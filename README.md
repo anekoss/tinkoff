@@ -1,5 +1,5 @@
 ![Build Status](https://github.com/sanyarnd/java-course-2023/actions/workflows/build.yml/badge.svg)
 
-Домашние задания курса https://fintech.tinkoff.ru/academy/java
+Домашние задания №1 курса https://fintech.tinkoff.ru/academy/java
 
-Студент: `ФИО`
+Студент: Чернова Анна Ивановна
