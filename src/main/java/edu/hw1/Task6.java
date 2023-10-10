@@ -4,29 +4,45 @@ import java.util.Arrays;
 
 public class Task6 {
 
-    public Task6() {
+    private static final int MIN2DIGITNUM = 10;
+
+    private static final int SIZENUM = 4;
+    private static final int CONSTK = 6174;
+
+    private Task6() {
     }
 
     public static int countK(int n) {
-        if (n >= 10000 || n <= 1000 ||
-            (n / 1000 == (n / 100) % 10 && (n / 100) % 10 == (n % 100) / 10 && (n % 100) / 10 == n % 10)) {
-            return -1;
+        if (n < Math.pow(MIN2DIGITNUM, SIZENUM) && n > Math.pow(MIN2DIGITNUM, SIZENUM - 1)) {
+            int[] arr = Arrays.stream(String.valueOf(n).split("")).mapToInt(Integer::parseInt).toArray();
+            int cnt = 0;
+            for (int i = 0; i < SIZENUM - 1; i++) {
+                if (arr[i] == arr[i + 1]) {
+                    cnt++;
+                }
+            }
+            if (cnt == SIZENUM - 1) {
+                return -1;
+            }
+            int max;
+            int min;
+            cnt = 0;
+            int num = n;
+            while (num != CONSTK) {
+                Arrays.sort(arr);
+                min = 0;
+                max = 0;
+                for (int i = 0; i < arr.length; i++) {
+                    min = min * MIN2DIGITNUM + arr[i];
+                    max = max * MIN2DIGITNUM + arr[SIZENUM - 1 - i];
+                }
+                cnt++;
+                num = max - min;
+                arr = Arrays.stream(String.valueOf(num).split("")).mapToInt(Integer::parseInt).toArray();
+
+            }
+            return cnt;
         }
-        int max;
-        int min;
-        int cnt = 0;
-        while (n != 6174) {
-            int[] arr = new int[4];
-            arr[0] = n / 1000;
-            arr[1] = (n / 100) % 10;
-            arr[2] = (n % 100) / 10;
-            arr[3] = n % 10;
-            Arrays.sort(arr);
-            max = arr[3] * 1000 + arr[2] * 100 + arr[1] * 10 + arr[0];
-            min = arr[0] * 1000 + arr[1] * 100 + arr[2] * 10 + arr[3];
-            cnt++;
-            n = max - min;
-        }
-        return cnt;
+        return -1;
     }
 }

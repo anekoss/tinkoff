@@ -1,20 +1,24 @@
 package edu.hw1;
 
 public class Task5 {
+
     private Task5() {
 
     }
+
+    private static final int NUMSYS = 10;
 
     public static boolean isPalindromeDescendant(int n) {
         if (isPalindrome(n)) {
             return true;
         }
-        n = getDescendant(n);
-        while (n / 10 >= 1) {
-            if (isPalindrome(n)) {
+        int num = n;
+        num = getDescendant(num);
+        while (num / NUMSYS >= 1) {
+            if (isPalindrome(num)) {
                 return true;
             }
-            n = getDescendant(n);
+            num = getDescendant(num);
         }
         return false;
 

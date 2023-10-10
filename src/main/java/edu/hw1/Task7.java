@@ -2,7 +2,7 @@ package edu.hw1;
 
 public class Task7 {
 
-    public Task7() {
+    private Task7() {
 
     }
 
@@ -18,8 +18,8 @@ public class Task7 {
         String binaryNum = Integer.toBinaryString(n);
 
         for (int i = 0; i < shift; i++) {
-            binaryNum = binaryNum.substring(binaryNum.length() - 1) +
-                binaryNum.substring(0, binaryNum.length() - 1);
+            binaryNum = binaryNum.substring(binaryNum.length() - 1)
+                + binaryNum.substring(0, binaryNum.length() - 1);
 
         }
         return Integer.parseInt(binaryNum, 2);
