@@ -1,74 +1,36 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static edu.hw1.Task5.isPalindromeDescendant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
 public class Task5Test {
-    @Test
-    void test1() {
-        int n = 11211230;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
+
+    @ParameterizedTest
+    @DisplayName("OK the result should be true")
+    @CsvSource({
+        "11211230, true",
+        "13001120, true",
+        "23336014, true",
+        "11, true",
+        "123312, true",
+        "121,true",
+        "112, true"
+    })
+    void correctInputTest1(int n, boolean res) {
+        assertThat(isPalindromeDescendant(n)).isEqualTo(res);
     }
 
-    @Test
-    void test2() {
-        int n = 13001120;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test3() {
-        int n = 23336014;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test4() {
-        int n = 11;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test5() {
-        int n = 121;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test6() {
-        int n = 123312;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test7() {
-        int n = 112;
-        boolean res = isPalindromeDescendant(n);
-
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    void test8() {
-        int n = 1124;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    void test9() {
-        int n = 37;
-        boolean res = isPalindromeDescendant(n);
-        assertThat(res).isEqualTo(false);
+    @ParameterizedTest
+    @DisplayName("OK the result should be false")
+    @CsvSource({
+        "1124, false",
+        "37, false",
+    })
+    void correctInputTest2(int n, boolean res) {
+        assertThat(isPalindromeDescendant(n)).isEqualTo(res);
     }
 
 }

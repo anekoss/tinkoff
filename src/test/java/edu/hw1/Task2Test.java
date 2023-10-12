@@ -1,39 +1,24 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
-    @Test
-    @DisplayName("счетчик количества цифр в числе 0")
-    void test1() {
-        Integer num = 0;
-        Integer cnt = Task2.countDigits(num);
-        assertThat(cnt).isEqualTo(1);
+
+    @ParameterizedTest
+    @DisplayName("OK should return correct result")
+    @CsvSource({
+        "0, 1",
+        "-123, 3",
+        "123406, 6",
+        "2, 1",
+    })
+    void correctInputTest(int n, int res) {
+        assertThat(Task2.countDigits(n)).isEqualTo(res);
     }
 
-    @Test
-    @DisplayName("счетчик количества цифр в отрицательном числе")
-    void test2() {
-        Integer num = -123;
-        Integer cnt = Task2.countDigits(num);
-        assertThat(cnt).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("счетчик количества цифр в числе OK")
-    void test3() {
-        Integer num = 123406;
-        Integer cnt = Task2.countDigits(num);
-        assertThat(cnt).isEqualTo(6);
-    }
-
-    @Test
-    @DisplayName("счетчик количества цифр в числе OK")
-    void test4() {
-        Integer num = 2;
-        Integer cnt = Task2.countDigits(num);
-        assertThat(cnt).isEqualTo(1);
-    }
 }

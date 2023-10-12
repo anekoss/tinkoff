@@ -1,12 +1,11 @@
 package edu.hw1;
 
-
 public class Task4 {
     private Task4() {
     }
 
     public static String fixString(String s) {
-        if (s == null) {
+        if (s == null || s.isEmpty()) {
             return null;
         }
         char[] arr = s.toCharArray();

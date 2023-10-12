@@ -1,69 +1,35 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static edu.hw1.Task6.countK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task6Test {
 
-    @Test
-    void test1() {
-        int n = 3524;
-        int res = countK(n);
-        assertThat(res).isEqualTo(3);
+    @ParameterizedTest
+    @DisplayName("OK should return correct result")
+    @CsvSource({
+        "3524, 3",
+        "6621, 5",
+        "6554, 4",
+        "1234, 3",
+        "6174, 0"
+    })
+    void correctInputTest(int n, int res) {
+        assertThat(countK(n)).isEqualTo(res);
     }
 
-    @Test
-    void test2() {
-        int n = 6621;
-        int res = countK(n);
-        assertThat(res).isEqualTo(5);
+    @ParameterizedTest
+    @DisplayName("Incorrect input data format")
+    @CsvSource({
+        "999, -1",
+        "1000, -1",
+        "8888, -1"
+    })
+    void inCorrectInputTest2(int n, int res) {
+        assertThat(countK(n)).isEqualTo(res);
     }
 
-    @Test
-    void test3() {
-        int n = 6554;
-        int res = countK(n);
-        assertThat(res).isEqualTo(4);
-    }
-
-    @Test
-    void test4() {
-        int n = 1234;
-        int res = countK(n);
-        assertThat(res).isEqualTo(3);
-    }
-
-    @Test
-    @DisplayName("число равно постоянной Капрекара")
-    void test5() {
-        int n = 6174;
-        int res = countK(n);
-        assertThat(res).isEqualTo(0);
-    }
-
-    @Test
-    @DisplayName("не четырехзначное число")
-    void test6() {
-        int n = 999;
-        int res = countK(n);
-        assertThat(res).isEqualTo(-1);
-    }
-
-    @Test
-    @DisplayName("число равно 1000")
-    void test7() {
-        int n = 1000;
-        int res = countK(n);
-        assertThat(res).isEqualTo(-1);
-    }
-
-    @Test
-    @DisplayName("все цифры одинаковы")
-    void test8() {
-        int n = 9999;
-        int res = countK(n);
-        assertThat(res).isEqualTo(-1);
-    }
 }

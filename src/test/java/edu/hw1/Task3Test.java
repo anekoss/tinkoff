@@ -1,83 +1,36 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.stream.Stream;
 import static edu.hw1.Task3.isNestable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task3Test {
 
-    @Test
-    @DisplayName("max(a1) меньше, чем max(a2)")
-    void test1() {
-        int[] a1 = {1, 2, 3, 4};
-        int[] a2 = {0, 6};
-        boolean res = isNestable(a1, a2);
-        assertThat(res).isEqualTo(true);
+    @ParameterizedTest
+    @DisplayName("OK should return correct result")
+    @MethodSource("provideDataForTest")
+    void correctInputTest(int[] a1, int[] a2, boolean expected) {
+        assertThat(isNestable(a1, a2)).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("max(a1) меньше, чем max(a2) && min(a1) больше чем min(a2)")
-    void test2() {
-        int[] a1 = {3, 1};
-        int[] a2 = {4, 0};
-        boolean res = isNestable(a1, a2);
-        assertThat(res).isEqualTo(true);
-    }
+    private static Stream<Arguments> provideDataForTest() {
+        return Stream.of(
+            Arguments.of(new int[] {1, 2, 3, 4}, new int[] {0, 6}, true),
+            Arguments.of(new int[] {3, 1}, new int[] {4, 0}, true),
+            Arguments.of(new int[] {1, 2, 3, 4}, new int[] {2, 3}, false),
+            Arguments.of(new int[] {3, 1}, new int[] {2, 0}, true),
+            Arguments.of(new int[] {9, 9, 8}, new int[] {8, 9}, false),
+            Arguments.of(new int[] {8}, new int[] {8}, false),
+            Arguments.of(new int[] {8, 4}, new int[] {8, 5}, false),
+            Arguments.of(new int[] {9, 4}, new int[] {8, 5}, false),
+            Arguments.of(new int[] {}, new int[] {}, false),
+            Arguments.of(new int[] {}, new int[] {1, 2, 3}, true),
+            Arguments.of(new int[] {5, 8, 10, 246}, new int[] {}, true)
 
-
-
-    @Test
-    @DisplayName("!max(a1) меньше, чем max(a2) && !min(a1) больше чем min(a2)")
-    void test3() {
-        int[] arr1 = {1, 2, 3, 4};
-        int[] arr2 = {2, 3};
-        boolean res = isNestable(arr1, arr2);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("min(a1) больше чем min(a2)")
-    void test4() {
-        int[] a1 = {3, 1};
-        int[] a2 = {2, 0};
-        boolean res = isNestable(a1, a2);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("!max(a1) меньше, чем max(a2) && !min(a1) больше чем min(a2)")
-    void test5() {
-        int[] arr1 = {9, 9, 8};
-        int[] arr2 = {8, 9};
-        boolean res = isNestable(arr1, arr2);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("!max(a1) меньше, чем max(a2) && !min(a1) больше чем min(a2)")
-    void test6() {
-        int[] arr1 = {8};
-        int[] arr2 = {8};
-        boolean res = isNestable(arr1, arr2);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("!max(a1) меньше, чем max(a2) && !min(a1) больше чем min(a2)")
-    void test7() {
-        int[] arr1 = {8, 4};
-        int[] arr2 = {8, 5};
-        boolean res = isNestable(arr1, arr2);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("!max(a1) меньше, чем max(a2) && !min(a1) больше чем min(a2)")
-    void test8() {
-        int[] arr1 = {9, 4};
-        int[] arr2 = {8, 5};
-        boolean res = isNestable(arr1, arr2);
-        assertThat(res).isEqualTo(false);
+            );
     }
 }

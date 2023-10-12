@@ -1,66 +1,36 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import static edu.hw1.Task7.rotateLeft;
 import static edu.hw1.Task7.rotateRight;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task7Test {
 
-    @Test
-    @DisplayName("циклический сдвиг вправо на 1")
-    void test1() {
-        int n = 8;
-        int res = rotateRight(n, 1);
-        assertThat(res).isEqualTo(4);
+    @ParameterizedTest
+    @DisplayName("OK cyclic shift to the right")
+    @CsvSource({
+        "8, 1, 4",
+        "0, 4, 0",
+        "16, 5, 16"
+    })
+    void correctInputTest1(int n, int shift, int res) {
+        assertThat(rotateRight(n, shift)).isEqualTo(res);
     }
 
-    @Test
-    @DisplayName("циклический сдвиг вправо числа 0")
-    void test2() {
-        int n = 0;
-        int res = rotateRight(n, 5);
-        assertThat(res).isEqualTo(0);
+    @ParameterizedTest
+    @DisplayName("OK cyclic shift to the left")
+    @CsvSource({
+        "16, 1, 1",
+        "17, 2, 6",
+        "0, 5, 0",
+        "128, 8, 128",
+        "128, 0, 128"
+    })
+    void correctInputTest2(int n, int shift, int res) {
+        assertThat(rotateLeft(n, shift)).isEqualTo(res);
     }
 
-    @Test
-    @DisplayName("циклический сдвиг влево на 1")
-    void test3() {
-        int n = 16;
-        int res = rotateLeft(n, 1);
-        assertThat(res).isEqualTo(1);
-    }
-
-    @Test
-    @DisplayName("циклический сдвиг влево на 2")
-    void test4() {
-        int n = 17;
-        int res = rotateLeft(n, 2);
-        assertThat(res).isEqualTo(6);
-    }
-
-    @Test
-    @DisplayName("циклический сдвиг влево числа 0")
-    void test5() {
-        int n = 0;
-        int res = rotateLeft(n, 5);
-        assertThat(res).isEqualTo(0);
-    }
-
-    @Test
-    @DisplayName("циклический сдвиг вправо на размер двоичного числа")
-    void test6() {
-        int n = 16;
-        int res = rotateRight(n, 5);
-        assertThat(res).isEqualTo(16);
-    }
-
-    @Test
-    @DisplayName("циклический сдвиг влево на размер двоичного числа")
-    void test7() {
-        int n = 128;
-        int res = rotateLeft(n, 8);
-        assertThat(res).isEqualTo(128);
-    }
 }

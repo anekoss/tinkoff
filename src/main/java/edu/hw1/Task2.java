@@ -7,7 +7,7 @@ public class Task2 {
     private Task2() {
     }
 
-    public static int countDigits(Integer n) {
+    public static int countDigits(int n) {
         int cnt = 0;
         int num = n;
         do {

@@ -1,104 +1,76 @@
 package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.stream.Stream;
 import static edu.hw1.Task8.knightBoardCapture;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task8Test {
-    @Test
-    @DisplayName("доска, где ни один конь не может захватить другого коня")
-    void test1() {
-        int[][] arr = {{0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 1, 0, 1, 0},
-            {0, 1, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1, 0, 0, 0}};
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(true);
+
+    @ParameterizedTest
+    @DisplayName("OK should return correct result")
+    @MethodSource("provideDataForTest")
+    void correctInputTest(int[][] arr, boolean expected) {
+        assertThat(knightBoardCapture(arr)).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("доска, где какой-то конь может захватить другого коня")
-    void test2() {
-        int[][] arr = {{1, 0, 1, 0, 1, 0, 1, 0},
-            {0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 0, 0, 0, 1, 0, 1, 0},
-            {0, 0, 1, 0, 0, 1, 0, 1},
-            {1, 0, 0, 0, 1, 0, 1, 0},
-            {0, 0, 0, 0, 0, 1, 0, 1},
-            {1, 0, 0, 0, 1, 0, 1, 0},
-            {0, 0, 0, 1, 0, 1, 0, 1}};
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(false);
-    }
+    private static Stream<Arguments> provideDataForTest() {
+        return Stream.of(
+            Arguments.of(new int[][] {{0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 1, 0, 1, 0},
+                {0, 1, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 1, 0, 0, 0}}, true),
+            Arguments.of(new int[][] {{1, 0, 1, 0, 1, 0, 1, 0},
+                {0, 1, 0, 1, 0, 1, 0, 1},
+                {0, 0, 0, 0, 1, 0, 1, 0},
+                {0, 0, 1, 0, 0, 1, 0, 1},
+                {1, 0, 0, 0, 1, 0, 1, 0},
+                {0, 0, 0, 0, 0, 1, 0, 1},
+                {1, 0, 0, 0, 1, 0, 1, 0},
+                {0, 0, 0, 1, 0, 1, 0, 1}}, false),
+            Arguments.of(new int[][] {{0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0}
+            }, false),
+            Arguments.of(new int[][] {{0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}}, true),
+            Arguments.of(new int[][] {{1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
 
-    @Test
-    @DisplayName("доска, где какой-то конь может захватить другого коня")
-    void test3() {
-        int[][] arr =
-            {{0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0}
-        };
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("доска без коней")
-    void test4() {
-        int[][] arr = {{0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0}
-        };
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("доска, где конь на каждой клетке")
-    void test5() {
-        int[][] arr = {{1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1},
-
-        };
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(false);
-    }
-
-    @Test
-    @DisplayName("доска, где ни один конь не может захватить другого коня")
-    void test6() {
-        int[][] arr = {{0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0}
-        };
-        boolean res = knightBoardCapture(arr);
-        assertThat(res).isEqualTo(true);
+            }, false),
+            Arguments.of(new int[][] {{0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}
+            }, true)
+        );
     }
 }
