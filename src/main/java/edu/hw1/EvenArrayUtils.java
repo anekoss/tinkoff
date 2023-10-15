@@ -21,6 +21,7 @@ public final class EvenArrayUtils {
         Objects.requireNonNull(numbers);
         LOGGER.trace("Filtering an array {}", numbers);
 
+
         int count = count(numbers);
 
         int[] result = new int[count];
