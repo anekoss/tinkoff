@@ -15,7 +15,6 @@ public record Addition(double number1, double number2) implements Expr {
     }
 
     @Override
-
     public double evaluate() {
         return number1() + number2();
     }

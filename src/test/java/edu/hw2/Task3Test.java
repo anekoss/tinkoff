@@ -6,7 +6,6 @@ import edu.hw2.Task3.DefaultConnectionManager;
 import edu.hw2.Task3.FaultyConnectionManager;
 import edu.hw2.Task3.PopularCommandExecutor;
 import edu.hw2.Task3.StableConnection;
-import io.github.artsok.RepeatedIfExceptionsTest;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,24 +14,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class Task3Test {
+class Task3Test {
 
     @RepeatedTest(value = 100)
-    public void stableConnectionExecTest() throws Exception {
-        try (Connection connection = new StableConnection()) {
-            assertDoesNotThrow(() -> connection.execute("command"));
-        }
-    }
-
-    @RepeatedIfExceptionsTest(repeats = 100, suspend = 100)
-    public void stableConnectionExecTest2() throws Exception {
+    void stableConnectionExecTest() throws Exception {
         try (Connection connection = new StableConnection()) {
             assertDoesNotThrow(() -> connection.execute("command"));
         }
     }
 
     @Test
-    public void faultyConnectionThrowExceptionTest() {
+    void faultyConnectionThrowExceptionTest() {
         while (true) {
             try (Connection connection = new FaultyConnectionManager().getConnection()) {
                 connection.execute("command");
@@ -45,7 +37,7 @@ public class Task3Test {
     }
 
     @Test
-    public void faultyConnectionSuccessfulExecuteTest() {
+    void faultyConnectionSuccessfulExecuteTest() {
         while (true) {
             try (Connection connection = new FaultyConnectionManager().getConnection()) {
                 connection.execute("command");
@@ -62,14 +54,14 @@ public class Task3Test {
         "1",
         "2",
         "10"})
-    public void updatePackagesThrowExceptionTest() {
+    void updatePackagesThrowExceptionTest() {
         while (true) {
             DefaultConnectionManager defaultConnectionManager = new DefaultConnectionManager();
             PopularCommandExecutor popularCommandExecutor = new PopularCommandExecutor(defaultConnectionManager, 1);
             try {
                 popularCommandExecutor.updatePackages();
             } catch (ConnectionException e) {
-                assertThat(e.getCause()).isEqualTo(null);
+                assertThat(e.getCause()).isNull();
                 break;
             }
         }
@@ -80,7 +72,7 @@ public class Task3Test {
         "1",
         "2",
         "10"})
-    public void updatePackagesSuccessfulExecuteTest(int maxAttempts) {
+    void updatePackagesSuccessfulExecuteTest(int maxAttempts) {
         while (true) {
             DefaultConnectionManager defaultConnectionManager = new DefaultConnectionManager();
             PopularCommandExecutor popularCommandExecutor =
@@ -93,5 +85,41 @@ public class Task3Test {
             }
         }
     }
+
+    @ParameterizedTest
+    @CsvSource({"1, 0.7"})
+    void updatePackagesThrowExceptionTest1(int maxAttempts, double probability) {
+        while (true) {
+            DefaultConnectionManager defaultConnectionManager = new DefaultConnectionManager(probability);
+            PopularCommandExecutor popularCommandExecutor =
+                new PopularCommandExecutor(defaultConnectionManager, maxAttempts);
+            try {
+                popularCommandExecutor.updatePackages();
+            } catch (ConnectionException e) {
+                assertThat(e.getMessage()).isEqualTo("The maximum number of connection attempts has been reached");
+                break;
+            }
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 0.7",
+        "1, 0.4",
+        "2, 0.2",
+        "10, 0.1"})
+    void updatePackagesSuccessfulExecuteTest1(int maxAttempts, double probability) {
+        while (true) {
+            DefaultConnectionManager defaultConnectionManager = new DefaultConnectionManager(probability);
+            PopularCommandExecutor popularCommandExecutor =
+                new PopularCommandExecutor(defaultConnectionManager, maxAttempts);
+            try {
+                popularCommandExecutor.updatePackages();
+                assertTrue(true);
+                break;
+            } catch (ConnectionException ignored) {
+            }
+        }
+    }
+
 }
 

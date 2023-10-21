@@ -5,7 +5,7 @@ import edu.hw2.Task4.Info;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Task4Test {
+class Task4Test {
     @Test
     void callingInfoTest1() {
         assertThat(Info.callingInfo()).isEqualTo(new CallingInfo(this.getClass().getName(), "callingInfoTest1"));

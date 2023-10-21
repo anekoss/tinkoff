@@ -15,7 +15,6 @@ public record Exponent(double number1, double number2) implements Expr {
     }
 
     @Override
-
     public double evaluate() {
         return Math.pow(number1(), number2());
     }

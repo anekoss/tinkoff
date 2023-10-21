@@ -13,7 +13,7 @@ public class StableConnection implements Connection {
     }
 
     @Override
-    public void close()  {
+    public void close() {
         LOGGER.info("closing server connection");
     }
 }

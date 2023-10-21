@@ -6,7 +6,6 @@ public record Negate(double number) implements Expr {
     }
 
     @Override
-
     public double evaluate() {
         return -number();
     }

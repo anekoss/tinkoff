@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class Task2Test {
+class Task2Test {
     static Arguments[] provideDataForTest() {
         return new Arguments[] {
             Arguments.of(new Rectangle(), 10, 20, 200),
@@ -31,10 +31,8 @@ public class Task2Test {
             Arguments.of(new Square(10), 30, 30, 900),
             Arguments.of(new Square(10), 30, 40, 1200),
 
-
         };
     }
-
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")

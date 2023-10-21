@@ -10,14 +10,13 @@ public class FaultyConnection implements Connection {
 
     @Override
     public void execute(String command) throws ConnectionException {
-        LOGGER.info("command " + command + " execution");
         if (DEFAULT_PROBABILITY_FAULTY_CONNECTION >= Math.random()) {
             throw new ConnectionException("execution " + command + " command failed, bad connection");
         }
     }
 
     @Override
-    public void close()  {
+    public void close() {
         LOGGER.info("closing server connection");
     }
 }

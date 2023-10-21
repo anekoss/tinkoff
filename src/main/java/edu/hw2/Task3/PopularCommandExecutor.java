@@ -4,9 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class PopularCommandExecutor {
+    private static final Logger LOGGER = LogManager.getLogger();
     private final ConnectionManager manager;
 
-    private static final Logger LOGGER = LogManager.getLogger();
     private final int maxAttempts;
 
     public PopularCommandExecutor(ConnectionManager manager, int maxAttempts) {
@@ -15,10 +15,14 @@ public final class PopularCommandExecutor {
     }
 
     public void updatePackages() throws ConnectionException {
-        tryExecute("apt update && apt upgrade -y");
+        try {
+            tryExecute("apt update && apt upgrade -y");
+        } catch (LimitAttemptsException e) {
+            throw new ConnectionException(e.getMessage());
+        }
     }
 
-    void tryExecute(String command) throws ConnectionException {
+    void tryExecute(String command) throws ConnectionException, LimitAttemptsException {
         for (int i = 1; i <= maxAttempts; i++) {
             LOGGER.info("server connection");
             try (Connection connection = manager.getConnection()) {
@@ -26,12 +30,13 @@ public final class PopularCommandExecutor {
                 connection.execute(command);
                 LOGGER.info(command + " command was executed successfully");
                 return;
-            } catch (Exception e) {
+            } catch (ConnectionException e) {
                 LOGGER.warn("command execution №" + i + " failed");
-                LOGGER.warn(e.getCause());
-                if (i == maxAttempts) {
-                    throw new ConnectionException();
+                if (maxAttempts == i) {
+                    throw new LimitAttemptsException();
                 }
+            } catch (CloseConnectionException e) {
+                LOGGER.info(e.getMessage());
             }
         }
 
