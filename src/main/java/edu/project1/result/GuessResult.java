@@ -8,7 +8,7 @@ sealed class GuessResult
 
     protected Word word;
 
-    public GuessResult(Word word) {
+    GuessResult(Word word) {
         this.word = word;
     }
 
