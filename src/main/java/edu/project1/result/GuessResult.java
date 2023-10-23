@@ -1,15 +1,15 @@
 package edu.project1.result;
 
-import edu.project1.Word;
+import edu.project1.WordGuess;
 
-sealed class GuessResult
+public sealed class GuessResult
     permits DefaultResult, FailedGuessResult, GiveUpResult, LostResult, RepeatGuessResult, RetryResult,
     SuccessfulGuessResult, WinResult {
 
-    protected Word word;
+    protected WordGuess wordGuess;
 
-    GuessResult(Word word) {
-        this.word = word;
+    public GuessResult(WordGuess wordGuess) {
+        this.wordGuess = wordGuess;
     }
 
     public String message() {

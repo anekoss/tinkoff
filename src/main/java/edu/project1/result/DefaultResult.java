@@ -1,16 +1,16 @@
 package edu.project1.result;
 
-import edu.project1.Word;
+import edu.project1.WordGuess;
 
 public final class DefaultResult extends GuessResult {
 
-    public DefaultResult(Word word) {
-        super(word);
+    public DefaultResult(WordGuess wordGuess) {
+        super(wordGuess);
     }
 
     @Override
     public String message() {
-        return "The word: " + word.getUserAnswer();
+        return "The word: " + wordGuess.getUserAnswer();
     }
 
 }

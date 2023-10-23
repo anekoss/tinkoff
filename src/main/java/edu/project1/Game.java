@@ -5,74 +5,32 @@ import java.util.Scanner;
 public class Game {
     private final PlayersProvider playersProvider;
     private final Scanner scanner;
-    private final Word word;
+    private final Printer printer;
+    private final StatusGuess statusGuess;
 
-    public Game(PlayersProvider playersProvider, Scanner scanner) {
+    public Game(PlayersProvider playersProvider, Scanner scanner, StatusGuess statusGuess) {
         this.playersProvider = playersProvider;
-        this.word = new Word();
         this.scanner = scanner;
+        this.statusGuess = statusGuess;
+        this.printer = new Printer();
     }
 
-    public Game(PlayersProvider playersProvider, Scanner scanner, int maxAttempts) {
+    public Game(PlayersProvider playersProvider, Scanner scanner, StatusGuess statusGuess, Printer printer) {
         this.playersProvider = playersProvider;
-        this.word = new Word(maxAttempts);
         this.scanner = scanner;
+        this.statusGuess = statusGuess;
+        this.printer = printer;
     }
 
-    public Game(PlayersProvider playersProvider, Scanner scanner, String word) {
-        this.playersProvider = playersProvider;
-        this.word = new Word(word);
-        this.scanner = scanner;
-    }
-
-    public Game(PlayersProvider playersProvider, Scanner scanner, String word, int maxAttempts) {
-        this.playersProvider = playersProvider;
-        this.word = new Word(word, maxAttempts);
-        this.scanner = scanner;
-    }
-
-    public void play() throws WrongWordException {
-        if (!word.isEmpty()) {
-            throw new WrongWordException();
-        }
-        do {
-            playersProvider.getNext();
-            Printer.printInvite(playersProvider);
+    public void play() {
+        while (!statusGuess.isEndGame() && scanner.hasNext()) {
+            playersProvider.getNext(statusGuess.getStatus());
+            printer.printInvite(playersProvider);
             String guess = scanner.next();
-            Printer.printGuess(guess);
-            tryGuess(guess);
-
-        }
-        while ((!word.checkAttemptsEnded() && !playersProvider.isWinner()) && !playersProvider.isGiveUp()
-            && scanner.hasNext());
-    }
-
-    private void tryGuess(String guess) {
-        if (guess.equals("exit")) {
-            playersProvider.giveUp();
-            Printer.printGiveUpResult(word);
-        } else if (guess.length() == 1 && word.isRepeatGuess(guess.charAt(0))) {
-            playersProvider.setPosition();
-            Printer.printRepeatGuessResult(word);
-        } else if (guess.length() == 1) {
-            boolean checkGuess = word.guess(guess.charAt(0));
-            if (word.checkAttemptsEnded() && !checkGuess) {
-                Printer.printLostResult(word);
-            } else if (!checkGuess) {
-                Printer.printFailedGuessResult(word);
-            } else if (word.checkWin()) {
-                playersProvider.setIsWinner();
-                Printer.printWinResult(word);
-            } else {
-                Printer.printSuccessfulResult(word);
-            }
-        } else {
-            playersProvider.setPosition();
-            Printer.printRetryResult(word);
+            printer.printGuess(guess);
+            statusGuess.tryGuess(guess);
+            printer.printResult(statusGuess.getGuessResult());
         }
     }
 
-    public Word getWord() {
-        return word;
-    }
 }

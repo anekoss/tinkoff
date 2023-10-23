@@ -1,6 +1,5 @@
 package edu.project1;
 
-import nl.altindag.log.LogCaptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,15 +14,16 @@ class ResultTest {
     @DisplayName("Игрок сдается")
     @CsvSource({"3, клубника, к я л у exit д б р о ж х и е",
     })
-    void giveUpTest(int maxAttempts, String word, String scanner)
+    void giveUpTest(int maxAttempts, String wordValue, String scanner)
         throws WrongWordException {
-        LogCaptor logCaptor = LogCaptor.forClass(Printer.class);
-        logCaptor.setLogLevelToInfo();
-        Game game = new Game(getOnePlayerProvider(), new Scanner(scanner), word, maxAttempts);
+        Word word = new Word(wordValue);
+        WordGuess wordGuess = new WordGuess(word, maxAttempts);
+        StatusGuess statusGuess = new StatusGuess(wordGuess);
+        Game game = new Game(getOnePlayerProvider(), new Scanner(scanner), statusGuess);
         game.play();
-        assertThat(game.getWord().getAttempts()).isLessThanOrEqualTo(maxAttempts);
-        String lastLog = logCaptor.getLogs().get(logCaptor.getLogs().size() - 1);
-        assertThat(lastLog).isEqualTo("You give up!");
+        assertThat(wordGuess.getAttempts()).isLessThanOrEqualTo(maxAttempts);
+        assertThat(statusGuess.getStatus()).isEqualTo(Status.GIVE_UP);
+        assertThat(statusGuess.getGuessResult().message()).isEqualTo("You give up!");
     }
 
     @ParameterizedTest
@@ -31,13 +31,13 @@ class ResultTest {
     @CsvSource({"3, клубника, к я я л , 1",
         "3, клубника, к к л , 0"
     })
-    void repeatGuessTest(int maxAttempts, String word, String scanner, int exceptedAttempts)
+    void repeatGuessTest(int maxAttempts, String wordValue, String scanner, int exceptedAttempts)
         throws WrongWordException {
-        LogCaptor logCaptor = LogCaptor.forClass(Printer.class);
-        logCaptor.setLogLevelToInfo();
-        Game game = new Game(getOnePlayerProvider(), new Scanner(scanner), word, maxAttempts);
+        Word word = new Word(wordValue);
+        WordGuess wordGuess = new WordGuess(word, maxAttempts);
+        StatusGuess statusGuess = new StatusGuess(wordGuess);
+        Game game = new Game(getOnePlayerProvider(), new Scanner(scanner), statusGuess);
         game.play();
-        assertThat(game.getWord().getAttempts()).isEqualTo(exceptedAttempts);
-        assertThat(logCaptor.getLogs().toString()).contains("This guess has already been entered. Please enter another character.");
+        assertThat(wordGuess.getAttempts()).isEqualTo(exceptedAttempts);
     }
 }

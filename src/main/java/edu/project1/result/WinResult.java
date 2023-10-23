@@ -1,15 +1,15 @@
 package edu.project1.result;
 
-import edu.project1.Word;
+import edu.project1.WordGuess;
 
 public final class WinResult extends GuessResult {
 
-    public WinResult(Word word) {
-        super(word);
+    public WinResult(WordGuess wordGuess) {
+        super(wordGuess);
     }
 
     @Override
     public String message() {
-        return "You won!";
+        return new SuccessfulGuessResult(wordGuess) + "\nYou won!";
     }
 }

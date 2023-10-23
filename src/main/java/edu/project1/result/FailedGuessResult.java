@@ -1,15 +1,16 @@
 package edu.project1.result;
 
-import edu.project1.Word;
+import edu.project1.WordGuess;
 
 public final class FailedGuessResult extends GuessResult {
 
-    public FailedGuessResult(Word word) {
-        super(word);
+    public FailedGuessResult(WordGuess wordGuess) {
+        super(wordGuess);
     }
 
     @Override
     public String message() {
-        return "Missed, mistake " + word.getAttempts() + " out of " + word.getMaxAttempts() + ".";
+        return "Missed, mistake " + wordGuess.getAttempts() + " out of " + wordGuess.getMaxAttempts() + ".\n"
+            + new DefaultResult(wordGuess).message();
     }
 }
