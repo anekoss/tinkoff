@@ -15,13 +15,6 @@ public class Game {
         this.printer = new Printer();
     }
 
-    public Game(PlayersProvider playersProvider, Scanner scanner, StatusGuess statusGuess, Printer printer) {
-        this.playersProvider = playersProvider;
-        this.scanner = scanner;
-        this.statusGuess = statusGuess;
-        this.printer = printer;
-    }
-
     public void play() {
         while (!statusGuess.isEndGame() && scanner.hasNext()) {
             playersProvider.getNext(statusGuess.getStatus());
