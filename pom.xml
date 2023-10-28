@@ -96,7 +96,11 @@
             <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.github.artsok</groupId>
+            <artifactId>rerunner-jupiter</artifactId>
+            <version>LATEST</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
