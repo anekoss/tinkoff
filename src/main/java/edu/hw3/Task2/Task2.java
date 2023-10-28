@@ -1,0 +1,38 @@
+package edu.hw3.Task2;
+
+import java.util.ArrayList;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class Task2 {
+    private Task2() {
+
+    }
+
+    public static List<String> clusterize(String str) {
+        log.info("string clustering execution");
+        if (str == null) {
+            log.info("null string cannot be clustered");
+            return new ArrayList<>();
+        }
+        List<String> list = new ArrayList<>();
+        int cnt = 0;
+        int index = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '(') {
+                cnt++;
+            } else if (str.charAt(i) == ')') {
+                cnt--;
+                if (cnt == 0) {
+                    list.add(str.substring(index, i + 1));
+                }
+            }
+            if (cnt == 0) {
+                index = i + 1;
+            }
+        }
+        log.info("string clustering completed");
+        return list;
+    }
+}
