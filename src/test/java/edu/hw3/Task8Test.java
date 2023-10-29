@@ -20,7 +20,7 @@ class Task8Test {
                 List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 100, 151, 2383828, 32, 22),
                 List.of(-1, -1, -1, -1),
                 Arrays.asList(null, null, 1, 2, 3, null, -100, null),
-                new ArrayList<>()
+                List.of()
             )
         );
     }

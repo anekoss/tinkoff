@@ -23,10 +23,9 @@ public class StockMarketManager implements StockMarket {
     }
 
     @Override
-    public Stock mostValuableStock() {
+    public Stock mostValuableStock() throws QueueEmptyException {
         if (stockQueue.isEmpty()) {
-            log.info("queue is empty");
-            return null;
+            throw new QueueEmptyException();
         }
         log.info("the most expensive stock received");
         return stockQueue.peek();

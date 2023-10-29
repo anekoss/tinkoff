@@ -1,13 +1,16 @@
 package edu.hw3;
 
+import edu.hw3.Task6.QueueEmptyException;
 import edu.hw3.Task6.Stock;
 import edu.hw3.Task6.StockMarketManager;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Task6Test {
 
@@ -22,7 +25,7 @@ class Task6Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForAddTest")
-    void stockManagerAddTest(List<Stock> list, Stock excepted) {
+    void stockManagerAddTest(List<Stock> list, Stock excepted) throws QueueEmptyException {
         StockMarketManager stockMarketManager = new StockMarketManager();
         for (Stock stock : list) {
             stockMarketManager.add(stock);
@@ -53,7 +56,7 @@ class Task6Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForRemoveTest")
-    void stockManagerRemoveTest(List<Stock> list, Stock removeStock, Stock excepted) {
+    void stockManagerRemoveTest(List<Stock> list, Stock removeStock, Stock excepted) throws QueueEmptyException {
         StockMarketManager stockMarketManager = new StockMarketManager();
         for (Stock stock : list) {
             stockMarketManager.add(stock);
@@ -62,4 +65,9 @@ class Task6Test {
         assertThat(stockMarketManager.mostValuableStock()).isEqualTo(excepted);
     }
 
+    @Test
+    void nullStockManagerRemoveTest() throws QueueEmptyException {
+        StockMarketManager stockMarketManager = new StockMarketManager();
+        assertThrows(QueueEmptyException.class, stockMarketManager::mostValuableStock);
+    }
 }

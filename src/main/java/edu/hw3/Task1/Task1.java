@@ -1,7 +1,5 @@
 package edu.hw3.Task1;
 
-import java.util.ArrayList;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -10,29 +8,23 @@ public class Task1 {
 
     }
 
-    private static final List<Character> ALPHABET = new ArrayList<>();
+    private static final char MIN_LOWER_CHAR = 'a';
+    private static final char MAX_LOWER_CHAR = 'z';
+    private static final char MIN_UPPER_CHAR = 'A';
+    private static final char MAX_UPPER_CHAR = 'Z';
 
-    static {
-        for (char ch = 'a'; ch <= 'z'; ch++) {
-            ALPHABET.add(ch);
-        }
-    }
-
-    public static String atbash(String value) {
+    public static String atbash(String value) throws NullStringCodedException {
         log.info("encoding of the string {}", value);
         if (value == null) {
-            log.info("null string cannot be coded");
-            return null;
+            throw new NullStringCodedException();
         }
         char[] codeString = value.toCharArray();
         for (int i = 0; i < codeString.length; i++) {
-            int index = ALPHABET.indexOf(Character.toLowerCase(codeString[i]));
-            if (index != -1) {
-                if (Character.isLowerCase(codeString[i])) {
-                    codeString[i] = ALPHABET.get(ALPHABET.size() - index - 1);
-                } else {
-                    codeString[i] = Character.toUpperCase(ALPHABET.get(ALPHABET.size() - index - 1));
-                }
+            if (codeString[i] >= MIN_LOWER_CHAR && codeString[i] <= MAX_LOWER_CHAR) {
+                codeString[i] = (char) (MIN_LOWER_CHAR + (MAX_LOWER_CHAR - codeString[i]));
+            }
+            if (codeString[i] >= MIN_UPPER_CHAR && codeString[i] <= MAX_UPPER_CHAR) {
+                codeString[i] = (char) (MIN_UPPER_CHAR + (MAX_UPPER_CHAR - codeString[i]));
             }
         }
         log.info("string encoding completed");

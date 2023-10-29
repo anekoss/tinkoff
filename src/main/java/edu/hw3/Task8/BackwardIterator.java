@@ -8,11 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BackwardIterator<T> implements Iterator<T> {
 
-    private final List<T> collection;
+    private final T[] collection;
     private int pointer;
 
     public BackwardIterator(List<T> collection) {
-        this.collection = collection;
+        this.collection = (T[]) collection.toArray();
         pointer = collection.size() - 1;
     }
 
@@ -29,7 +29,7 @@ public class BackwardIterator<T> implements Iterator<T> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return collection.get(pointer--);
+        return collection[pointer--];
     }
 
 }

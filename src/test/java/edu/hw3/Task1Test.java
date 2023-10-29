@@ -1,5 +1,6 @@
 package edu.hw3;
 
+import edu.hw3.Task1.NullStringCodedException;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import static edu.hw3.Task1.Task1.atbash;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Task1Test {
 
@@ -26,13 +28,13 @@ class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void atbashTest(String value, @NotNull String excepted) {
+    void atbashTest(String value, @NotNull String excepted) throws NullStringCodedException {
         assertThat(atbash(value)).hasSize(excepted.length()).isEqualTo(excepted);
     }
 
     @Test
-    void atbashNullTest() {
+    void atbashNullTest() throws NullStringCodedException {
         assertThat(atbash("")).isEmpty();
-        assertThat(atbash(null)).isNull();
+        assertThrows(NullStringCodedException.class, () -> atbash(null));
     }
 }

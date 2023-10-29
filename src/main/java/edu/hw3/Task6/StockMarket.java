@@ -6,5 +6,5 @@ interface StockMarket {
 
     void remove(Stock stock);
 
-    Stock mostValuableStock();
+    Stock mostValuableStock() throws QueueEmptyException;
 }

@@ -8,11 +8,10 @@ public class Task5 {
     private Task5() {
     }
 
-    public static Contact[] parseContacts(String[] contactNames, String order) {
+    public static Contact[] parseContacts(String[] contactNames, String order) throws EmptyContactArrayException {
         Contact[] contacts = sortContact(contactNames);
         if (contacts.length == 0) {
-            log.info("empty array cannot be sorted");
-            return contacts;
+            throw new EmptyContactArrayException();
         }
         if (order.equalsIgnoreCase("ASC")) {
             log.info("ASC sorting execution");

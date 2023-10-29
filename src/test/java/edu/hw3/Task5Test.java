@@ -1,12 +1,15 @@
 package edu.hw3;
 
 import edu.hw3.Task5.Contact;
+import edu.hw3.Task5.EmptyContactArrayException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import static edu.hw3.Task5.Task5.parseContacts;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Task5Test {
 
@@ -27,20 +30,22 @@ class Task5Test {
                     new Contact("Thomas"),
                     new Contact("David")
                 }
-            ),
-            Arguments.of(
-                new String[] {},
-                new Contact[] {},
-                new Contact[] {}
-
             )
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void parseContactsTest(String[] contacts, Contact[] ascSortedContacts, Contact[] descSortedContacts) {
+    void parseContactsTest(String[] contacts, Contact[] ascSortedContacts, Contact[] descSortedContacts)
+        throws EmptyContactArrayException {
         assertThat(parseContacts(contacts, "ASC")).isEqualTo(ascSortedContacts);
         assertThat(parseContacts(contacts, "DESC")).isEqualTo(descSortedContacts);
+    }
+
+    @Test
+    void parseNullContactsTest() {
+        String[] contacts = new String[] {};
+        assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, "ASC"));
+        assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, "DESC"));
     }
 }
