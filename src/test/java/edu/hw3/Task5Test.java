@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import static edu.hw3.Task5.Task5.parseContacts;
+import static edu.hw3.Task5.Task5.sortContact;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -40,6 +42,8 @@ class Task5Test {
         throws EmptyContactArrayException {
         assertThat(parseContacts(contacts, "ASC")).isEqualTo(ascSortedContacts);
         assertThat(parseContacts(contacts, "DESC")).isEqualTo(descSortedContacts);
+        assertThat(parseContacts(contacts, null)).isEqualTo(sortContact(contacts));
+        assertThat(parseContacts(contacts, "hi")).isEqualTo(sortContact(contacts));
     }
 
     @Test
@@ -47,5 +51,7 @@ class Task5Test {
         String[] contacts = new String[] {};
         assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, "ASC"));
         assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, "DESC"));
+        assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, null));
+        assertThrows(EmptyContactArrayException.class, () -> parseContacts(contacts, "hi"));
     }
 }

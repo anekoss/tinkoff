@@ -6,12 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Task2 {
-    private Task2() {
-
-    }
 
     private static final char RIGHT_DELIMITER = ')';
     private static final char LEFT_DELIMITER = '(';
+
+    private Task2() {
+
+    }
 
     public static List<String> clusterize(String str) {
         log.info("string clustering execution");

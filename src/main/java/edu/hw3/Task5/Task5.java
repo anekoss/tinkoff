@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Task5 {
+    private static final String ASC = "ASC";
+    private static final String DESC = "DESC";
+
     private Task5() {
     }
 
@@ -13,12 +16,12 @@ public class Task5 {
         if (contacts.length == 0) {
             throw new EmptyContactArrayException();
         }
-        if (order.equalsIgnoreCase("ASC")) {
+        if (ASC.equalsIgnoreCase(order)) {
             log.info("ASC sorting execution");
             Arrays.sort(contacts, new ContactComparator());
             log.info("ASC sorting completed");
         }
-        if (order.equalsIgnoreCase("DESC")) {
+        if (DESC.equalsIgnoreCase(order)) {
             log.info("DESC sorting execution");
             Arrays.sort(contacts, new ContactComparator().reversed());
             log.info("DESC sorting completed");
@@ -26,7 +29,7 @@ public class Task5 {
         return contacts;
     }
 
-    static Contact[] sortContact(String[] contactNames) {
+    public static Contact[] sortContact(String[] contactNames) {
         if (contactNames.length == 0) {
             return new Contact[0];
         }

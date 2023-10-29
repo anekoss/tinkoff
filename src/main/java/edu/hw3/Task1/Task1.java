@@ -4,14 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Task1 {
-    private Task1() {
-
-    }
-
     private static final char MIN_LOWER_CHAR = 'a';
     private static final char MAX_LOWER_CHAR = 'z';
     private static final char MIN_UPPER_CHAR = 'A';
     private static final char MAX_UPPER_CHAR = 'Z';
+
+    private Task1() {
+
+    }
 
     public static String atbash(String value) throws NullStringCodedException {
         log.info("encoding of the string {}", value);

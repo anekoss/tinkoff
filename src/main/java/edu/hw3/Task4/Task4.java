@@ -6,8 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Task4 {
-    private Task4() {
-    }
 
     private static final LinkedHashMap<String, Integer> ROMAN_MAP = new LinkedHashMap<>();
     private static final int ROMAN_M_TO_ARABIC = 1000;
@@ -23,6 +21,9 @@ public class Task4 {
     private static final int ROMAN_V_TO_ARABIC = 5;
     private static final int ROMAN_IV_TO_ARABIC = 4;
     private static final int ROMAN_I_TO_ARABIC = 1;
+
+    private Task4() {
+    }
 
     static {
         ROMAN_MAP.put("M", ROMAN_M_TO_ARABIC);
