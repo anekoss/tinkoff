@@ -8,17 +8,13 @@ import java.util.List;
 import java.util.stream.Stream;
 import static edu.hw4.Task1.sortAnimalsByHeight;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task1Test {
 
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(List.of(), List.of()),
-            Arguments.of(Arrays.asList(null, null), Arrays.asList(null, null)),
-            Arguments.of(
-                Arrays.asList(new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null),
-                Arrays.asList(null, new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true))
-            ),
             Arguments.of(
                 Arrays.asList(
                     new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true),
@@ -57,7 +53,26 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void sortAnimalsByHeightTest(List<Animal> animals, List<Animal> sortedAnimals) {
+    void sortAnimalsByHeightTest(List<Animal> animals, List<Animal> sortedAnimals)
+        throws NullAnimalListException, NullAnimalException {
         assertThat(sortAnimalsByHeight(animals)).isEqualTo(sortedAnimals);
     }
+
+    public static Stream<Arguments> provideDataForExceptionTest() {
+        return Stream.of(
+            Arguments.of(null, NullAnimalListException.class),
+            Arguments.of(Arrays.asList(null, null), NullAnimalException.class),
+            Arguments.of(
+                Arrays.asList(null, new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true)),
+                NullAnimalException.class
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDataForExceptionTest")
+    void sortAnimalsByHeightExceptionTest(List<Animal> animals, Class exceptedException) {
+        assertThrows(exceptedException, () -> sortAnimalsByHeight(animals));
+    }
+
 }

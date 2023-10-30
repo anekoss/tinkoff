@@ -8,6 +8,7 @@ public record Animal(
     int height,
     int weight,
     boolean bites
+
 ) {
     enum Type {
         CAT, DOG, BIRD, FISH, SPIDER
@@ -24,5 +25,30 @@ public record Animal(
             case FISH -> 0;
             case SPIDER -> 8;
         };
+    }
+
+    public String getNameText() {
+        return "name";
+    }
+    public String getTypeText() {
+        return "type";
+    }
+
+    public String getAgeText() {
+        return "age";
+    }
+    public String getWeightText() {
+        return "weight";
+    }
+
+    public String getHeightText() {
+        return "age";
+    }
+    public String getSexText() {
+        return "sex";
+    }
+
+    public String getBitesText() {
+        return "bites";
     }
 }

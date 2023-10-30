@@ -8,31 +8,17 @@ import java.util.List;
 import java.util.stream.Stream;
 import static edu.hw4.Task4.getMaxNameAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task4Test {
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
-            Arguments.of(
-                List.of(), null
-            ),
-            Arguments.of(Arrays.asList(null, null), null),
-            Arguments.of(
-                Arrays.asList(new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null),
-                new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null
-            ),
             Arguments.of(
                 Arrays.asList(
                     new Animal("aa", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("bdjfjdjfj", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true)
                 ),
                 new Animal("bdjfjdjfj", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true)
-            ),
-            Arguments.of(
-                Arrays.asList(
-                    new Animal(null, Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
-                    new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
-                ),
-                new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
             ),
             Arguments.of(
                 List.of(
@@ -54,7 +40,35 @@ public class Task4Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void maxNameAnimalTest(List<Animal> animals, Animal excepted) {
+    void maxNameAnimalTest(List<Animal> animals, Animal excepted)
+        throws NullAnimalListException, NotFoundAnimalException, NullAnimalException {
         assertThat(getMaxNameAnimal(animals)).isEqualTo(excepted);
+    }
+
+    public static Stream<Arguments> provideDataForExceptionTest() {
+        return Stream.of(
+            Arguments.of(
+                List.of(), NotFoundAnimalException.class
+            ),
+            Arguments.of(null, NullAnimalListException.class),
+            Arguments.of(Arrays.asList(null, null), NullAnimalException.class),
+            Arguments.of(
+                Arrays.asList(
+                    new Animal(null, Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
+                    new Animal(null, Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
+                ),
+                NotFoundAnimalException.class
+            ),
+            Arguments.of(
+                Arrays.asList(null, new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true)),
+                NullAnimalException.class
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDataForExceptionTest")
+    void maxNameAnimalExceptionTest(List<Animal> animals, Class excepted) {
+        assertThrows(excepted, () -> getMaxNameAnimal(animals));
     }
 }

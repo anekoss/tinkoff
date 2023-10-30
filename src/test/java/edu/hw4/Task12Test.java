@@ -5,63 +5,21 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
-import static edu.hw4.Task3.getCountAnimalsType;
+import static edu.hw4.Task12.getCntWeightMoreHeightAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class Task3Test {
-
+public class Task12Test {
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
-            Arguments.of(
-                List.of(),
-                Map.of(
-                    Animal.Type.CAT,
-                    0,
-                    Animal.Type.DOG,
-                    0,
-                    Animal.Type.BIRD,
-                    0,
-                    Animal.Type.FISH,
-                    0,
-                    Animal.Type.SPIDER, 0
-                )
-            ),
+            Arguments.of(List.of(), 0),
             Arguments.of(
                 Arrays.asList(
                     new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true)
                 ),
-                Map.of(
-                    Animal.Type.CAT,
-                    2,
-                    Animal.Type.DOG,
-                    0,
-                    Animal.Type.BIRD,
-                    0,
-                    Animal.Type.FISH,
-                    0,
-                    Animal.Type.SPIDER, 0
-                )
-            ),
-            Arguments.of(
-                Arrays.asList(
-                    new Animal("a", null, Animal.Sex.M, 12, 13, 100, true),
-                    new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
-                ),
-                Map.of(
-                    Animal.Type.CAT,
-                    0,
-                    Animal.Type.DOG,
-                    1,
-                    Animal.Type.BIRD,
-                    0,
-                    Animal.Type.FISH,
-                    0,
-                    Animal.Type.SPIDER, 0
-                )
+                2
             ),
             Arguments.of(List.of(
                 new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true),
@@ -74,26 +32,18 @@ public class Task3Test {
                 new Animal("h", Animal.Type.BIRD, Animal.Sex.M, 10, 8, 5, false),
                 new Animal("i", Animal.Type.DOG, Animal.Sex.F, 15, 54, 2344, true),
                 new Animal("j", Animal.Type.SPIDER, Animal.Sex.M, 6, 4, 234, false)
-            ), Map.of(
-                Animal.Type.CAT,
-                2,
-                Animal.Type.DOG,
-                2,
-                Animal.Type.BIRD,
-                2,
-                Animal.Type.FISH,
-                2,
-                Animal.Type.SPIDER, 2
-            ))
+            ), 4)
         );
-
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void countAnimalTypeTest(List<Animal> animals, Map<Animal.Type, Integer> countAnimalsType)
+    void getCntWeightMoreHeightTest(List<Animal> animals, Integer excepted)
         throws NullAnimalListException, NullAnimalException {
-        assertThat(getCountAnimalsType(animals)).isEqualTo(countAnimalsType);
+        int k = animals.size();
+        for (int i = 0; i <= k; i++) {
+            assertThat(getCntWeightMoreHeightAnimal(animals)).isEqualTo(excepted);
+        }
     }
 
     public static Stream<Arguments> provideDataForExceptionTest() {
@@ -109,8 +59,9 @@ public class Task3Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void countAnimalTypeExceptionTest(List<Animal> animals, Class exceptedException) {
-        assertThrows(exceptedException, () -> getCountAnimalsType(animals));
+    void getCntWeightMoreHeightExceptionTest(List<Animal> animals, Class exceptedException) {
+
+        assertThrows(exceptedException, () -> getCntWeightMoreHeightAnimal(animals));
     }
 
 }

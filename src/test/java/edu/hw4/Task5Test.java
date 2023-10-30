@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 import static edu.hw4.Task5.getMaxSexAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task5Test {
 
@@ -16,11 +17,10 @@ public class Task5Test {
             Arguments.of(
                 List.of(), "equals"
             ),
-            Arguments.of(Arrays.asList(null, null), "equals"),
-            Arguments.of(
-                Arrays.asList(new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null),
-                Animal.Sex.M.name()
-            ),
+            Arguments.of(Arrays.asList(
+                new Animal("a", Animal.Type.CAT, null, 12, 13, 100, true),
+                new Animal("b", Animal.Type.DOG, null, 12, 13, 100, true)
+            ), "equals"),
             Arguments.of(
                 Arrays.asList(
                     new Animal("aa", Animal.Type.CAT, Animal.Sex.F, 12, 13, 100, true),
@@ -28,6 +28,7 @@ public class Task5Test {
                 ),
                 Animal.Sex.F.name()
             ),
+
             Arguments.of(
                 Arrays.asList(
                     new Animal("a", Animal.Type.CAT, null, 12, 13, 100, true),
@@ -55,7 +56,26 @@ public class Task5Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void maxNameAnimalTest(List<Animal> animals, String excepted) {
+    void maxSexAnimalTest(List<Animal> animals, String excepted)
+        throws NullAnimalListException, NullAnimalException {
         assertThat(getMaxSexAnimal(animals)).isEqualTo(excepted);
     }
+
+    public static Stream<Arguments> provideDataForExceptionTest() {
+        return Stream.of(
+            Arguments.of(null, NullAnimalListException.class),
+            Arguments.of(Arrays.asList(null, null), NullAnimalException.class),
+            Arguments.of(
+                Arrays.asList(new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null),
+                NullAnimalException.class
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDataForExceptionTest")
+    void maxSexAnimalExceptionTest(List<Animal> animals, Class excepted) {
+        assertThrows(excepted, () -> getMaxSexAnimal(animals));
+    }
+
 }

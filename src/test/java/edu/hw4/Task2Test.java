@@ -8,16 +8,12 @@ import java.util.List;
 import java.util.stream.Stream;
 import static edu.hw4.Task2.sortAnimalsByWeight;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task2Test {
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(List.of(), List.of()),
-            Arguments.of(Arrays.asList(null, null), Arrays.asList(null, null)),
-            Arguments.of(
-                Arrays.asList(new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true), null),
-                Arrays.asList(null, new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true))
-            ),
             Arguments.of(
                 Arrays.asList(
                     new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
@@ -40,7 +36,6 @@ public class Task2Test {
                 new Animal("i", Animal.Type.DOG, Animal.Sex.F, 15, 54, 2344, true),
                 new Animal("j", Animal.Type.SPIDER, Animal.Sex.M, 6, 4, 234, false)
             ), List.of(
-
                 new Animal("i", Animal.Type.DOG, Animal.Sex.F, 15, 54, 2344, true),
                 new Animal("j", Animal.Type.SPIDER, Animal.Sex.M, 6, 4, 234, false),
                 new Animal("d", Animal.Type.CAT, Animal.Sex.F, 5, 25, 100, false),
@@ -57,7 +52,8 @@ public class Task2Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void sortAnimalsByWeightTest(List<Animal> animals, List<Animal> sortedAnimals) {
+    void sortAnimalsByWeightTest(List<Animal> animals, List<Animal> sortedAnimals)
+        throws NullAnimalListException, NullAnimalException {
         int k = animals.size();
         for (int i = 0; i <= k; i++) {
             assertThat(sortAnimalsByWeight(animals, i)).isEqualTo(sortedAnimals.subList(0, i));
@@ -66,10 +62,29 @@ public class Task2Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void sortAnimalsByWeightIncorrectKTest(List<Animal> animals, List<Animal> sortedAnimals) {
+    void sortAnimalsByWeightIncorrectKTest(List<Animal> animals, List<Animal> sortedAnimals)
+        throws NullAnimalListException, NullAnimalException {
         int k = animals.size();
         assertThat(sortAnimalsByWeight(animals, -1)).isEqualTo(List.of());
         assertThat(sortAnimalsByWeight(animals, k + 1)).isEqualTo(sortedAnimals);
+    }
+
+    public static Stream<Arguments> provideDataForExceptionTest() {
+        return Stream.of(
+            Arguments.of(null, NullAnimalListException.class),
+            Arguments.of(Arrays.asList(null, null), NullAnimalException.class),
+            Arguments.of(
+                Arrays.asList(null, new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 10, 1, true)),
+                NullAnimalException.class
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDataForExceptionTest")
+    void sortAnimalsByWeightExceptionTest(List<Animal> animals, Class exceptedException) {
+        int k = 5;
+        assertThrows(exceptedException, () -> sortAnimalsByWeight(animals, k));
     }
 
 }

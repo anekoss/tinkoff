@@ -1,13 +1,16 @@
 package edu.hw4;
 
 import java.util.List;
-import java.util.Objects;
+
+import static edu.hw4.AnimalListValidator.validateAnimalList;
 
 public class Task5 {
-    public static String getMaxSexAnimal(List<Animal> animals) {
-        long countM = animals.stream().filter(Objects::nonNull).filter(animal -> animal.sex() != null)
+    public static String getMaxSexAnimal(List<Animal> animals)
+        throws NullAnimalListException, NullAnimalException {
+        validateAnimalList(animals);
+        long countM = animals.stream()
             .filter(animal -> animal.sex() == Animal.Sex.M).count();
-        long countF = animals.stream().filter(Objects::nonNull).filter(animal -> animal.sex() != null)
+        long countF = animals.stream()
             .filter(animal -> animal.sex() == Animal.Sex.F).count();
         if (countM > countF) {
             return Animal.Sex.M.name();
