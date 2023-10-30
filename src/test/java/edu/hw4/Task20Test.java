@@ -1,11 +1,8 @@
 package edu.hw4;
 
-import edu.hw4.Animal.NullAnimalException;
-import edu.hw4.Animal.NullAnimalListException;
 import edu.hw4.Task19.TypeError;
 import edu.hw4.Task19.ValidationError;
 import edu.hw4.Task20.Task20;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task20Test {
 
@@ -71,6 +67,7 @@ public class Task20Test {
         ));
         exceptedMap2.put(null, "field name : NULL");
         return Stream.of(
+            Arguments.of(null, Map.of()),
             Arguments.of(Map.of(), Map.of())
             , Arguments.of(
                 errorMap1, exceptedMap1
@@ -85,19 +82,6 @@ public class Task20Test {
     @MethodSource("provideDataForTest")
     void getStringErrorTest(Map<String, Set<ValidationError>> errorMap, Map<String, String> excepted) {
         assertThat(new Task20().getStringErrorAnimals(errorMap)).isEqualTo(excepted);
-    }
-
-    public static Stream<Arguments> provideDataForExceptionTest() {
-        return Stream.of(
-            Arguments.of(null, NullAnimalListException.class),
-            Arguments.of(Arrays.asList(null, null), NullAnimalException.class)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideDataForExceptionTest")
-    void getStringErrorExceptionTest(Map<String, Set<ValidationError>> errorMap, Class<Exception> exceptedException) {
-        assertThrows(exceptedException, () -> new Task20().getStringErrorAnimals(errorMap));
     }
 
 }

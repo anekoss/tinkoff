@@ -79,7 +79,7 @@ public class Task7Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void ggetKOldestExceptionTest(List<Animal> animals, Class<Exception> excepted) {
+    void getKOldestExceptionTest(List<Animal> animals, Class<Exception> excepted) {
         int k = 5;
         assertThrows(excepted, () -> getKOldestAnimal(animals, k));
     }
