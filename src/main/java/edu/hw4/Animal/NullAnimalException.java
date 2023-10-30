@@ -1,4 +1,4 @@
-package edu.hw4;
+package edu.hw4.Animal;
 
 import lombok.extern.slf4j.Slf4j;
 

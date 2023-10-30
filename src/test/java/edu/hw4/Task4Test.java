@@ -1,12 +1,16 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NotFoundAnimalException;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import static edu.hw4.Task4.getMaxNameAnimal;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.getMaxNameAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -14,7 +18,7 @@ public class Task4Test {
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("aa", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("bdjfjdjfj", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true)
                 ),
@@ -53,7 +57,7 @@ public class Task4Test {
             Arguments.of(null, NullAnimalListException.class),
             Arguments.of(Arrays.asList(null, null), NullAnimalException.class),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal(null, Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal(null, Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
                 ),
@@ -68,7 +72,7 @@ public class Task4Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void maxNameAnimalExceptionTest(List<Animal> animals, Class excepted) {
+    void maxNameAnimalExceptionTest(List<Animal> animals, Class<Exception> excepted) {
         assertThrows(excepted, () -> getMaxNameAnimal(animals));
     }
 }

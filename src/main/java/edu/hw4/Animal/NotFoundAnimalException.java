@@ -1,4 +1,4 @@
-package edu.hw4;
+package edu.hw4.Animal;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NotFoundAnimalException extends Exception {
     @Override
     public String getMessage() {
-        log.info("This method cannot be applied to an animal with a null parameter");
+        log.info("No animal with these parameters in the sheet");
         return super.getMessage();
     }
 }

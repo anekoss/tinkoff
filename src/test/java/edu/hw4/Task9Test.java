@@ -1,12 +1,15 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import static edu.hw4.Task9.getSumPawsAnimals;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.getSumPawsAnimals;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -19,7 +22,7 @@ public class Task9Test {
                 4
             ),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 14, 13, 150, true)
                 ),
@@ -45,13 +48,13 @@ public class Task9Test {
     @ParameterizedTest
     @MethodSource("provideDataForTest")
     void getSumPawsAnimalsTest(List<Animal> animals, Integer excepted)
-        throws NotFoundAnimalException, NullAnimalListException, NullAnimalException {
+        throws NullAnimalListException, NullAnimalException {
         assertThat(getSumPawsAnimals(animals)).isEqualTo(excepted);
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getSumPawsExceptionTest(List<Animal> animals, Class excepted) {
+    void getSumPawsExceptionTest(List<Animal> animals, Class<Exception> excepted) {
         assertThrows(excepted, () -> getSumPawsAnimals(animals));
     }
 

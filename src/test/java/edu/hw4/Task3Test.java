@@ -1,13 +1,16 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import static edu.hw4.Task3.getCountAnimalsType;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.getCountAnimalsType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,7 +33,7 @@ public class Task3Test {
                 )
             ),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("a", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true)
                 ),
@@ -47,7 +50,7 @@ public class Task3Test {
                 )
             ),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("a", null, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
                 ),
@@ -109,7 +112,7 @@ public class Task3Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void countAnimalTypeExceptionTest(List<Animal> animals, Class exceptedException) {
+    void countAnimalTypeExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
         assertThrows(exceptedException, () -> getCountAnimalsType(animals));
     }
 

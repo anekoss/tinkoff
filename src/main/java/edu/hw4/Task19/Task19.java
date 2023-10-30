@@ -1,17 +1,17 @@
 package edu.hw4.Task19;
 
-import edu.hw4.Animal;
-import edu.hw4.NullAnimalException;
-import edu.hw4.NullAnimalListException;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import static edu.hw4.AnimalListValidator.validateAnimalList;
+import static edu.hw4.Animal.AnimalListValidator.validateAnimalList;
 
 public class Task19 {
-    Set<ValidationError> validationErrors;
+    private Set<ValidationError> validationErrors;
 
     public Map<String, Set<ValidationError>> getFieldErrorAnimals(List<Animal> animals)
         throws NullAnimalListException, NullAnimalException {
@@ -47,7 +47,7 @@ public class Task19 {
         if (isNegativeOrZero(animal.height())) {
             validationErrors.add(new ValidationError(animal.getHeightText(), TypeError.NEGATIVE_OR_ZERO));
         }
-        return validationErrors.size() > 0;
+        return !validationErrors.isEmpty();
     }
 
     private boolean isNegativeOrZero(int value) {

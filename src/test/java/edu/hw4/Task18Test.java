@@ -1,13 +1,16 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import java.util.ArrayList;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NotFoundAnimalException;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import static edu.hw4.Task18.getMaxWeightFish;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.getMaxWeightFish;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -91,8 +94,9 @@ public class Task18Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getMaxWeightFishTestExceptionTest(List<List<Animal>> animalLists, Class exceptedException) {
+    void getMaxWeightFishTestExceptionTest(List<List<Animal>> animalLists, Class<Exception> exceptedException) {
         assertThrows(exceptedException, () -> getMaxWeightFish(animalLists));
     }
 
 }
+

@@ -1,14 +1,12 @@
 package edu.hw4;
 
-import edu.hw4.Animal.Animal;
 import edu.hw4.Animal.NullAnimalException;
 import edu.hw4.Animal.NullAnimalListException;
-import edu.hw4.Task19.Task19;
 import edu.hw4.Task19.TypeError;
 import edu.hw4.Task19.ValidationError;
+import edu.hw4.Task20.Task20;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -18,10 +16,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class Task19Test {
+public class Task20Test {
 
     public static Stream<Arguments> provideDataForTest() {
-        HashMap<String, Set<ValidationError>> exceptedMap1 = new HashMap<>(Map.of(
+        HashMap<String, Set<ValidationError>> errorMap1 = new HashMap<>(Map.of(
             "b",
             Set.of(
                 new ValidationError("age", TypeError.NEGATIVE_OR_ZERO),
@@ -29,12 +27,12 @@ public class Task19Test {
                 new ValidationError("sex", TypeError.NULL)
             )
         ));
-        exceptedMap1.put(
+        errorMap1.put(
             null,
             Set.of(new ValidationError("name", TypeError.NULL), new ValidationError("type", TypeError.NULL))
         );
 
-        HashMap<String, Set<ValidationError>> exceptedMap2 = new HashMap<>(Map.of(
+        HashMap<String, Set<ValidationError>> errorMap2 = new HashMap<>(Map.of(
             "a a",
             Set.of(new ValidationError("name", TypeError.NO_UNIQUE)),
             "b  a  b",
@@ -50,48 +48,43 @@ public class Task19Test {
             Set.of(new ValidationError("sex", TypeError.NULL))
         )
         );
-        exceptedMap2.put(
+        errorMap2.put(
             null,
             Set.of(new ValidationError("name", TypeError.NULL))
         );
 
+        HashMap<String, String> exceptedMap1 =
+            new HashMap<>(Map.of("b", "field age : NEGATIVE_OR_ZERO,field height : NEGATIVE_OR_ZERO,field sex : NULL"));
+        exceptedMap1.put(null, "field name : NULL,field type : NULL");
+        HashMap<String, String> exceptedMap2 = new HashMap<>(Map.of(
+            "a a",
+            "field name : NO_UNIQUE",
+            "hHHH rr r",
+            "field sex : NULL",
+            "g ss ss a A",
+            "field type : NULL",
+            "d fff",
+            "field height : NEGATIVE_OR_ZERO",
+            "e dddf sss",
+            "field weight : NEGATIVE_OR_ZERO",
+            "b  a  b", "field age : NEGATIVE_OR_ZERO"
+        ));
+        exceptedMap2.put(null, "field name : NULL");
         return Stream.of(
-            Arguments.of(List.of(), Map.of()),
-            Arguments.of(
-                List.of(
-                    new Animal("aa ff ff", Animal.Type.CAT, Animal.Sex.M, 10, 130, 100, true),
-                    new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
-                ), Map.of())
+            Arguments.of(Map.of(), Map.of())
             , Arguments.of(
-                List.of(
-                    new Animal(null, null, Animal.Sex.M, 10, 130, 100, true),
-                    new Animal("b", Animal.Type.FISH, null, -12, -13, 100, true)
-                ),
-                exceptedMap1
+                errorMap1, exceptedMap1
             ),
             Arguments.of(
-                List.of(
-                    new Animal("a a", Animal.Type.DOG, Animal.Sex.M, 12, 10, 1, true),
-                    new Animal("b  a  b", Animal.Type.DOG, Animal.Sex.F, -8, 15, 1, false),
-                    new Animal("d fff", Animal.Type.CAT, Animal.Sex.F, 5, -25, 100, false),
-                    new Animal("e dddf sss", Animal.Type.SPIDER, Animal.Sex.M, 3, 2, -57, true),
-                    new Animal("f", Animal.Type.FISH, Animal.Sex.M, 1, 100, 12, false),
-                    new Animal("c s s s", Animal.Type.SPIDER, Animal.Sex.M, 2, 5, 4, true),
-                    new Animal("g ss ss a A", null, Animal.Sex.F, 4, 3, 2, true),
-                    new Animal("hHHH rr r", Animal.Type.SPIDER, null, 10, 8, 5, false),
-                    new Animal("a a", Animal.Type.SPIDER, Animal.Sex.F, 15, 54, 2344, true),
-                    new Animal(null, Animal.Type.SPIDER, Animal.Sex.M, 6, 4, 234, false)
-                ),
-                exceptedMap2
+                errorMap2, exceptedMap2
             )
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
-    void getFieldErrorTest(List<Animal> animals, Map<String, Set<ValidationError>> excepted)
-        throws NullAnimalListException, NullAnimalException {
-        assertThat(new Task19().getFieldErrorAnimals(animals)).isEqualTo(excepted);
+    void getStringErrorTest(Map<String, Set<ValidationError>> errorMap, Map<String, String> excepted) {
+        assertThat(new Task20().getStringErrorAnimals(errorMap)).isEqualTo(excepted);
     }
 
     public static Stream<Arguments> provideDataForExceptionTest() {
@@ -103,9 +96,8 @@ public class Task19Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getFieldErrorExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
-        assertThrows(exceptedException, () -> new Task19().getFieldErrorAnimals(animals));
+    void getStringErrorExceptionTest(Map<String, Set<ValidationError>> errorMap, Class<Exception> exceptedException) {
+        assertThrows(exceptedException, () -> new Task20().getStringErrorAnimals(errorMap));
     }
 
 }
-

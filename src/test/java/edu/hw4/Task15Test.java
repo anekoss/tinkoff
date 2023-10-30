@@ -1,20 +1,24 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import static edu.hw4.Task15.getSumWeightTypeAnimal;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.getSumWeightTypeAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Task15Test {
     public static Stream<Arguments> provideDataForTest() {
         return Stream.of(
-            Arguments.of(List.of(), 0, 1, Map.of(Animal.Type.CAT,
+            Arguments.of(List.of(), 0, 1, Map.of(
+                Animal.Type.CAT,
                 0,
                 Animal.Type.DOG,
                 0,
@@ -26,13 +30,14 @@ public class Task15Test {
                 0
             )),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("aa ff ff", Animal.Type.CAT, Animal.Sex.M, 10, 130, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
                 ),
                 9,
                 11,
-                Map.of(Animal.Type.CAT,
+                Map.of(
+                    Animal.Type.CAT,
                     100,
                     Animal.Type.DOG,
                     0,
@@ -45,10 +50,11 @@ public class Task15Test {
                 )
             ),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("null", Animal.Type.CAT, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
-                ), 10, 15,Map.of(Animal.Type.CAT,
+                ), 10, 15, Map.of(
+                    Animal.Type.CAT,
                     100,
                     Animal.Type.DOG,
                     100,
@@ -71,7 +77,8 @@ public class Task15Test {
                 new Animal("hHHH rr r", Animal.Type.BIRD, Animal.Sex.M, 10, 8, 5, false),
                 new Animal("i", Animal.Type.DOG, Animal.Sex.F, 15, 54, 2344, true),
                 new Animal("j", Animal.Type.SPIDER, Animal.Sex.M, 6, 4, 234, false)
-            ), 1, 10, Map.of(Animal.Type.CAT,
+            ), 1, 10, Map.of(
+                Animal.Type.CAT,
                 100,
                 Animal.Type.DOG,
                 1,
@@ -105,7 +112,7 @@ public class Task15Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getSumWeightTypeAnimalExceptionTest(List<Animal> animals, Class exceptedException) {
+    void getSumWeightTypeAnimalExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
         assertThrows(exceptedException, () -> getSumWeightTypeAnimal(animals, 0, 100));
     }
 

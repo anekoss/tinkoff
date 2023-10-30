@@ -1,12 +1,15 @@
 package edu.hw4;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import static edu.hw4.Task17.hasSpidersBitesMoreDogs;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import static edu.hw4.Task1_18.Task1To18.hasSpidersBitesMoreDogs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,18 +18,18 @@ public class Task17Test {
         return Stream.of(
             Arguments.of(List.of(), false),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("aa ff ff", Animal.Type.CAT, Animal.Sex.M, 10, 130, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, true)
                 ), false)
             , Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal("aa ff ff", Animal.Type.SPIDER, Animal.Sex.M, 10, 130, 100, true),
                     new Animal("b", Animal.Type.FISH, Animal.Sex.M, 12, 13, 100, true)
                 ), false
             ),
             Arguments.of(
-                Arrays.asList(
+                List.of(
                     new Animal(null, Animal.Type.SPIDER, Animal.Sex.M, 12, 13, 100, true),
                     new Animal("b", Animal.Type.DOG, Animal.Sex.M, 12, 13, 100, false)
                 ), false
@@ -68,7 +71,7 @@ public class Task17Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void hasSpidersBitesMoreDogsExceptionTest(List<Animal> animals, Class exceptedException) {
+    void hasSpidersBitesMoreDogsExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
         assertThrows(exceptedException, () -> hasSpidersBitesMoreDogs(animals));
     }
 

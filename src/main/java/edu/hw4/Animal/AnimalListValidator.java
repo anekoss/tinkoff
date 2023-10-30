@@ -1,9 +1,12 @@
-package edu.hw4;
+package edu.hw4.Animal;
 
 import java.util.List;
 import java.util.Objects;
 
 public class AnimalListValidator {
+    private AnimalListValidator() {
+    }
+
     public static void validateAnimalList(List<Animal> animals)
         throws NullAnimalListException, NullAnimalException {
         if (animals == null) {

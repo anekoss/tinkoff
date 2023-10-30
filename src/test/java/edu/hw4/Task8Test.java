@@ -1,15 +1,15 @@
 package edu.hw4;
 
+import edu.hw4.Animal.Animal;
+import edu.hw4.Animal.NullAnimalException;
+import edu.hw4.Animal.NullAnimalListException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-import static edu.hw4.Task2.sortAnimalsByWeight;
-import static edu.hw4.Task5.getMaxSexAnimal;
-import static edu.hw4.Task8.getMaxWeightHeightKAnimal;
+import static edu.hw4.Task1_18.Task1To18.getMaxWeightHeightKAnimal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -64,7 +64,7 @@ public class Task8Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getMaxWeightHeightKExceptionTest(List<Animal> animals, Class exceptedException) {
+    void getMaxWeightHeightKExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
         int k = 5;
         assertThrows(exceptedException, () -> getMaxWeightHeightKAnimal(animals, k));
     }

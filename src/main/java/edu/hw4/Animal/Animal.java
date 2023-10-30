@@ -1,4 +1,4 @@
-package edu.hw4;
+package edu.hw4.Animal;
 
 public record Animal(
     String name,
@@ -10,26 +10,32 @@ public record Animal(
     boolean bites
 
 ) {
-    enum Type {
+    private static final int COUNT_CAT_DOG_PAWS = 4;
+    private static final int COUNT_BIRD_PAWS = 2;
+    private static final int COUNT_FISH_PAWS = 0;
+    private static final int COUNT_SPIDER_PAWS = 8;
+
+    public enum Type {
         CAT, DOG, BIRD, FISH, SPIDER
     }
 
-    enum Sex {
+    public enum Sex {
         M, F
     }
 
     public int paws() {
         return switch (type) {
-            case CAT, DOG -> 4;
-            case BIRD -> 2;
-            case FISH -> 0;
-            case SPIDER -> 8;
+            case CAT, DOG -> COUNT_CAT_DOG_PAWS;
+            case BIRD -> COUNT_BIRD_PAWS;
+            case FISH -> COUNT_FISH_PAWS;
+            case SPIDER -> COUNT_SPIDER_PAWS;
         };
     }
 
     public String getNameText() {
         return "name";
     }
+
     public String getTypeText() {
         return "type";
     }
@@ -37,18 +43,16 @@ public record Animal(
     public String getAgeText() {
         return "age";
     }
+
     public String getWeightText() {
         return "weight";
     }
 
     public String getHeightText() {
-        return "age";
-    }
-    public String getSexText() {
-        return "sex";
+        return "height";
     }
 
-    public String getBitesText() {
-        return "bites";
+    public String getSexText() {
+        return "sex";
     }
 }
