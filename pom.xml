@@ -24,8 +24,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <maven.version>3.8.8</maven.version>
-        <jdk.version>21</jdk.version>
-        <java.release>21</java.release>
+        <jdk.version>18</jdk.version>
+        <java.release>18</java.release>
 
         <revision>1.0.0</revision>
 
@@ -96,10 +96,17 @@
             <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
-            <groupId>io.github.artsok</groupId>
-            <artifactId>rerunner-jupiter</artifactId>
-            <version>LATEST</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.7</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
