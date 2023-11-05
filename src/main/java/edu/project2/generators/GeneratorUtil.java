@@ -10,7 +10,6 @@ public class GeneratorUtil {
         this.mazeManager = mazeManager;
     }
 
-
     public Cell visitRandomCell() {
         Cell cell = mazeManager.getRandomNoVisitedCell();
         mazeManager.removeVisited(cell);
@@ -28,5 +27,4 @@ public class GeneratorUtil {
         mazeManager.removeVisited(neighbour);
         mazeManager.removeWall(cell, neighbour);
     }
-
 }

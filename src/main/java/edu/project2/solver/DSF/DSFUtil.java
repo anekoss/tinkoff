@@ -1,9 +1,11 @@
-package edu.project2.solver;
+package edu.project2.solver.DSF;
 
+import edu.project2.BadCoordinateException;
 import edu.project2.game.Cell;
 import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
 import edu.project2.game.MazeManager;
+import edu.project2.solver.SolverManager;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class DSFUtil {
         this.path = new LinkedList<>();
     }
 
-    public List<Cell> solve(Coordinate in, Coordinate out) {
+    public List<Cell> solve(Coordinate in, Coordinate out) throws BadCoordinateException {
         path = new LinkedList<>();
         Cell currentCell = solverManager.getCellForCoordinate(in);
         path.push(currentCell);
@@ -27,16 +29,17 @@ public class DSFUtil {
         return path;
     }
 
-    private void searchOutPoint(Cell cell, Cell out) {
-        mazeManager.removeVisited(cell);
-        while (!cell.equals(out)) {
-            if (mazeManager.isNoVisitedNeighboursIsEmpty(cell)) {
-                cell = visitRandomNeighbour(cell);
-                path.push(cell);
+    private void searchOutPoint(Cell inCell, Cell out) {
+        Cell currentCell = inCell;
+        mazeManager.removeVisited(currentCell);
+        while (!currentCell.equals(out)) {
+            if (mazeManager.isNoVisitedNeighboursIsEmpty(currentCell)) {
+                currentCell = visitRandomNeighbour(currentCell);
+                path.push(currentCell);
             } else if (!path.isEmpty()) {
                 path.pop();
                 if (!path.isEmpty()) {
-                    cell = path.peek();
+                    currentCell = path.peek();
                 }
             }
         }

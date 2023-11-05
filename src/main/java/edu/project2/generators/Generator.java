@@ -7,23 +7,13 @@ public interface Generator {
 
     Maze generateMaze(int height, int width) throws BadFieldMazeException;
 
-    default int validateHeightMaze(int height) throws BadFieldMazeException {
-        if (height <= 0) {
+    default int validateSizeMaze(int side) throws BadFieldMazeException {
+        if (side <= 0) {
             throw new BadFieldMazeException();
         }
-        if (height % 2 == 0) {
-            height++;
+        if (side % 2 == 0) {
+            return side + 1;
         }
-        return height;
-    }
-
-    default int validateWidthMaze(int width) throws BadFieldMazeException {
-        if (width <= 0) {
-            throw new BadFieldMazeException();
-        }
-        if (width % 2 == 0) {
-            width++;
-        }
-        return width;
+        return side + 2;
     }
 }

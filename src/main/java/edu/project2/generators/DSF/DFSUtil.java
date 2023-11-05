@@ -1,8 +1,8 @@
-package edu.project2.generators;
+package edu.project2.generators.DSF;
 
-import edu.project2.BadFieldMazeException;
 import edu.project2.game.Cell;
 import edu.project2.game.MazeManager;
+import edu.project2.generators.GeneratorUtil;
 import java.util.LinkedList;
 
 public class DFSUtil {
@@ -10,7 +10,7 @@ public class DFSUtil {
     private final LinkedList<Cell> visitedCell;
     private final GeneratorUtil generatorUtil;
 
-    public DFSUtil(int height, int width) throws BadFieldMazeException {
+    public DFSUtil(int height, int width) {
         this.mazeManager = new MazeManager(height, width);
         this.visitedCell = new LinkedList<>();
         this.generatorUtil = new GeneratorUtil(mazeManager);
@@ -31,19 +31,5 @@ public class DFSUtil {
         }
         return mazeManager.getGrid();
     }
-
-//    private Cell visitRandomCell() {
-//        Cell currentCell = mazeManager.getRandomNoVisitedCell();
-//        mazeManager.removeVisited(currentCell);
-//        return currentCell;
-//    }
-//
-//    private Cell removeNeighbourWall(Cell currentCell) {
-//        Cell randomNeighbour = mazeManager.getRandomNeighbour(currentCell);
-//        mazeManager.removeVisited(randomNeighbour);
-//        mazeManager.removeNeighbour(currentCell, randomNeighbour);
-//        mazeManager.removeWall(currentCell, randomNeighbour);
-//        return randomNeighbour;
-//    }
 
 }
