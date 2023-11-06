@@ -118,13 +118,15 @@ public class Task1To18 {
     public static Integer getSumPawsAnimals(List<Animal> animals)
         throws NullAnimalListException, NullAnimalException {
         validateAnimalList(animals);
-        return animals.stream().filter(animal -> animal.type() != null).mapToInt(Animal::paws).sum();
+        return animals.stream().filter(animal -> animal.type() != null).mapToInt(animal -> animal.type().getPaws())
+            .sum();
     }
 
     public static List<Animal> getAgeNoEqualsCntPawsAnimals(List<Animal> animals)
         throws NullAnimalListException, NullAnimalException {
         validateAnimalList(animals);
-        return animals.stream().filter(animal -> animal.type() != null && animal.age() != animal.paws()).toList();
+        return animals.stream().filter(animal -> animal.type() != null && animal.age() != animal.type().getPaws())
+            .toList();
     }
 
     public static List<Animal> getBiteAnimals(List<Animal> animals)

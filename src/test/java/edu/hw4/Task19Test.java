@@ -91,7 +91,7 @@ public class Task19Test {
     @MethodSource("provideDataForTest")
     void getFieldErrorTest(List<Animal> animals, Map<String, Set<ValidationError>> excepted)
         throws NullAnimalListException, NullAnimalException {
-        assertThat(new Task19().getFieldErrorAnimals(animals)).isEqualTo(excepted);
+        assertThat(new Task19().getFieldErrorsInAllAnimals(animals)).isEqualTo(excepted);
     }
 
     public static Stream<Arguments> provideDataForExceptionTest() {
@@ -104,7 +104,7 @@ public class Task19Test {
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
     void getFieldErrorExceptionTest(List<Animal> animals, Class<Exception> exceptedException) {
-        assertThrows(exceptedException, () -> new Task19().getFieldErrorAnimals(animals));
+        assertThrows(exceptedException, () -> new Task19().getFieldErrorsInAllAnimals(animals));
     }
 
 }
