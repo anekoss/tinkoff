@@ -5,11 +5,12 @@ import edu.project2.BadFieldMazeException;
 import edu.project2.game.Cell;
 import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
+import java.util.Deque;
 import java.util.List;
 
 public interface Solver {
 
-    List<Cell> solve(Maze maze, Coordinate in, Coordinate out) throws BadFieldMazeException, BadCoordinateException;
+    Deque<Cell> solve(Maze maze, Coordinate in, Coordinate out) throws BadFieldMazeException, BadCoordinateException;
 
     default Coordinate validateCoordinateMaze(Maze maze, Coordinate coordinate) throws BadCoordinateException {
         if (coordinate.col() < 0 || coordinate.col() > maze.height() || coordinate.row() < 0

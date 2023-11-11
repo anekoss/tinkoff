@@ -6,6 +6,7 @@ import edu.project2.game.Maze;
 import edu.project2.generators.DSF.DSFMazeGenerator;
 import edu.project2.solver.BSF.BSFSolver;
 import edu.project2.solver.DSF.DSFSolver;
+import java.util.Deque;
 import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,7 +23,7 @@ class GenerateAndSolverTest {
     void generateAndSolveMazeTest(int height, int width, int inX, int inY, int outX, int outY)
         throws BadFieldMazeException, BadCoordinateException {
         Maze maze = dfsGenerator.generateMaze(height, width);
-        List<Cell> path = dsfSolver.solve(maze, new Coordinate(inX, inY), new Coordinate(outX, outY));
+        Deque<Cell> path = dsfSolver.solve(maze, new Coordinate(inX, inY), new Coordinate(outX, outY));
         assertThat(path).isNotNull().contains(new Cell(inX, inY, Cell.Dictionary.CELL))
             .contains(new Cell(outX, outY, Cell.Dictionary.CELL));
         path = bsfSolver.solve(maze, new Coordinate(inX, inY), new Coordinate(outX, outY));

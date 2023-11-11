@@ -6,7 +6,9 @@ import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
 import edu.project2.game.MazeManager;
 import edu.project2.solver.SolverManager;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,17 +19,16 @@ public class BSFUtil {
     private final MazeManager grid;
 
     private final SolverManager solverManager;
+    private final Map<Cell, Cell> parent = new HashMap<>();
+    List<Cell> visited = new ArrayList<>();
+    Deque<Cell> path = new ArrayDeque<>();
 
     public BSFUtil(Maze maze) {
         this.grid = new MazeManager(maze);
         this.solverManager = new SolverManager(maze);
     }
 
-    private final Map<Cell, Cell> parent = new HashMap<>();
-    List<Cell> visited = new ArrayList<>();
-    LinkedList<Cell> path = new LinkedList<>();
-
-    public List<Cell> solve(Coordinate in, Coordinate out) throws BadCoordinateException {
+    public Deque<Cell> solve(Coordinate in, Coordinate out) throws BadCoordinateException {
         path = new LinkedList<>();
         Cell cell = solverManager.getCellForCoordinate(in);
         Cell outCell = solverManager.getCellForCoordinate(out);
@@ -38,26 +39,23 @@ public class BSFUtil {
     private void bfs(Cell inCell, Cell outCell) {
         Cell currentCell = inCell;
         path.push(currentCell);
-        while (!path.isEmpty()) {
+        while (!currentCell.equals(outCell)) {
             currentCell = path.remove();
-            if (visited.contains(currentCell)) {
-                continue;
-            }
-            if (currentCell.equals(outCell)) {
-                return;
-            }
-            if (grid.getNeighbours(currentCell) != null) {
-                for (Cell cell1 : grid.getNeighbours(currentCell)) {
-                    path.add(cell1);
-                    parent.put(cell1, currentCell);
+            if (!visited.contains(currentCell)) {
+                if (grid.getNeighbours(currentCell) != null) {
+                    Cell finalCurrentCell = currentCell;
+                    grid.getNeighbours(currentCell).stream().forEach(cell -> {
+                        path.add(cell);
+                        parent.put(cell, finalCurrentCell);
+                    });
                 }
+                grid.removeVisited(currentCell);
+                visited.add(currentCell);
             }
-            grid.removeVisited(currentCell);
-            visited.add(currentCell);
         }
     }
 
-    public List<Cell> getPath(Cell inCell, Cell outCell) {
+    private Deque<Cell> getPath(Cell inCell, Cell outCell) {
         Cell currentCell = outCell;
         path = new LinkedList<>();
         path.add(currentCell);

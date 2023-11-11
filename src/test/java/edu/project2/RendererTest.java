@@ -5,8 +5,10 @@ import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
 import edu.project2.game.MazeRenderer;
 import edu.project2.game.Output;
+import edu.project2.generators.KruskalMazeGenerator;
 import edu.project2.solver.DSF.DSFSolver;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,8 +20,12 @@ import static edu.project2.game.Cell.Dictionary.WALL;
 import static edu.project2.game.MazeRenderer.ANSI_GREEN_BACKGROUND;
 import static edu.project2.game.MazeRenderer.ANSI_RED_BACKGROUND;
 import static edu.project2.game.MazeRenderer.ANSI_RESET;
+import static edu.project2.game.MazeRenderer.NEXT_LINE;
+import static edu.project2.game.MazeRenderer.WHITESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 class RendererTest {
     @Captor
@@ -67,22 +73,24 @@ class RendererTest {
         return Stream.of(
             Arguments.of(
                 new Maze(5, 5, cellGrid), 30,
-                ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "  " + "  " + "  " + ANSI_GREEN_BACKGROUND + "  " +
+                ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + WHITESPACE + WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "  " + ANSI_GREEN_BACKGROUND + "  " +
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "  " + "  " + "  " + ANSI_GREEN_BACKGROUND + "  " +
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + WHITESPACE + WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "\n"
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE
             ));
     }
 
@@ -126,27 +134,27 @@ class RendererTest {
         return Stream.of(
             Arguments.of(
                 new Maze(5, 5, cellGrid), 30, new Coordinate(1, 1), new Coordinate(3, 1),
-                ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_RED_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_RED_BACKGROUND + "  " + ANSI_RESET + ANSI_RED_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " +
+                ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_RED_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " +
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_RED_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_RED_BACKGROUND + "  " + ANSI_RESET + ANSI_RED_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " +
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE +
                     ANSI_RESET +
-                    "\n" +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + "  " + ANSI_RESET + "\n"
+                    NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE
             ));
     }
 
@@ -162,4 +170,6 @@ class RendererTest {
         String actual = String.join("", captor.getAllValues());
         assertThat(actual).isEqualTo(excepted);
     }
+
 }
+

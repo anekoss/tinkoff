@@ -61,7 +61,7 @@ public class MazeManager {
     }
 
     public List<Cell> getNeighboursCell(Cell cell, int height, int width, int diff) {
-        ArrayList<Cell> neighbours = new ArrayList<>();
+        List<Cell> neighbours = new ArrayList<>();
         if (cell.x() - diff > 0) {
             neighbours.add(grid[cell.x() - diff][cell.y()]);
         }
@@ -125,6 +125,10 @@ public class MazeManager {
             neighbours.remove(neighbour);
         }
         this.noVisitedNeighbours.put(cell, neighbours);
+    }
+
+    public Set<Cell> getNoVisitedCell() {
+        return noVisitedCell;
     }
 
     public Cell getRandomNeighbour(Cell cell) {

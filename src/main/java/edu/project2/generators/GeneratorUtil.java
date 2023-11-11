@@ -25,6 +25,7 @@ public class GeneratorUtil {
 
     public void removeVisitedWall(Cell cell, Cell neighbour) {
         mazeManager.removeVisited(neighbour);
+        mazeManager.removeVisited(cell);
         mazeManager.removeWall(cell, neighbour);
     }
 }
