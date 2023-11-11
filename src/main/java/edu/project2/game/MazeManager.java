@@ -127,10 +127,6 @@ public class MazeManager {
         this.noVisitedNeighbours.put(cell, neighbours);
     }
 
-    public Set<Cell> getNoVisitedCell() {
-        return noVisitedCell;
-    }
-
     public Cell getRandomNeighbour(Cell cell) {
         List<Cell> neighbour = noVisitedNeighbours.get(cell);
         return neighbour.get(RANDOM.nextInt(neighbour.size()));

@@ -4,18 +4,17 @@ import edu.project2.game.Cell;
 import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
 import edu.project2.generators.DSF.DSFMazeGenerator;
-import edu.project2.solver.BSF.BSFSolver;
-import edu.project2.solver.DSF.DSFSolver;
+import edu.project2.solver.BSF.BSFMazeSolver;
+import edu.project2.solver.DSF.DSFMazeSolver;
 import java.util.Deque;
-import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GenerateAndSolverTest {
     DSFMazeGenerator dfsGenerator = new DSFMazeGenerator();
-    DSFSolver dsfSolver = new DSFSolver();
-    BSFSolver bsfSolver = new BSFSolver();
+    DSFMazeSolver dsfSolver = new DSFMazeSolver();
+    BSFMazeSolver bsfSolver = new BSFMazeSolver();
 
     @ParameterizedTest
     @CsvSource({"10, 10, 1, 1, 9,9",

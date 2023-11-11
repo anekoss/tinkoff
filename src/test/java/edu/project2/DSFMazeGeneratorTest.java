@@ -31,8 +31,4 @@ class DSFMazeGeneratorTest {
         assertThat(dfsGenerator.generateMaze(height, width).width()).isEqualTo(exceptedWidth);
     }
 
-
-
-
-
 }

@@ -3,8 +3,8 @@ package edu.project2;
 import edu.project2.game.Cell;
 import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
-import edu.project2.solver.BSF.BSFSolver;
-import edu.project2.solver.DSF.DSFSolver;
+import edu.project2.solver.BSF.BSFMazeSolver;
+import edu.project2.solver.DSF.DSFMazeSolver;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 class SolverTest {
-    DSFSolver dsfSolver = new DSFSolver();
-    BSFSolver bsfSolver = new BSFSolver();
+    DSFMazeSolver dsfSolver = new DSFMazeSolver();
+    BSFMazeSolver bsfSolver = new BSFMazeSolver();
 
     static Stream<Arguments> provideDataForTest() {
         Cell.Dictionary[][] grid = new Cell.Dictionary[11][11];
@@ -67,7 +67,8 @@ class SolverTest {
                     new Cell(1, 2, CELL),
                     new Cell(1, 1, CELL)
                 )
-            ),
+            )
+            ,
             Arguments.of(
                 new Maze(11, 11, cellGrid), new Coordinate(6, 1), new Coordinate(5, 3), List.of(
                     new Cell(5, 3, CELL),
@@ -82,8 +83,8 @@ class SolverTest {
     @MethodSource("provideDataForTest")
     void checkSolverTest(Maze maze, Coordinate in, Coordinate out, List<Cell> excepted)
         throws BadCoordinateException {
-        assertThat(dsfSolver.solve(maze, in, out)).isEqualTo(excepted);
-        assertThat(bsfSolver.solve(maze, in, out)).isEqualTo(excepted);
+        assertThat(dsfSolver.solve(maze, in, out).stream().toList()).isEqualTo(excepted);
+        assertThat(bsfSolver.solve(maze, in, out).stream().toList()).isEqualTo(excepted);
     }
 
     @Test

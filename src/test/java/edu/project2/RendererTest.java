@@ -5,10 +5,8 @@ import edu.project2.game.Coordinate;
 import edu.project2.game.Maze;
 import edu.project2.game.MazeRenderer;
 import edu.project2.game.Output;
-import edu.project2.generators.KruskalMazeGenerator;
-import edu.project2.solver.DSF.DSFSolver;
+import edu.project2.solver.DSF.DSFMazeSolver;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,14 +16,12 @@ import org.mockito.Mockito;
 import static edu.project2.game.Cell.Dictionary.CELL;
 import static edu.project2.game.Cell.Dictionary.WALL;
 import static edu.project2.game.MazeRenderer.ANSI_GREEN_BACKGROUND;
+import static edu.project2.game.MazeRenderer.ANSI_NEXT_LINE;
 import static edu.project2.game.MazeRenderer.ANSI_RED_BACKGROUND;
 import static edu.project2.game.MazeRenderer.ANSI_RESET;
-import static edu.project2.game.MazeRenderer.NEXT_LINE;
-import static edu.project2.game.MazeRenderer.WHITESPACE;
+import static edu.project2.game.MazeRenderer.ANSI_TWO_WHITESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 class RendererTest {
     @Captor
@@ -73,24 +69,35 @@ class RendererTest {
         return Stream.of(
             Arguments.of(
                 new Maze(5, 5, cellGrid), 30,
-                ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + WHITESPACE + WHITESPACE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE +
+                ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + ANSI_GREEN_BACKGROUND + WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_TWO_WHITESPACE +
+                    ANSI_TWO_WHITESPACE +
+                    ANSI_TWO_WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + WHITESPACE + WHITESPACE + WHITESPACE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE +
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_TWO_WHITESPACE +
+                    ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_TWO_WHITESPACE +
+                    ANSI_TWO_WHITESPACE +
+                    ANSI_TWO_WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
+                    ANSI_RESET +
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_NEXT_LINE
             ));
     }
 
@@ -134,27 +141,37 @@ class RendererTest {
         return Stream.of(
             Arguments.of(
                 new Maze(5, 5, cellGrid), 30, new Coordinate(1, 1), new Coordinate(3, 1),
-                ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE +
+                ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_RED_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
                     ANSI_RESET +
-                    NEXT_LINE +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET +
-                    ANSI_GREEN_BACKGROUND + WHITESPACE + ANSI_RESET + NEXT_LINE
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
+                    ANSI_RESET +
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_RED_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_RED_BACKGROUND + ANSI_TWO_WHITESPACE +
+                    ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE +
+                    ANSI_RESET +
+                    ANSI_NEXT_LINE +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_GREEN_BACKGROUND +
+                    ANSI_TWO_WHITESPACE + ANSI_RESET +
+                    ANSI_GREEN_BACKGROUND + ANSI_TWO_WHITESPACE + ANSI_RESET + ANSI_NEXT_LINE
             ));
     }
 
@@ -164,7 +181,7 @@ class RendererTest {
         throws BadCoordinateException {
         Output output = Mockito.mock(Output.class);
         MazeRenderer mazeRenderer = new MazeRenderer(output);
-        mazeRenderer.printSolve(maze, new DSFSolver().solve(maze, in, out));
+        mazeRenderer.printSolve(maze, new DSFMazeSolver().solve(maze, in, out));
         Mockito.verify(output, times((exceptedTimes))).print(captor.capture());
         assertThat(captor.getAllValues()).isNotNull();
         String actual = String.join("", captor.getAllValues());
