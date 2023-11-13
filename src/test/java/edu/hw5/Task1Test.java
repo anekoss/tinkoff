@@ -1,7 +1,6 @@
 package edu.hw5;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,7 +17,7 @@ public class Task1Test {
             Arguments.of(
                 List.of(
                     "2022-03-12, 20:20 - 2022-03-12, 23:50"
-                ), Duration.ofMinutes(230)),
+                ), Duration.ofMinutes(210)),
             Arguments.of(
                 List.of(
                     "2022-03-12, 20:20 - 2022-03-12, 23:50",
@@ -76,7 +75,7 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getSessionTimeExceptionTest(List<String> sessions) throws InputErrorException {
+    void getSessionTimeExceptionTest(List<String> sessions) {
         assertThrows(InputErrorException.class, () -> new Task1().getSessionTime(sessions));
     }
 }

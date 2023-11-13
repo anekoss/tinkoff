@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task2 {
+    private final int countMonthInYear = 12;
+    private final int dayOfAwfulFriday = 13;
 
     public List<LocalDate> getAllFridayForYear(int year) {
         List<LocalDate> dates = new ArrayList<>();
         LocalDate currentDate;
-        for (int i = 1; i <= 12; i++) {
-            currentDate = LocalDate.of(year, i, 13);
+        for (int i = 1; i <= countMonthInYear; i++) {
+            currentDate = LocalDate.of(year, i, dayOfAwfulFriday);
             if (currentDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
                 dates.add(currentDate);
             }
@@ -28,7 +30,7 @@ public class Task2 {
         do {
             nextFriday = nextFriday.with(TemporalAdjusters.firstDayOfNextMonth())
                 .with(TemporalAdjusters.dayOfWeekInMonth(2, DayOfWeek.FRIDAY));
-        } while (nextFriday.getDayOfMonth() != 13);
+        } while (nextFriday.getDayOfMonth() != dayOfAwfulFriday);
         return nextFriday;
 
     }
