@@ -12,6 +12,10 @@ public class WordDateFormatter extends Formatter {
         super(next);
     }
 
+    public WordDateFormatter() {
+        super();
+    }
+
     @Override
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {
         isDateNull(date);

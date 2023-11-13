@@ -12,6 +12,9 @@ public class EuropeanDateFormatter extends Formatter {
     public EuropeanDateFormatter(Formatter next) {
         super(next);
     }
+    public EuropeanDateFormatter(){
+        super();
+    }
 
     @Override
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {

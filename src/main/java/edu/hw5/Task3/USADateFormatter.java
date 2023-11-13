@@ -14,6 +14,9 @@ public class USADateFormatter extends Formatter {
         super(next);
     }
 
+    public USADateFormatter(){
+        super();
+    }
     @Override
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {
         isDateNull(date);

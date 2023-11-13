@@ -12,7 +12,9 @@ public class EuropeanShortDateFormatter extends Formatter {
     public EuropeanShortDateFormatter(Formatter next) {
         super(next);
     }
-
+    public EuropeanShortDateFormatter(){
+        super();
+    }
     @Override
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {
         isDateNull(date);

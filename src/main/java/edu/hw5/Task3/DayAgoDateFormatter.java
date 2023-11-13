@@ -12,6 +12,9 @@ public class DayAgoDateFormatter extends Formatter {
     public DayAgoDateFormatter(Formatter next) {
         super(next);
     }
+    public DayAgoDateFormatter(){
+        super();
+    }
 
     @Override
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {

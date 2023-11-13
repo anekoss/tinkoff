@@ -13,6 +13,10 @@ public class Formatter {
         this.next = next;
     }
 
+    public Formatter() {
+        this.next = null;
+    }
+
     public Optional<LocalDate> parseDate(String date) throws InputErrorException {
         isDateNull(date);
         Optional<LocalDate> localDate = Optional.empty();
