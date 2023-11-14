@@ -1,6 +1,7 @@
 package edu.hw5;
 
 import java.time.Duration;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -48,34 +49,34 @@ public class Task1Test {
         return Stream.of(
             Arguments.of(
                 List.of()
-            ),
+                , InputErrorException.class),
             Arguments.of(
                 List.of(
                     ""
-                )
+                ), DateTimeParseException.class
             ),
             Arguments.of(
                 Arrays.asList(
                     null, null
-                )
+                ), InputErrorException.class
             ),
             Arguments.of(Arrays.asList(
                 "2022-11-25, 19:30 - 2022-11-25, 23:00",
                 null,
                 "2022-03-12, 20:20 - 2022-03-12, 23:50",
                 "2022-04-01, 21:30 - 2022-04-02, 01:20"
-            )),
+            ), InputErrorException.class),
             Arguments.of(
                 List.of(
                     "2022-03-12, 23:59 hiii 2022-03-13, 00:01",
                     "2022-03-12, 23:59 - 2022-03-13, 00:01"
-                ))
+                ), DateTimeParseException.class)
         );
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForExceptionTest")
-    void getSessionTimeExceptionTest(List<String> sessions) {
-        assertThrows(InputErrorException.class, () -> new Task1().getSessionTime(sessions));
+    void getSessionTimeExceptionTest(List<String> sessions, Class<Exception> excepted) {
+        assertThrows(excepted, () -> new Task1().getSessionTime(sessions));
     }
 }

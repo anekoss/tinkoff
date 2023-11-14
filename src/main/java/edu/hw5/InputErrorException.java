@@ -1,4 +1,4 @@
 package edu.hw5;
 
-public class InputErrorException extends Throwable {
+public class InputErrorException extends Exception {
 }
