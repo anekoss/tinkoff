@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -140,7 +139,7 @@ public class Task3Test {
     void globTest(String glob, List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""), glob)) {
             List<Path> pathList = getStreamAsList(directoryStream);
-            assertThat(pathList).isEqualTo(excepted);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
     }
 
@@ -170,7 +169,7 @@ public class Task3Test {
     void newDirectoryStreamTest(List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""))) {
             List<Path> pathList = getStreamAsList(directoryStream);
-            assertThat(pathList).isEqualTo(excepted);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
             try (Stream<Path> exceptedPathStream = Files.list(Path.of(""))) {
 
                 assertThat(pathList).isEqualTo(exceptedPathStream.toList());
@@ -233,7 +232,7 @@ public class Task3Test {
     void andTest(AbstractFilter filter, List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
-            assertThat(pathList).isEqualTo(excepted);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
     }
 
@@ -242,7 +241,7 @@ public class Task3Test {
     void orTest(AbstractFilter filter, List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
-            assertThat(pathList).isEqualTo(excepted);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
     }
 }
