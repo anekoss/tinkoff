@@ -174,10 +174,9 @@ public class Task3Test {
     }
 
     static List<Path> getStreamAsList(DirectoryStream<Path> stream) {
-        Iterator<Path> iterator = stream.iterator();
         List<Path> pathList = new ArrayList<>();
-        while (iterator.hasNext()) {
-            pathList.add(iterator.next());
+        for (Path path : stream) {
+            pathList.add(path);
         }
         return pathList;
     }
