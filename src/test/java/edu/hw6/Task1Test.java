@@ -6,16 +6,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task1Test {
+
+    @AfterAll
+    static void deleteTestFile() throws IOException {
+        Files.deleteIfExists(Path.of("Task1Test"));
+    }
+
     static Stream<Arguments> provideDataForTest() {
         DiskMap diskMap = new DiskMap();
         DiskMap diskMap1 = new DiskMap();

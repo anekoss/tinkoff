@@ -44,8 +44,8 @@ public class DirectoryFilter {
 
     public static AbstractFilter globMatches(String glob) {
         return (entry -> {
-            if (glob != null && glob.matches("^[.][^.]+$")) {
-                int index = entry.toString().lastIndexOf(".");
+            int index = entry.toString().lastIndexOf(".");
+            if (glob != null && glob.matches("^[.][^.]+$") && index != -1) {
                 return entry.toString().substring(index).equals(glob);
             }
             return false;

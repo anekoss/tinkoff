@@ -30,78 +30,78 @@ public class Task3Test {
     static Stream<Arguments> provideDataForFilterTest() {
         return Stream.of(
             Arguments.of(regularFile, List.of(
-                Path.of("..\\tinkoff\\.editorconfig"),
-                Path.of("..\\tinkoff\\.gitattributes"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\mvnw.cmd"),
-                Path.of("..\\tinkoff\\pom.xml"),
-                Path.of("..\\tinkoff\\README.md")
+                Path.of(".editorconfig"),
+                Path.of(".gitattributes"),
+                Path.of(".gitignore"),
+                Path.of("checkstyle.xml"),
+                Path.of("mvnw"),
+                Path.of("mvnw.cmd"),
+                Path.of("pom.xml"),
+                Path.of("README.md")
             )),
             Arguments.of(writeable, List.of(
-                Path.of("..\\tinkoff\\.editorconfig"),
-                Path.of("..\\tinkoff\\.git"),
-                Path.of("..\\tinkoff\\.gitattributes"),
-                Path.of("..\\tinkoff\\.github"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\.idea"),
-                Path.of("..\\tinkoff\\.mvn"),
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\mvnw.cmd"),
-                Path.of("..\\tinkoff\\pom.xml"),
-                Path.of("..\\tinkoff\\README.md"),
-                Path.of("..\\tinkoff\\src")
+                Path.of(".editorconfig"),
+                Path.of(".git"),
+                Path.of(".gitattributes"),
+                Path.of(".github"),
+                Path.of(".gitignore"),
+                Path.of(".idea"),
+                Path.of(".mvn"),
+                Path.of("checkstyle.xml"),
+                Path.of("mvnw"),
+                Path.of("mvnw.cmd"),
+                Path.of("pom.xml"),
+                Path.of("README.md"),
+                Path.of("src")
             )),
             Arguments.of(readable, List.of(
-                Path.of("..\\tinkoff\\.editorconfig"),
-                Path.of("..\\tinkoff\\.git"),
-                Path.of("..\\tinkoff\\.gitattributes"),
-                Path.of("..\\tinkoff\\.github"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\.idea"),
-                Path.of("..\\tinkoff\\.mvn"),
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\mvnw.cmd"),
-                Path.of("..\\tinkoff\\pom.xml"),
-                Path.of("..\\tinkoff\\README.md"),
-                Path.of("..\\tinkoff\\src")
+                Path.of(".editorconfig"),
+                Path.of(".git"),
+                Path.of(".gitattributes"),
+                Path.of(".github"),
+                Path.of(".gitignore"),
+                Path.of(".idea"),
+                Path.of(".mvn"),
+                Path.of("checkstyle.xml"),
+                Path.of("mvnw"),
+                Path.of("mvnw.cmd"),
+                Path.of("pom.xml"),
+                Path.of("README.md"),
+                Path.of("src")
             )),
             Arguments.of(sizeLargerThan(200), List.of(
-                Path.of("..\\tinkoff\\.editorconfig"),
-                Path.of("..\\tinkoff\\.git"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\.idea"),
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\mvnw.cmd"),
-                Path.of("..\\tinkoff\\pom.xml"),
-                Path.of("..\\tinkoff\\README.md")
+                Path.of(".editorconfig"),
+                Path.of(".git"),
+                Path.of(".gitignore"),
+                Path.of(".idea"),
+                Path.of("checkstyle.xml"),
+                Path.of("mvnw"),
+                Path.of("mvnw.cmd"),
+                Path.of("pom.xml"),
+                Path.of("README.md")
             )),
             Arguments.of(sizeLessThan(1000), List.of(
-                Path.of("..\\tinkoff\\.gitattributes"),
-                Path.of("..\\tinkoff\\.github"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\.mvn"),
-                Path.of("..\\tinkoff\\README.md"),
-                Path.of("..\\tinkoff\\src")
+                Path.of(".gitattributes"),
+                Path.of(".github"),
+                Path.of(".gitignore"),
+                Path.of(".mvn"),
+                Path.of("README.md"),
+                Path.of("src")
             )),
             Arguments.of(sizeEquals(242), List.of(
-                Path.of("..\\tinkoff\\README.md")
+                Path.of("README.md")
             )),
             Arguments.of(globMatches(".xml"), List.of(
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\pom.xml")
+                Path.of("checkstyle.xml"),
+                Path.of("pom.xml")
             )),
             Arguments.of(regexContains("^..[^.]*$"), List.of(
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\src")
+                Path.of("mvnw"),
+                Path.of("src")
             )),
             Arguments.of(magicNumber(new byte[] {60, 63, 120, 109, 108, 32, 118, 101, 114, 115}), List.of(
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\pom.xml")
+                Path.of("checkstyle.xml"),
+                Path.of("pom.xml")
             ))
         );
     }
@@ -109,7 +109,7 @@ public class Task3Test {
     @ParameterizedTest
     @MethodSource("provideDataForFilterTest")
     void filterTest(AbstractFilter filter, List<Path> excepted) throws IOException {
-        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of("..\\tinkoff"), filter)) {
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted);
 
@@ -119,14 +119,14 @@ public class Task3Test {
     static Stream<Arguments> provideDataForGlobDirectoryStreamTest() {
         return Stream.of(
             Arguments.of(".xml", List.of(
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\pom.xml")
+                Path.of("checkstyle.xml"),
+                Path.of("pom.xml")
             )),
             Arguments.of(".git", List.of(
-                Path.of("..\\tinkoff\\.git")
+                Path.of(".git")
             )),
             Arguments.of(".idea", List.of(
-                Path.of("..\\tinkoff\\.idea"))
+                Path.of(".idea"))
             )
         );
     }
@@ -134,7 +134,7 @@ public class Task3Test {
     @ParameterizedTest
     @MethodSource("provideDataForGlobDirectoryStreamTest")
     void globTest(String glob, List<Path> excepted) throws IOException {
-        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get("..\\tinkoff"), glob)) {
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""), glob)) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted);
         }
@@ -143,19 +143,19 @@ public class Task3Test {
     static Stream<Arguments> provideDataForDirectoryStreamTest() {
         return Stream.of(
             Arguments.of(List.of(
-                Path.of("..\\tinkoff\\.editorconfig"),
-                Path.of("..\\tinkoff\\.git"),
-                Path.of("..\\tinkoff\\.gitattributes"),
-                Path.of("..\\tinkoff\\.github"),
-                Path.of("..\\tinkoff\\.gitignore"),
-                Path.of("..\\tinkoff\\.idea"),
-                Path.of("..\\tinkoff\\.mvn"),
-                Path.of("..\\tinkoff\\checkstyle.xml"),
-                Path.of("..\\tinkoff\\mvnw"),
-                Path.of("..\\tinkoff\\mvnw.cmd"),
-                Path.of("..\\tinkoff\\pom.xml"),
-                Path.of("..\\tinkoff\\README.md"),
-                Path.of("..\\tinkoff\\src")
+                Path.of(".editorconfig"),
+                Path.of(".git"),
+                Path.of(".gitattributes"),
+                Path.of(".github"),
+                Path.of(".gitignore"),
+                Path.of(".idea"),
+                Path.of(".mvn"),
+                Path.of("checkstyle.xml"),
+                Path.of("mvnw"),
+                Path.of("mvnw.cmd"),
+                Path.of("pom.xml"),
+                Path.of("README.md"),
+                Path.of("src")
             ))
         );
     }
@@ -163,10 +163,10 @@ public class Task3Test {
     @ParameterizedTest
     @MethodSource("provideDataForDirectoryStreamTest")
     void newDirectoryStreamTest(List<Path> excepted) throws IOException {
-        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get("..\\tinkoff"))) {
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""))) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted);
-            try (Stream<Path> exceptedPathStream = Files.list(Path.of("..\\tinkoff"))) {
+            try (Stream<Path> exceptedPathStream = Files.list(Path.of(""))) {
 
                 assertThat(pathList).isEqualTo(exceptedPathStream.toList());
             }
@@ -227,7 +227,7 @@ public class Task3Test {
     @ParameterizedTest
     @MethodSource("andFilterTest")
     void andTest(AbstractFilter filter, List<Path> excepted) throws IOException {
-        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of("..\\tinkoff"), filter)) {
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted);
         }
@@ -236,7 +236,7 @@ public class Task3Test {
     @ParameterizedTest
     @MethodSource("orFilterTest")
     void orTest(AbstractFilter filter, List<Path> excepted) throws IOException {
-        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of("..\\tinkoff"), filter)) {
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted);
         }
