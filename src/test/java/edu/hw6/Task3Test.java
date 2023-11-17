@@ -79,6 +79,7 @@ public class Task3Test {
             )),
             Arguments.of(sizeLessThan(1000), List.of(
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("README.md"),
@@ -143,6 +144,7 @@ public class Task3Test {
                 Path.of(".editorconfig"),
                 Path.of(".git"),
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
