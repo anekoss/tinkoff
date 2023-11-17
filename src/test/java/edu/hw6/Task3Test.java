@@ -40,7 +40,9 @@ public class Task3Test {
             )),
             Arguments.of(writeable, List.of(
                 Path.of(".editorconfig"),
+                Path.of(".git"),
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
@@ -53,7 +55,9 @@ public class Task3Test {
             )),
             Arguments.of(readable, List.of(
                 Path.of(".editorconfig"),
+                Path.of(".git"),
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
@@ -66,6 +70,7 @@ public class Task3Test {
             )),
             Arguments.of(sizeLargerThan(200), List.of(
                 Path.of(".editorconfig"),
+                Path.of(".git"),
                 Path.of(".gitignore"),
                 Path.of("checkstyle.xml"),
                 Path.of("mvnw"),
@@ -76,6 +81,7 @@ public class Task3Test {
             )),
             Arguments.of(sizeLessThan(1000), List.of(
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("README.md"),
@@ -116,8 +122,11 @@ public class Task3Test {
                 Path.of("checkstyle.xml"),
                 Path.of("pom.xml")
             )),
-            Arguments.of(".md", List.of(
-                Path.of("README.md"))
+            Arguments.of(".git", List.of(
+                Path.of(".git")
+            )),
+            Arguments.of(".idea", List.of(
+                Path.of(".idea"))
             )
         );
     }
@@ -135,7 +144,9 @@ public class Task3Test {
         return Stream.of(
             Arguments.of(List.of(
                 Path.of(".editorconfig"),
+                Path.of(".git"),
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
