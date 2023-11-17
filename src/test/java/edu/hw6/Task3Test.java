@@ -116,11 +116,8 @@ public class Task3Test {
                 Path.of("checkstyle.xml"),
                 Path.of("pom.xml")
             )),
-            Arguments.of(".git", List.of(
-                Path.of(".git")
-            )),
-            Arguments.of(".idea", List.of(
-                Path.of(".idea"))
+            Arguments.of(".md", List.of(
+                Path.of("README.md"))
             )
         );
     }
