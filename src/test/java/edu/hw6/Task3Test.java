@@ -51,7 +51,8 @@ public class Task3Test {
                 Path.of("mvnw.cmd"),
                 Path.of("pom.xml"),
                 Path.of("README.md"),
-                Path.of("src")
+                Path.of("src"),
+                Path.of("target")
             )),
             Arguments.of(readable, List.of(
                 Path.of(".editorconfig"),
@@ -66,7 +67,8 @@ public class Task3Test {
                 Path.of("mvnw.cmd"),
                 Path.of("pom.xml"),
                 Path.of("README.md"),
-                Path.of("src")
+                Path.of("src"),
+                Path.of("target")
             )),
             Arguments.of(sizeLargerThan(200), List.of(
                 Path.of(".editorconfig"),
@@ -77,7 +79,8 @@ public class Task3Test {
                 Path.of("mvnw"),
                 Path.of("mvnw.cmd"),
                 Path.of("pom.xml"),
-                Path.of("README.md")
+                Path.of("README.md"),
+                Path.of("target")
             )),
             Arguments.of(sizeLessThan(1000), List.of(
                 Path.of(".gitattributes"),
@@ -94,9 +97,10 @@ public class Task3Test {
                 Path.of("checkstyle.xml"),
                 Path.of("pom.xml")
             )),
-            Arguments.of(regexContains("^..[^.]*$"), List.of(
+            Arguments.of(regexContains("^[^.]*$"), List.of(
                 Path.of("mvnw"),
-                Path.of("src")
+                Path.of("src"),
+                Path.of("target")
             )),
             Arguments.of(magicNumber(new byte[] {60, 63, 120, 109, 108, 32, 118, 101, 114, 115}), List.of(
                 Path.of("checkstyle.xml"),
@@ -154,7 +158,8 @@ public class Task3Test {
                 Path.of("mvnw.cmd"),
                 Path.of("pom.xml"),
                 Path.of("README.md"),
-                Path.of("src")
+                Path.of("src"),
+                Path.of("target")
             ))
         );
     }
