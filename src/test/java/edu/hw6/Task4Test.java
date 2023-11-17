@@ -31,7 +31,7 @@ public class Task4Test {
     void getFileUsingCompositionOutputStreamTest(String filePath, String string, String copyFilePath)
         throws IOException {
         assertThat(new Task4().getFileUsingCompositionOutputStream(filePath, string)).exists()
-            .isEqualTo(Path.of(filePath));
+            .isEqualTo(Path.of(filePath, new String[] {}));
         assertThat(String.join("\n", Files.readAllLines(Path.of(filePath)))).isEqualTo(string);
         assertThat(new Task4().getFileUsingCompositionOutputStream(filePath, string)).exists()
             .isEqualTo(Path.of(copyFilePath));

@@ -178,11 +178,11 @@ public class Task3Test {
     }
 
     static List<Path> getStreamAsList(DirectoryStream<Path> stream) {
-        List<Path> pathList = new ArrayList<>();
+        List<Path> paths = new ArrayList<>();
         for (Path path : stream) {
-            pathList.add(path);
+            paths.add(path);
         }
-        return pathList;
+        return paths;
     }
 
     static Stream<Arguments> andFilterTest() {
