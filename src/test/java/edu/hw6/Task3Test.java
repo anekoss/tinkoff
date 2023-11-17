@@ -111,7 +111,10 @@ public class Task3Test {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
-
+        }
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of("pom.xml"), filter)) {
+            List<Path> pathList = getStreamAsList(directoryStream);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
     }
 
@@ -134,7 +137,14 @@ public class Task3Test {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get("pom.xml"), glob)) {
+            List<Path> pathList = getStreamAsList(directoryStream);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
+        }
+
     }
+
+
 
     static Stream<Arguments> provideDataForDirectoryStreamTest() {
         return Stream.of(
@@ -160,6 +170,10 @@ public class Task3Test {
     @MethodSource("provideDataForDirectoryStreamTest")
     void newDirectoryStreamTest(List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""))) {
+            List<Path> pathList = getStreamAsList(directoryStream);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
+        }
+        try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get("pom.xml"))) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
