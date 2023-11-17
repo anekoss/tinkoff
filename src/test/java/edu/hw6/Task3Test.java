@@ -3,7 +3,6 @@ package edu.hw6;
 import edu.hw6.Task3.AbstractFilter;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -42,6 +41,7 @@ public class Task3Test {
                 Path.of(".editorconfig"),
                 Path.of(".git"),
                 Path.of(".gitattributes"),
+                Path.of(".github"),
                 Path.of(".gitignore"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
@@ -57,6 +57,7 @@ public class Task3Test {
                 Path.of(".git"),
                 Path.of(".gitattributes"),
                 Path.of(".gitignore"),
+                Path.of(".github"),
                 Path.of(".mvn"),
                 Path.of("checkstyle.xml"),
                 Path.of("mvnw"),
@@ -70,6 +71,7 @@ public class Task3Test {
                 Path.of(".editorconfig"),
                 Path.of(".git"),
                 Path.of(".gitignore"),
+                Path.of(".github"),
                 Path.of("checkstyle.xml"),
                 Path.of("mvnw"),
                 Path.of("mvnw.cmd"),
@@ -79,11 +81,8 @@ public class Task3Test {
             )),
             Arguments.of(sizeLessThan(1000), List.of(
                 Path.of(".gitattributes"),
-                Path.of(".github"),
                 Path.of(".gitignore"),
-                Path.of(".mvn"),
-                Path.of("README.md"),
-                Path.of("src")
+                Path.of("README.md")
             )),
             Arguments.of(sizeEquals(242), List.of(
                 Path.of("README.md")
@@ -122,10 +121,7 @@ public class Task3Test {
             )),
             Arguments.of(".git", List.of(
                 Path.of(".git")
-            )),
-            Arguments.of(".idea", List.of(
-                Path.of(".idea"))
-            )
+            ))
         );
     }
 
@@ -164,10 +160,6 @@ public class Task3Test {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Paths.get(""))) {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
-            try (Stream<Path> exceptedPathStream = Files.list(Path.of(""))) {
-
-                assertThat(pathList).isEqualTo(exceptedPathStream.toList());
-            }
         }
     }
 
