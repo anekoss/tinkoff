@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -114,7 +115,7 @@ public class Task3Test {
     void filterTest(AbstractFilter filter, List<Path> excepted) throws IOException {
         try (DirectoryStream<Path> directoryStream = newDirectoryStream(Path.of(""), filter)) {
             List<Path> pathList = getStreamAsList(directoryStream);
-            assertThat(pathList).isEqualTo(excepted);
+            assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
 
         }
     }
@@ -182,7 +183,7 @@ public class Task3Test {
         for (Path path : stream) {
             paths.add(path);
         }
-        return paths;
+        return paths.stream().sorted().toList();
     }
 
     static Stream<Arguments> andFilterTest() {
