@@ -14,7 +14,7 @@ public class Task3 {
             return Files.newDirectoryStream(dir);
 
         } else {
-            return Files.newDirectoryStream(dir.getParent());
+            return Files.newDirectoryStream(dir.toAbsolutePath().getParent());
 
         }
 
@@ -26,7 +26,7 @@ public class Task3 {
 
         } else {
             return Files.newDirectoryStream(
-                dir.getParent(),
+                dir.toAbsolutePath().getParent(),
                 DirectoryFilter.globMatches(glob)
             );
         }
@@ -41,7 +41,7 @@ public class Task3 {
 
         } else {
             return
-                Files.newDirectoryStream(dir.getParent(), filter);
+                Files.newDirectoryStream(dir.toAbsolutePath().getParent(), filter);
         }
     }
 }

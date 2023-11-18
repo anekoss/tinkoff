@@ -116,6 +116,7 @@ public class Task3Test {
             List<Path> pathList = getStreamAsList(directoryStream);
             assertThat(pathList).isEqualTo(excepted.stream().sorted().toList());
         }
+
     }
 
     static Stream<Arguments> provideDataForGlobDirectoryStreamTest() {
