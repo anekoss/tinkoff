@@ -1,15 +1,15 @@
 package edu.hw6.Task6;
 
-public enum Protokol {
+public enum Protocol {
     UDP("UDP"), TCP("TCP"), UDP_TCP("UDP/TCP");
-    private final String protokolName;
+    private final String protocolName;
 
-    Protokol(String protokolName) {
-        this.protokolName = protokolName;
+    Protocol(String protocolName) {
+        this.protocolName = protocolName;
     }
 
-    public String getProtokolName() {
-        return protokolName;
+    public String getProtocolName() {
+        return protocolName;
     }
 
     public String getBusyStatus() {

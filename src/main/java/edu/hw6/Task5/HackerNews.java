@@ -17,6 +17,7 @@ public class HackerNews {
     private final String titleFieldName = "title";
     private final String separatorKeyAndValue = ":";
     private final int timeout = 60;
+    private final static long[] IOEXCEPTION_RESULT = new long[] {};
 
     public long[] hackerNewsTopStories() throws InterruptedException {
 
@@ -38,9 +39,8 @@ public class HackerNews {
                         return ByteBuffer.wrap(value.getBytes(StandardCharsets.UTF_8)).getLong();
                     }
                 }).toArray();
-        } catch (
-            IOException e) {
-            return new long[] {};
+        } catch (IOException e) {
+            return IOEXCEPTION_RESULT;
         }
 
     }

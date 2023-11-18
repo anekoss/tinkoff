@@ -1,23 +1,19 @@
 package edu.hw6.Task1;
 
 import java.io.Serializable;
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class DiskMap implements Map<String, String>, Serializable {
-    private final List<Entry<String, String>> map;
+    private final Map<String, String> map;
 
     public DiskMap() {
-        map = new ArrayList<>();
+        map = new HashMap<>();
     }
 
     @Override
@@ -33,7 +29,7 @@ public class DiskMap implements Map<String, String>, Serializable {
     @Override
     public boolean containsKey(Object key) {
         if (key instanceof String) {
-            return map.stream().map(Entry::getKey).anyMatch(key::equals);
+            return map.keySet().stream().anyMatch(key::equals);
         }
         return false;
     }
@@ -41,7 +37,7 @@ public class DiskMap implements Map<String, String>, Serializable {
     @Override
     public boolean containsValue(Object value) {
         if (value instanceof String) {
-            return map.stream().map(Entry::getValue)
+            return map.values().stream()
                 .anyMatch(value::equals);
         }
         return false;
@@ -49,10 +45,10 @@ public class DiskMap implements Map<String, String>, Serializable {
 
     @Override
     public String get(Object key) {
-        Entry<String, String> node =
-            map.stream().filter(entry -> key.equals(entry.getKey())).findAny().orElse(null);
-        if (node != null) {
-            return node.getValue();
+        if (key instanceof String) {
+            if (containsKey(key)) {
+                return map.get(key);
+            }
         }
         return null;
     }
@@ -60,13 +56,8 @@ public class DiskMap implements Map<String, String>, Serializable {
     @Nullable
     @Override
     public String put(String key, String value) {
-        Entry<String, String> newNode = new AbstractMap.SimpleEntry<>(key, value);
-        int indexNode = map.indexOf(newNode);
-        if (indexNode == -1) {
-            map.add(newNode);
-        } else {
-            map.add(indexNode, newNode);
-            return map.remove(indexNode + 1).getValue();
+        if (key != null && value != null) {
+            return map.put(key, value);
         }
         return null;
     }
@@ -74,9 +65,8 @@ public class DiskMap implements Map<String, String>, Serializable {
     @Override
     public String remove(Object key) {
         if (key instanceof String) {
-            int indexNode = map.stream().map(Entry::getKey).toList().indexOf(key);
-            if (indexNode != -1) {
-                return map.remove(indexNode).getValue();
+            if (containsKey(key)) {
+                map.remove(key);
             }
         }
         return null;
@@ -97,19 +87,19 @@ public class DiskMap implements Map<String, String>, Serializable {
     @NotNull
     @Override
     public Set<String> keySet() {
-        return map.stream().map(Entry::getKey).collect(Collectors.toSet());
+        return map.keySet();
     }
 
     @NotNull
     @Override
     public Collection<String> values() {
-        return map.stream().map(Entry::getValue).collect(Collectors.toList());
+        return map.values();
     }
 
     @NotNull
     @Override
     public Set<Entry<String, String>> entrySet() {
-        return new HashSet<>(map);
+        return map.entrySet();
     }
 
     @Override public boolean equals(Object o) {
