@@ -1,4 +1,4 @@
-package edu.project3;
+package edu.project3.reader;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,26 +8,21 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class LogParser {
+
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(
         "dd/MMM/yyyy:HH:mm:ss Z",
         Locale.US
     );
 
     private static final Pattern LOG_ENTRY_PATTERN = Pattern.compile(
-        "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(.+?)\" (\\d{3}) (\\S+) \"(.*?)\" \"(.*?)\"$");
+        "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})] \"(.+?)\" (\\d{3}) (\\S+) \"(.*?)\" \"(.*?)\"$");
 
-    Stream<LogRecord> parseLogs(Stream<String> logStream) {
+    public Stream<LogRecord> parseLogs(Stream<String> logStream) {
         return
-            logStream.filter(s -> LOG_ENTRY_PATTERN.matcher(s).matches()).map(s -> {
-                try {
-                    return parseLog(s);
-                } catch (InvalidLogFormat e) {
-                    return null;
-                }
-            });
+            logStream.filter(s -> LOG_ENTRY_PATTERN.matcher(s).matches()).map(this::parseLog);
     }
 
-    LogRecord parseLog(String log) throws InvalidLogFormat {
+    private LogRecord parseLog(String log) {
         Matcher matcher = LOG_ENTRY_PATTERN.matcher(log);
         if (matcher.matches()) {
             return new LogRecord(
@@ -40,7 +35,7 @@ public class LogParser {
                 matcher.group(9)
             );
         } else {
-            throw new InvalidLogFormat();
+            throw new IllegalArgumentException();
         }
     }
 }
