@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import org.jetbrains.annotations.NotNull;
 
 public class CloneFile {
+    private CloneFile() {
+    }
 
     public static Path cloneFile(@NotNull Path path) throws IOException {
 

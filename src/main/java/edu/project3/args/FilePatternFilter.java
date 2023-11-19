@@ -11,16 +11,15 @@ import java.util.regex.Pattern;
 
 public class FilePatternFilter {
 
+    private FilePatternFilter() {
+    }
+
     private static DirectoryStream.Filter<Path> regexContains(String pattern) {
         return (entry -> pattern != null && Pattern.compile(pattern).matcher(entry.toString()).find());
     }
 
-    private static DirectoryStream<Path> newDirectoryStream(Path path, String regex) {
-        try {
-            return Files.newDirectoryStream(path, regexContains(regex));
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Неверный формат пути к log файлу. Ожидается локальный шаблон или URL.");
-        }
+    private static DirectoryStream<Path> newDirectoryStream(Path path, String regex) throws IOException {
+        return Files.newDirectoryStream(path, regexContains(regex));
     }
 
     public static List<Path> getPathsContainsRegex(String path) {

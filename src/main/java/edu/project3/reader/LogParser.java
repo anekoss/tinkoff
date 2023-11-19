@@ -8,7 +8,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class LogParser {
-
+    private static final int NUMBER_GROUP_IP_ADDRESS = 1;
+    private static final int NUMBER_GROUP_TIMESTAMP = 4;
+    private static final int NUMBER_GROUP_REQUEST = 5;
+    private static final int NUMBER_GROUP_STATUS_CODE = 6;
+    private static final int NUMBER_GROUP_RESPONSE_SIZE = 7;
+    private static final int NUMBER_GROUP_REFERER = 8;
+    private static final int NUMBER_GROUP_USER_AGENT = 9;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(
         "dd/MMM/yyyy:HH:mm:ss Z",
         Locale.US
@@ -26,13 +32,13 @@ public class LogParser {
         Matcher matcher = LOG_ENTRY_PATTERN.matcher(log);
         if (matcher.matches()) {
             return new LogRecord(
-                matcher.group(1),
-                OffsetDateTime.parse(matcher.group(4), FORMATTER),
-                matcher.group(5),
-                Integer.parseInt(matcher.group(6)),
-                Long.parseLong(matcher.group(7)),
-                matcher.group(8),
-                matcher.group(9)
+                matcher.group(NUMBER_GROUP_IP_ADDRESS),
+                OffsetDateTime.parse(matcher.group(NUMBER_GROUP_TIMESTAMP), FORMATTER),
+                matcher.group(NUMBER_GROUP_REQUEST),
+                Integer.parseInt(matcher.group(NUMBER_GROUP_STATUS_CODE)),
+                Long.parseLong(matcher.group(NUMBER_GROUP_RESPONSE_SIZE)),
+                matcher.group(NUMBER_GROUP_REFERER),
+                matcher.group(NUMBER_GROUP_USER_AGENT)
             );
         } else {
             throw new IllegalArgumentException();

@@ -35,8 +35,7 @@ public class LogReader {
     public Stream<String> getLogsStream() {
         return Stream.concat(
             argsRecord.paths().stream().filter(Objects::nonNull).flatMap(this::readLog),
-            argsRecord.uris().stream().filter(Objects::nonNull).flatMap(value ->
-            {
+            argsRecord.uris().stream().filter(Objects::nonNull).flatMap(value -> {
                 try {
                     return readLog(value);
                 } catch (InterruptedException e) {
@@ -79,6 +78,5 @@ public class LogReader {
             return Stream.of();
         }
     }
-
 
 }

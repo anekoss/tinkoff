@@ -14,30 +14,34 @@ import static edu.project3.args.FilePatternFilter.getPathsContainsRegex;
 
 public class CommandLineArgsParser {
 
-    private static final Pattern patternArgs =
+    private static final Pattern PATTERN_ARGS =
         Pattern.compile(
-            "^(\s?)(--path)(\s?)(.*)(\s?)(--from?)(\s?)(.*)(\s?)(--to|)(\s?)(.*)(\s?)(--format)(\s?)(markdown|adoc)(\s?)$");
-    private static final Pattern patternURI = Pattern.compile("^(https?|ftp)://[^\\s/$.?#].\\S*$");
+            "^(\s?)(--path)(\s?)(.*)(\s?)(--from?)(\s?)(.*)(\s?)(--to|) "
+                + "(\s?)(.*)(\s?)(--format)(\s?)(markdown|adoc)(\s?)$");
+    private static final Pattern PATTERN_URI = Pattern.compile("^(https?|ftp)://[^\\s/$.?#].\\S*$");
 
-    private static final Pattern patternPath = Pattern.compile("^(.+)/([^/]+)$");
+    private static final Pattern PATTERN_PATH = Pattern.compile("^(.+)/([^/]+)$");
+    private static final int NUMBER_GROUP_PATH = 4;
+    private static final int NUMBER_GROUP_FROM = 8;
+    private static final int NUMBER_GROUP_TO = 12;
+    private static final int NUMBER_GROUP_FORMAT = 16;
 
     private final Matcher matcherArgs;
 
     public CommandLineArgsParser(String[] args) {
-        this.matcherArgs = patternArgs.matcher(initInputArgs(args));
-        System.out.println(matcherArgs);
+        this.matcherArgs = PATTERN_ARGS.matcher(initInputArgs(args));
     }
 
     public ArgsRecord getArgs() {
         if (!matcherArgs.matches()) {
             throw new IllegalArgumentException("Неверный формат аргументов командной строки");
         }
-        List<Path> paths = getPaths(matcherArgs.group(4).split(" "));
-        List<URI> uris = getURI(matcherArgs.group(4).split(" "));
+        List<Path> paths = getPaths(matcherArgs.group(NUMBER_GROUP_PATH).split(" "));
+        List<URI> uris = getURI(matcherArgs.group(NUMBER_GROUP_PATH).split(" "));
         checkPath(paths, uris);
-        LocalDate from = getTime(matcherArgs.group(8).replaceAll(" ", ""));
-        LocalDate to = getTime(matcherArgs.group(12).replaceAll(" ", ""));
-        FormatReport formatReport = getFormat(matcherArgs.group(16));
+        LocalDate from = getTime(matcherArgs.group(NUMBER_GROUP_FROM).replaceAll(" ", ""));
+        LocalDate to = getTime(matcherArgs.group(NUMBER_GROUP_TO).replaceAll(" ", ""));
+        FormatReport formatReport = getFormat(matcherArgs.group(NUMBER_GROUP_FORMAT));
         return new ArgsRecord(paths, uris, from, to, formatReport);
     }
 
@@ -72,7 +76,7 @@ public class CommandLineArgsParser {
     private List<Path> getPaths(String[] allPath) {
         List<Path> pathList = new ArrayList<>();
         for (String path : allPath) {
-            if (patternPath.matcher(path).find()) {
+            if (PATTERN_PATH.matcher(path).find()) {
                 Path of = Path.of(path);
                 if (Files.exists(of)) {
                     pathList.add(of);
@@ -90,7 +94,7 @@ public class CommandLineArgsParser {
     private List<URI> getURI(String[] allPath) {
         List<URI> uriList = new ArrayList<>();
         for (String uri : allPath) {
-            if (patternURI.matcher(uri).find()) {
+            if (PATTERN_URI.matcher(uri).find()) {
                 uriList.add(URI.create(uri));
             }
         }
