@@ -4,9 +4,10 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-public record ArgsRecord(List<Path> paths, List<URI> uris, java.time.LocalDate from, java.time.LocalDate to,
+public record ArgsRecord(Set<Path> paths, Set<URI> uris, java.time.LocalDate from, java.time.LocalDate to,
                          FormatReport format) {
     private final static String DATE_FROM = "Начальная дата";
     private final static String DATE_TO = "Конечная дата";
