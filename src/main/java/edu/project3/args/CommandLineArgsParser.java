@@ -21,7 +21,8 @@ public class CommandLineArgsParser {
 
     private static final Pattern PATTERN_ARGS =
         Pattern.compile(
-            "^(\s?)(--path)(\s?)([^-]+)((--from)(\s?)([\\d,-]+))?(\s?)((--to)?(\s?)([\\d, -]+))?(\s?)(--format)(\s?)(markdown|adoc)(\s?)$");
+            "^(\s?)(--path)(\s?)([^-]+)((--from)(\s?)([\\d,-]+))?(\s?)((--to)?(\s?)([\\d, -]+))?(\s?)"
+                + "(--format)(\s?)(markdown|adoc)(\s?)$");
 
     private static final int NUMBER_GROUP_PATH = 4;
     private static final int NUMBER_GROUP_FROM = 8;
@@ -35,11 +36,6 @@ public class CommandLineArgsParser {
     }
 
     public ArgsRecord getArgs() {
-        matcherArgs.matches();
-        for (int i = 1; i <= matcherArgs.groupCount(); i++) {
-            System.out.println(i + matcherArgs.group(i));
-        }
-        System.out.println(matcherArgs.groupCount());
         if (!matcherArgs.matches()) {
             throw new IllegalArgumentException("Неверный формат аргументов командной строки");
         }
@@ -60,8 +56,6 @@ public class CommandLineArgsParser {
                 }
             }
         }
-        System.out.println(matcherArgs.group(NUMBER_GROUP_FROM));
-        System.out.println(matcherArgs.group(NUMBER_GROUP_TO));
         LocalDate from = getTime(matcherArgs.group(NUMBER_GROUP_FROM));
         LocalDate to = getTime(matcherArgs.group(NUMBER_GROUP_TO));
 
