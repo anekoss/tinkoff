@@ -16,7 +16,7 @@ public class LogAnalyze {
 
     public LogAnalyze(LogReader logReader) {
         this.commonMetrics = logReader.getArgsRecord().toStringMetrics();
-        this.logIterator = new LogParser().parseLogs(logReader.getLogsStream()).iterator();
+        this.logIterator = new LogParser().parseLogs(logReader.getLogsStream(), logReader.getArgsRecord()).iterator();
         this.filter = new LogAnalyzeMetric(
             new CountRequestObserver(),
             new AvgResponseSizeObserver(),

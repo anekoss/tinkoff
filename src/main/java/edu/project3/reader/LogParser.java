@@ -1,5 +1,6 @@
 package edu.project3.reader;
 
+import edu.project3.args.ArgsRecord;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -23,9 +24,13 @@ public class LogParser {
     private static final Pattern LOG_ENTRY_PATTERN = Pattern.compile(
         "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})] \"(.+?)\" (\\d{3}) (\\S+) \"(.*?)\" \"(.*?)\"$");
 
-    public Stream<LogRecord> parseLogs(Stream<String> logStream) {
+    public Stream<LogRecord> parseLogs(Stream<String> logStream, ArgsRecord argsRecord) {
         return
-            logStream.filter(s -> LOG_ENTRY_PATTERN.matcher(s).matches()).map(this::parseLog);
+            logStream.filter(s -> LOG_ENTRY_PATTERN.matcher(s).matches()).map(this::parseLog)
+                .filter(logRecord -> (logRecord.timestamp().toLocalDate().isBefore(argsRecord.to()) ||
+                    logRecord.timestamp().toLocalDate().isEqual(argsRecord.to()) || argsRecord.to() == null) &&
+                    (logRecord.timestamp().toLocalDate().isAfter(argsRecord.from()) ||
+                        logRecord.timestamp().toLocalDate().isEqual(argsRecord.from()) || argsRecord.from() == null));
     }
 
     private LogRecord parseLog(String log) {

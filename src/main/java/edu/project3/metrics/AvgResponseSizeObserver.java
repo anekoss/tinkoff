@@ -15,7 +15,7 @@ public class AvgResponseSizeObserver implements LogObserver {
     }
 
     public List<String> toStringMetric() {
-        return List.of(nameMetrics, String.valueOf(getAvgSize()));
+        return List.of(nameMetrics, String.valueOf(getAvgSize()) + "b");
     }
 
     private long getAvgSize() {

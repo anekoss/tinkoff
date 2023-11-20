@@ -4,12 +4,12 @@ import edu.project3.metrics.LogAnalyze;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class AdocFileparser implements FileParser {
+public class AdocFileParser implements FileParser {
     private final List<List<String>> countRecourcesMetrics;
     private final List<List<String>> commonMetrics;
     private final List<List<String>> countStatusCodeMetrics;
 
-    public AdocFileparser(LogAnalyze logAnalyze) {
+    public AdocFileParser(LogAnalyze logAnalyze) {
         commonMetrics = logAnalyze.getCommonMetrics();
         countStatusCodeMetrics = logAnalyze.getStatusCodeMetrcis();
         countRecourcesMetrics = logAnalyze.getCountResourcesMetrics();

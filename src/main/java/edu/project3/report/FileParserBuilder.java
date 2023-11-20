@@ -9,7 +9,7 @@ public class FileParserBuilder {
 
     FileParser build() {
         if (formatReport == FormatReport.ADOC) {
-            return new AdocFileparser(logAnalyze);
+            return new AdocFileParser(logAnalyze);
         }
         return new MdFileParser(logAnalyze);
     }

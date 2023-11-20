@@ -37,8 +37,10 @@ public class LogAnalyzeMetric implements LogMetric {
 
     @Override
     public void notifyObservers() {
-        for (LogObserver observer : observers) {
-            observer.update(logRecord);
+        if (logRecord != null) {
+            for (LogObserver observer : observers) {
+                observer.update(logRecord);
+            }
         }
     }
 

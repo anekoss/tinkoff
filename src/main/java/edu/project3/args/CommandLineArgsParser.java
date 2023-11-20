@@ -28,7 +28,6 @@ public class CommandLineArgsParser {
     private static final int NUMBER_GROUP_FROM = 8;
     private static final int NUMBER_GROUP_TO = 13;
     private static final int NUMBER_GROUP_FORMAT = 17;
-
     private final Matcher matcherArgs;
 
     public CommandLineArgsParser(String[] args) {
@@ -91,10 +90,7 @@ public class CommandLineArgsParser {
             if (Files.isDirectory(of)) {
                 return false;
             }
-            if (!Files.exists(of)) {
-                return false;
-            }
-            return true;
+            return Files.exists(of);
         } catch (InvalidPathException e) {
             return false;
         }
