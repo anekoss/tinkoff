@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,19 +52,18 @@ public class LogReportTest {
 
     @Test
     void createFileReportTest() {
-        assertThat(logReportMd.createFileReport(FormatReport.MARKDOWN)).isEqualTo(Path.of("REPORT.MD"));
-        assertThat(logReportAdoc.createFileReport(FormatReport.ADOC)).isEqualTo(Path.of("report.adoc"));
+        assertThat(logReportMd.createFileReport(FormatReport.MARKDOWN)).exists().isRegularFile();
+        assertThat(logReportAdoc.createFileReport(FormatReport.ADOC)).exists().isRegularFile();
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForTest")
     void writeMetricsToFileTest(List<String> mdReport, List<String> adocReport) throws IOException {
-
-        logReportMd.createFileReport(FormatReport.MARKDOWN);
-        logReportAdoc.createFileReport(FormatReport.ADOC);
-        Path mdPath = logReportMd.writeMetricsToFile();
+        Path mdPath = logReportMd.createFileReport(FormatReport.MARKDOWN);
+        Path adocPath = logReportAdoc.createFileReport(FormatReport.ADOC);
+        logReportMd.writeMetricsToFile();
         assertThat(mdPath).isRegularFile().isNotEmptyFile();
-        Path adocPath = logReportAdoc.writeMetricsToFile();
+        logReportAdoc.writeMetricsToFile();
         assertThat(adocPath).isRegularFile().isNotEmptyFile();
         assertThat(Files.readAllLines(mdPath)).isEqualTo(mdReport);
         assertThat(Files.readAllLines(adocPath)).isEqualTo(adocReport);

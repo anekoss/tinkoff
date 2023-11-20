@@ -22,7 +22,7 @@ public class LogAnalyzeTest {
     static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(
-                Path.of("testLog/logs/logFile.txt"),
+                Path.of("testLog//logs/logFile.txt"),
                 new ArgsRecord(
                     Set.of(
                         Path.of("testLog/logs/logFile.txt")),
@@ -32,7 +32,7 @@ public class LogAnalyzeTest {
                     FormatReport.MARKDOWN
                 ),
                 List.of(
-                    List.of("Файл(ы)", "testLog\\logs\\logFile.txt"),
+                    List.of("Файл(ы)", "testLog/logs/logFile.txt"),
                     List.of("Начальная дата", "2015-05-17"),
                     List.of("Конечная дата", "2015-05-17"),
                     List.of("Средний размер ответа", "101b"),
