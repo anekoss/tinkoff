@@ -10,15 +10,18 @@ public class AvgResponseSizeObserver implements LogObserver {
 
     @Override
     public void update(LogRecord log) {
-        size += +log.responseSize();
+        size += log.responseSize();
         cntSize++;
     }
 
     public List<String> toStringMetric() {
-        return List.of(nameMetrics, String.valueOf(getAvgSize()) + "b");
+        return List.of(nameMetrics, getAvgSize() + "b");
     }
 
     private long getAvgSize() {
+        if (cntSize == 0) {
+            return 0;
+        }
         return size / cntSize;
     }
 

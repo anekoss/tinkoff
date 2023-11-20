@@ -11,11 +11,11 @@ public class CloneFile {
     }
 
     public static Path cloneFile(@NotNull Path path) throws IOException {
-
         String pathName = path.toString();
         String newPath;
+        Path copyPath = path;
         int copyCount = 0;
-        while (true) {
+        while (copyCount != -1) {
             String[] pathInfo = getFileNameAndGlob(pathName);
             if (copyCount == 0) {
                 newPath =
@@ -28,11 +28,13 @@ public class CloneFile {
                         + pathInfo[1];
             }
             try {
-                return Files.createFile(Path.of(newPath));
+                copyPath = Files.createFile(Path.of(newPath));
+                copyCount = -1;
             } catch (FileAlreadyExistsException ignored) {
                 copyCount++;
             }
         }
+        return copyPath;
     }
 
     private static String[] getFileNameAndGlob(String path) {

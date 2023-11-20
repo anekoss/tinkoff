@@ -27,10 +27,11 @@ public class LogParser {
     public Stream<LogRecord> parseLogs(Stream<String> logStream, ArgsRecord argsRecord) {
         return
             logStream.filter(s -> LOG_ENTRY_PATTERN.matcher(s).matches()).map(this::parseLog)
-                .filter(logRecord -> (logRecord.timestamp().toLocalDate().isBefore(argsRecord.to()) ||
-                    logRecord.timestamp().toLocalDate().isEqual(argsRecord.to()) || argsRecord.to() == null) &&
-                    (logRecord.timestamp().toLocalDate().isAfter(argsRecord.from()) ||
-                        logRecord.timestamp().toLocalDate().isEqual(argsRecord.from()) || argsRecord.from() == null));
+                .filter(logRecord ->
+                    (argsRecord.to() == null || logRecord.timestamp().toLocalDate().isBefore(argsRecord.to())
+                        || logRecord.timestamp().toLocalDate().isEqual(argsRecord.to()))
+                        && (argsRecord.from() == null || logRecord.timestamp().toLocalDate().isAfter(argsRecord.from())
+                        || logRecord.timestamp().toLocalDate().isEqual(argsRecord.from())));
     }
 
     private LogRecord parseLog(String log) {

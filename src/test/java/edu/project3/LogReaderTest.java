@@ -46,7 +46,7 @@ public class LogReaderTest {
                     LocalDate.parse("2023-08-31"),
                     null,
                     FormatReport.ADOC
-                ), 5095
+                ), 5077
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
@@ -56,7 +56,7 @@ public class LogReaderTest {
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
-                ), 5095
+                ), 5077
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
@@ -79,7 +79,7 @@ public class LogReaderTest {
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), LocalDate.parse("2023-09-25"), FormatReport.ADOC
-                ), 2662
+                ), 2644
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(

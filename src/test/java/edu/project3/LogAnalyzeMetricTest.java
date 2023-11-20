@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogAnalyzeMetricTest {
@@ -135,16 +137,21 @@ public class LogAnalyzeMetricTest {
             ));
     }
 
-
-
     @ParameterizedTest
     @MethodSource("provideDataForRegisterTest")
     void registerObserverTest(
         LogRecord logRecord,
         List<List<String>> countResources
     ) {
-        logAnalyzeMetric.registerObserver(countResourcesObserver1);
-        logAnalyzeMetric.onNewData(logRecord);
+        LogAnalyzeMetric logAnalyzeMetric1 = new LogAnalyzeMetric(
+            Mockito.mock(CountRequestObserver.class),
+            Mockito.mock(AvgResponseSizeObserver.class),
+            new CountResourcesObserver(),
+            Mockito.mock(CountMaxStatusCodeObserver.class)
+        );
+        logAnalyzeMetric1.registerObserver(countResourcesObserver1);
+        logAnalyzeMetric1.onNewData(logRecord);
         assertThat(countResourcesObserver1.toStringMetric()).isEqualTo(countResources);
+        assertThat(countResourcesObserver1.toStringMetric()).isEqualTo(logAnalyzeMetric1.getCountResourcesMetrics());
     }
 }

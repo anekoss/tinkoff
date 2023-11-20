@@ -1,11 +1,11 @@
 package edu.project3;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import static edu.project3.args.FilePatternFilter.getPathsContainsRegex;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,8 +21,10 @@ public class FilePatternFilterTest {
                 "*/lo*",
                 List.of(Path.of("testLog/logFile.txt"), Path.of("testLog/logs(1).txt"), Path.of("testLog/logs.txt"))
             ),
-            Arguments.of("*/*.txt",
-                List.of(Path.of("testLog/logFile.txt"), Path.of("testLog/logs(1).txt"), Path.of("testLog/logs.txt")))
+            Arguments.of(
+                "*/*.txt",
+                List.of(Path.of("testLog/logFile.txt"), Path.of("testLog/logs(1).txt"), Path.of("testLog/logs.txt"))
+            )
         );
     }
 
