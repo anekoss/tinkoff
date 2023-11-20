@@ -31,6 +31,7 @@ public class FilePatternFilterTest {
     @ParameterizedTest
     @MethodSource("provideDataForTest")
     void getPathsContainsRegexTest(String path, List<Path> exceptedPath) {
-        assertThat(getPathsContainsRegex(path).stream().sorted()).isEqualTo(exceptedPath.stream().sorted());
+        assertThat(getPathsContainsRegex(path).stream().sorted().toList()).isEqualTo(exceptedPath.stream().sorted()
+            .toList());
     }
 }

@@ -59,14 +59,8 @@ public class LogReportTest {
     @ParameterizedTest
     @MethodSource("provideDataForTest")
     void writeMetricsToFileTest(List<String> mdReport, List<String> adocReport) throws IOException {
-        Path mdPath = logReportMd.createFileReport(FormatReport.MARKDOWN);
-        Path adocPath = logReportAdoc.createFileReport(FormatReport.ADOC);
-        logReportMd.writeMetricsToFile();
-        assertThat(mdPath).isRegularFile().isNotEmptyFile();
-        logReportAdoc.writeMetricsToFile();
-        assertThat(adocPath).isRegularFile().isNotEmptyFile();
-        assertThat(Files.readAllLines(mdPath)).isEqualTo(mdReport);
-        assertThat(Files.readAllLines(adocPath)).isEqualTo(adocReport);
+        assertThat(Files.readAllLines(logReportMd.writeMetricsToFile())).isEqualTo(mdReport);
+        assertThat(Files.readAllLines(logReportAdoc.writeMetricsToFile())).isEqualTo(adocReport);
     }
 
     static Stream<Arguments> provideDataForTest() {
