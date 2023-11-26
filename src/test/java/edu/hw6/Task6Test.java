@@ -40,12 +40,12 @@ public class Task6Test {
 
     @Test
     void udpPortInfoTest() {
-        assertThat(new Task6().getInfoUdpPort(412)).isEqualTo(null);
+        assertThat(new Task6().getInfoUdpPort(412)).isEqualTo("UDP	412	Свободен");
     }
 
     @Test
     void tcpPortInfoTest() {
-        assertThat(new Task6().getInfoUdpPort(81)).isEqualTo(null);
+        assertThat(new Task6().getInfoTcpPort(81)).isEqualTo("TCP	81	Свободен");
     }
 
     @Test
