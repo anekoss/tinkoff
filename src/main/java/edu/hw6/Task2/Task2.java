@@ -28,8 +28,8 @@ public class Task2 {
                         + pathInfo[1];
             }
             try {
-                copyCount = -1;
                 copyPath = Files.createFile(Path.of(newPath));
+                copyCount = -1;
             } catch (FileAlreadyExistsException ignored) {
                 copyCount++;
             }
