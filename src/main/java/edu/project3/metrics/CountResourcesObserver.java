@@ -19,7 +19,7 @@ public class CountResourcesObserver implements LogObserver {
         }
     }
 
-    public List<List<String>> toStringMetric() {
+    public List<List<String>> toListStringMetric() {
         return
             countResources.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(entry -> List.of(entry.getKey(), entry.getValue().toString())).toList();

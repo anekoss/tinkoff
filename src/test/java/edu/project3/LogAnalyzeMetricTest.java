@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -101,8 +100,8 @@ public class LogAnalyzeMetricTest {
         List<String> avgSize
     ) {
         logAnalyzeMetric.onNewData(logRecord);
-        assertThat(countMaxStatusCodeObserver.toStringMetric()).isEqualTo(statusCodeMap);
-        assertThat(countResourcesObserver.toStringMetric()).isEqualTo(countResources);
+        assertThat(countMaxStatusCodeObserver.toListStringMetric()).isEqualTo(statusCodeMap);
+        assertThat(countResourcesObserver.toListStringMetric()).isEqualTo(countResources);
         assertThat(countRequestObserver.toStringMetric()).isEqualTo(countRequests);
         assertThat(avgResponseSizeObserver.toStringMetric()).isEqualTo(avgSize);
     }
@@ -111,12 +110,12 @@ public class LogAnalyzeMetricTest {
     @AfterEach
     void onNullDataTest() {
         List<String> countRequests = countRequestObserver.toStringMetric();
-        List<List<String>> statusCodeMap = countMaxStatusCodeObserver.toStringMetric();
-        List<List<String>> countResources = countResourcesObserver.toStringMetric();
+        List<List<String>> statusCodeMap = countMaxStatusCodeObserver.toListStringMetric();
+        List<List<String>> countResources = countResourcesObserver.toListStringMetric();
         List<String> avgSize = avgResponseSizeObserver.toStringMetric();
         logAnalyzeMetric.onNewData(null);
-        assertThat(countMaxStatusCodeObserver.toStringMetric()).isEqualTo(statusCodeMap);
-        assertThat(countResourcesObserver.toStringMetric()).isEqualTo(countResources);
+        assertThat(countMaxStatusCodeObserver.toListStringMetric()).isEqualTo(statusCodeMap);
+        assertThat(countResourcesObserver.toListStringMetric()).isEqualTo(countResources);
         assertThat(countRequestObserver.toStringMetric()).isEqualTo(countRequests);
         assertThat(avgResponseSizeObserver.toStringMetric()).isEqualTo(avgSize);
     }
@@ -151,7 +150,7 @@ public class LogAnalyzeMetricTest {
         );
         logAnalyzeMetric1.registerObserver(countResourcesObserver1);
         logAnalyzeMetric1.onNewData(logRecord);
-        assertThat(countResourcesObserver1.toStringMetric()).isEqualTo(countResources);
-        assertThat(countResourcesObserver1.toStringMetric()).isEqualTo(logAnalyzeMetric1.getCountResourcesMetrics());
+        assertThat(countResourcesObserver1.toListStringMetric()).isEqualTo(countResources);
+        assertThat(countResourcesObserver1.toListStringMetric()).isEqualTo(logAnalyzeMetric1.getCountResourcesMetrics());
     }
 }

@@ -54,10 +54,10 @@ public class LogAnalyzeMetric implements LogMetric {
     }
 
     public List<List<String>> getStatusCodeMetrics() {
-        return countMaxStatusCodeObserver.toStringMetric();
+        return countMaxStatusCodeObserver.toListStringMetric();
     }
 
     public List<List<String>> getCountResourcesMetrics() {
-        return countResourcesObserver.toStringMetric();
+        return countResourcesObserver.toListStringMetric();
     }
 }

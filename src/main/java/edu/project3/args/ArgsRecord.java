@@ -2,8 +2,11 @@ package edu.project3.args;
 
 import java.net.URI;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,16 +22,8 @@ public record ArgsRecord(Set<Path> paths, Set<URI> uris, java.time.LocalDate fro
             paths.stream().map(Path::toString).collect(Collectors.joining(","))
                 + uris.stream().map(URI::toString).collect(Collectors.joining(","))
         ));
-        if (from == null) {
-            args.add(List.of(DATE_FROM, ""));
-        } else {
-            args.add(List.of(DATE_FROM, from.toString()));
-        }
-        if (to == null) {
-            args.add(List.of(DATE_TO, ""));
-        } else {
-            args.add(List.of(DATE_TO, to.toString()));
-        }
+        args.add(List.of(DATE_FROM, Optional.ofNullable(from).map(Objects::toString).orElse("")));
+        args.add(List.of(DATE_TO, Optional.ofNullable(to).map(Objects::toString).orElse("")));
         return args;
     }
 

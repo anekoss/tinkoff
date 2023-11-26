@@ -21,7 +21,7 @@ public class CountMaxStatusCodeObserver implements LogObserver {
         }
     }
 
-    public List<List<String>> toStringMetric() {
+    public List<List<String>> toListStringMetric() {
         return
             countStatusCodeMap.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(entry -> List.of(
