@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import static edu.hw6.Task6.Protocol.TCP;
@@ -39,20 +40,32 @@ public class Task6 {
         this.printStream = System.out;
     }
 
-    public void scanPorts() {
+    public Map<String, Map<Integer, String>> scanPorts() {
+        Map<Integer, String> infoUdpPorts = new HashMap<>();
+        Map<Integer, String> infoTcpPorts = new HashMap<>();
+
         for (int port = START_PORT; port <= END_PORT; port++) {
-            try (
-                ServerSocket ignored = new ServerSocket(port)) {
-                printStream.println(TCP + SEPARATOR + port + SEPARATOR + TCP.getFreeStatus());
-            } catch (IOException e) {
-                printStream.println(getBusyPortInfo(port, TCP));
-            }
-            try (
-                DatagramSocket ignored = new DatagramSocket(port)) {
-                printStream.println(UDP + SEPARATOR + port + SEPARATOR + UDP.getFreeStatus());
-            } catch (IOException e) {
-                printStream.println(getBusyPortInfo(port, UDP));
-            }
+            infoTcpPorts.put(port, getInfoTcpPort(port));
+            infoUdpPorts.put(port, getInfoUdpPort(port));
+        }
+        return Map.of(TCP.getProtocolName(), infoTcpPorts, UDP.getProtocolName(), infoUdpPorts);
+    }
+
+    public String getInfoTcpPort(int port) {
+        try (
+            ServerSocket ignored = new ServerSocket(port)) {
+            return TCP + SEPARATOR + port + SEPARATOR + TCP.getFreeStatus();
+        } catch (IOException e) {
+            return getBusyPortInfo(port, TCP);
+        }
+    }
+
+    public String getInfoUdpPort(int port) {
+        try (
+            DatagramSocket ignored = new DatagramSocket(port)) {
+            return UDP + SEPARATOR + port + SEPARATOR + UDP.getFreeStatus();
+        } catch (IOException e) {
+            return getBusyPortInfo(port, UDP);
         }
     }
 
@@ -67,7 +80,9 @@ public class Task6 {
         return protocol + SEPARATOR + port + SEPARATOR + protocol.getBusyStatus();
     }
 
-    public Map<Integer, Map.Entry<Protocol, String>> getKnownPorts() {
-        return knownPorts;
+    private void printInfoPorts() {
+        Map<String, Map<Integer, String>> infoPorts = scanPorts();
+        infoPorts.values().stream().sorted().map(Map::values).distinct().forEach(printStream::println);
     }
+
 }
