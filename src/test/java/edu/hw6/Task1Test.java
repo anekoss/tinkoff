@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -42,7 +41,7 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void mapSizeTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void mapSizeTest(DiskMap diskMap, int size) {
         assertThat(diskMap.size()).isEqualTo(size);
         assertThat(diskMap.isEmpty()).isEqualTo(size == 0);
         diskMap.put("null", "null");
@@ -52,10 +51,10 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void mapPutAllTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void mapPutAllTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         diskMap.putAll(elements);
         assertThat(diskMap.size()).isEqualTo(elements.size());
-        for (Map.Entry entry : elements.entrySet()) {
+        for (Map.Entry<String, String> entry : elements.entrySet()) {
             assertThat(diskMap.get(entry.getKey())).isEqualTo(entry.getValue());
         }
         assertThat(diskMap.size()).isEqualTo(elements.size());
@@ -63,10 +62,10 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void mapGetAndRemoveTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void mapGetAndRemoveTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         diskMap.putAll(elements);
         int sizeElements = elements.size();
-        for (Map.Entry entry : elements.entrySet()) {
+        for (Map.Entry<String, String> entry : elements.entrySet()) {
             assertThat(diskMap.get(entry.getKey())).isEqualTo(entry.getValue());
             diskMap.remove(entry.getKey());
             assertThat(diskMap.size()).isEqualTo(--sizeElements);
@@ -76,7 +75,7 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void containsKeyAndValueTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void containsKeyAndValueTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         for (Map.Entry<String, String> entry : elements.entrySet()) {
             assertThat(diskMap.containsKey(entry.getKey())).isEqualTo(false);
             assertThat(diskMap.containsValue(entry.getValue())).isEqualTo(false);
@@ -109,7 +108,7 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void clearTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void clearTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         diskMap.clear();
         assertThat(diskMap.size()).isEqualTo(0);
         diskMap.putAll(elements);
@@ -120,24 +119,24 @@ public class Task1Test {
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void keySetAndValuesTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void keySetAndValuesTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         assertThat(diskMap.keySet()).isEqualTo(Set.of());
         assertThat(diskMap.entrySet()).isEqualTo(Set.of());
-        assertThat(diskMap.values()).isEqualTo(List.of());
+        assertThat(diskMap.values()).isEmpty();
         diskMap.putAll(elements);
         assertThat(diskMap.keySet()).isEqualTo(elements.keySet());
         assertThat(diskMap.entrySet()).isEqualTo(elements.entrySet());
-        assertThat(diskMap.values()).isEqualTo(elements.values().stream().toList());
+        assertThat(diskMap.values().stream().sorted().toList()).isEqualTo(elements.values().stream().sorted().toList());
     }
 
     @ParameterizedTest
     @MethodSource("provideDataForMapMethodTest")
-    void entrySetTest(DiskMap diskMap, int size, Map<String, String> elements) {
+    void entrySetTest(DiskMap diskMap, int ignoredSize, Map<String, String> elements) {
         assertThat(diskMap.entrySet()).isEqualTo(Set.of());
-        assertThat(diskMap.values()).isEqualTo(List.of());
+        assertThat(diskMap.values()).isEmpty();
         diskMap.putAll(elements);
         assertThat(diskMap.keySet()).isEqualTo(elements.keySet());
-        assertThat(diskMap.values()).isEqualTo(elements.values().stream().toList());
+        assertThat(diskMap.values().stream().sorted().toList()).isEqualTo(elements.values().stream().sorted().toList());
     }
 
 }
