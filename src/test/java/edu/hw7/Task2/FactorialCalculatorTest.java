@@ -1,4 +1,4 @@
-package edu.hw7;
+package edu.hw7.Task2;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

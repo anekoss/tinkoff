@@ -1,6 +1,7 @@
 package edu.hw7.Task3;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -98,16 +99,20 @@ public class PersonDatabaseWithReadWriteLock implements PersonDatabase {
     }
 
     private void addToIndex(Map<String, Set<Integer>> indexMap, String personField, Integer id) {
-        Set<Integer> ids = indexMap.getOrDefault(personField, Set.of());
+        Set<Integer> ids = indexMap.getOrDefault(personField, new HashSet<>());
         ids.add(id);
         indexMap.put(personField, ids);
     }
 
     private void removeFromIndex(Map<String, Set<Integer>> indexMap, String personField, Integer id) {
-        Set<Integer> ids = indexMap.getOrDefault(personField, Set.of());
+        Set<Integer> ids = indexMap.getOrDefault(personField, new HashSet<>());
         if (ids.contains(id)) {
             ids.remove(id);
-            indexMap.put(personField, ids);
+            if (ids.isEmpty()) {
+                indexMap.remove(personField);
+            } else {
+                indexMap.put(personField, ids);
+            }
         }
     }
 
@@ -115,5 +120,21 @@ public class PersonDatabaseWithReadWriteLock implements PersonDatabase {
         return personDatabase.entrySet().stream()
             .filter(integerPersonEntry -> ids.contains(integerPersonEntry.getKey()))
             .map(Map.Entry::getValue).toList();
+    }
+
+    public Map<String, Set<Integer>> getAddressIndex() {
+        return addressIndex;
+    }
+
+    public Map<String, Set<Integer>> getPhoneIndex() {
+        return phoneIndex;
+    }
+
+    public Map<String, Set<Integer>> getNameIndex() {
+        return nameIndex;
+    }
+
+    public Map<Integer, Person> getPersonDatabase() {
+        return personDatabase;
     }
 }
