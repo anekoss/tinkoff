@@ -1,14 +1,16 @@
 package edu.hw6;
 
 import edu.hw6.Task5.HackerNews;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import java.io.IOException;
-import java.net.http.HttpClient;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -31,11 +33,17 @@ public class Task5Test {
 
     @Test
     void newsTypeTest() throws InterruptedException, IOException {
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://hacker-news.firebaseio.com/v0/item/" + 37570037 + ".json"))
+            .timeout(Duration.of(60, ChronoUnit.SECONDS))
+            .GET()
+            .build();
+        HttpResponse<String> httpResponse = hackerNews.sendAndGetHttpResponse(request);
         HackerNews hackerNews = Mockito.mock(HackerNews.class);
-        when(hackerNews.sendAndGetHttpResponse(any())).thenCallRealMethod();
-        when(hackerNews.news(anyInt())).thenCallRealMethod();
+        when(hackerNews.sendAndGetHttpResponse(any())).thenReturn(httpResponse);
         when(hackerNews.getFieldPattern(anyString())).thenReturn(this.hackerNews.getFieldPattern(
             "type"));
+        when(hackerNews.news(37570037)).thenCallRealMethod();
         assertThat(hackerNews.news(37570037)).isEqualTo("story");
     }
 
