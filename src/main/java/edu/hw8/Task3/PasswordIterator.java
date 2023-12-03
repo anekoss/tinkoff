@@ -3,6 +3,10 @@ package edu.hw8.Task3;
 import org.jetbrains.annotations.NotNull;
 
 public class PasswordIterator {
+    private PasswordIterator() {
+
+    }
+
     private final static String DEFAULT_NEXT_STRING_VALUE = "";
 
     public static int countCombination(int lengthCombination, int sizeAlphabet) {
@@ -21,12 +25,13 @@ public class PasswordIterator {
             return DEFAULT_NEXT_STRING_VALUE;
         }
         StringBuilder password = new StringBuilder();
+        int numberPassword = numberNextPassword;
         do {
-            int index = numberNextPassword % symbols.length;
+            int index = numberPassword % symbols.length;
             password.append(symbols[index]);
-            numberNextPassword = numberNextPassword / symbols.length;
+            numberPassword = numberPassword / symbols.length;
         }
-        while (numberNextPassword > 0);
+        while (numberPassword > 0);
         return password.toString();
     }
 }

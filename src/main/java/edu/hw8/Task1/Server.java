@@ -23,6 +23,5 @@ public class Server {
             Socket socket = serverSocket.accept();
             executorService.submit(new ClientHandlerServer(socket, invectiveServiceGenerator));
         }
-
     }
 }

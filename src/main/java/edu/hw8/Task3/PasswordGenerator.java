@@ -11,6 +11,8 @@ import static edu.hw8.Task3.PasswordIterator.nextPassword;
 
 @Slf4j
 public class PasswordGenerator {
+    private static final String STRING_FORMAT = "%02x";
+    private static final int MAX_CODE = 0xff;
 
     public static final char[] SYMBOLS =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
@@ -52,13 +54,12 @@ public class PasswordGenerator {
         return passwordMap;
     }
 
-
     public String generateMD5Hash(@NotNull String password) throws NoSuchAlgorithmException {
         MessageDigest messageDigest1 = MessageDigest.getInstance("MD5");
         messageDigest1.update(password.getBytes());
         StringBuilder md5Hex = new StringBuilder();
         for (byte b : messageDigest1.digest()) {
-            md5Hex.append(String.format("%02x", b & 0xff));
+            md5Hex.append(String.format(STRING_FORMAT, b & MAX_CODE));
         }
         return md5Hex.toString();
     }

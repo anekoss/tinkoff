@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ClientHandlerServer implements Runnable {
     private final Socket socket;
     private final InputStream in;
+    private final static int MAX_BUFFER_SIZE = 1024;
     private final OutputStream out;
     private final InvectiveService invectiveService;
 
@@ -45,7 +46,7 @@ public class ClientHandlerServer implements Runnable {
     }
 
     private String getMessage() throws IOException {
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[MAX_BUFFER_SIZE];
         try {
             int bytesRead = in.read(buffer);
             return new String(buffer, 0, bytesRead);

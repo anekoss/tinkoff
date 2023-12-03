@@ -10,17 +10,14 @@ public class Fibonacci implements Runnable {
 
     @Override
     public void run() {
-        int a = 0, b = 1;
+        int previousFibonacci = 1;
         for (int i = 0; i < n; i++) {
-            int c = a + b;
-            a = b;
-            b = c;
+            int c = fibonacci + previousFibonacci;
+            fibonacci = previousFibonacci;
+            previousFibonacci = c;
         }
         if (n <= 0) {
             fibonacci = -1;
-        } else {
-            fibonacci = a;
-
         }
     }
 
