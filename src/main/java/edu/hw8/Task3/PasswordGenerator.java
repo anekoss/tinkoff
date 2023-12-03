@@ -15,10 +15,10 @@ public class PasswordGenerator {
     public static final char[] SYMBOLS =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
     private final Map<String, String> hashPasswordMap;
-    private final int threadIteration = 1000;
+    private final int threadIteration = 100000;
     private final AtomicInteger passwordLength = new AtomicInteger(0);
 
-    public PasswordGenerator(Map<String, String> hashPasswordMap) throws NoSuchAlgorithmException {
+    public PasswordGenerator(Map<String, String> hashPasswordMap) {
         this.hashPasswordMap = hashPasswordMap;
     }
 
@@ -52,21 +52,6 @@ public class PasswordGenerator {
         return passwordMap;
     }
 
-    public void addPasswordIfExist(int numberPassword, Map<String, String> passwordMap)
-        throws NoSuchAlgorithmException {
-
-        for (int i = numberPassword - threadIteration; i < numberPassword; i++) {
-            String code = nextPassword(i, SYMBOLS);
-            String md5Hash = generateMD5Hash(code);
-            System.out.println(i);
-            if (hashPasswordMap.containsKey(md5Hash)) {
-                System.out.println(code);
-                System.out.println(i);
-                passwordMap.put(code, hashPasswordMap.get(md5Hash));
-            }
-        }
-
-    }
 
     public String generateMD5Hash(@NotNull String password) throws NoSuchAlgorithmException {
         MessageDigest messageDigest1 = MessageDigest.getInstance("MD5");
@@ -76,6 +61,17 @@ public class PasswordGenerator {
             md5Hex.append(String.format("%02x", b & 0xff));
         }
         return md5Hex.toString();
+    }
+
+    private void addPasswordIfExist(int numberPassword, Map<String, String> passwordMap)
+        throws NoSuchAlgorithmException {
+        for (int i = numberPassword - threadIteration; i < numberPassword; i++) {
+            String code = nextPassword(i, SYMBOLS);
+            String md5Hash = generateMD5Hash(code);
+            if (hashPasswordMap.containsKey(md5Hash)) {
+                passwordMap.put(code, hashPasswordMap.get(md5Hash));
+            }
+        }
     }
 
 }

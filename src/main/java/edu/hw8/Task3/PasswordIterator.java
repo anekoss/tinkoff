@@ -9,11 +9,11 @@ public class PasswordIterator {
         if (lengthCombination <= 0 || sizeAlphabet <= 0) {
             return 0;
         }
-        int countCompination = 1;
+        int countCombination = 1;
         for (int i = 0; i < lengthCombination; i++) {
-            countCompination *= sizeAlphabet;
+            countCombination *= sizeAlphabet;
         }
-        return countCompination;
+        return countCombination;
     }
 
     public static String nextPassword(int numberNextPassword, char @NotNull [] symbols) {

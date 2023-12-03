@@ -21,7 +21,7 @@ public class Server {
     public void main() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
-            executorService.submit(new ServerSomthing(socket, invectiveServiceGenerator));
+            executorService.submit(new ClientHandlerServer(socket, invectiveServiceGenerator));
         }
 
     }

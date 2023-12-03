@@ -16,10 +16,19 @@ public class Fibonacci implements Runnable {
             a = b;
             b = c;
         }
-        fibonacci = a;
+        if (n <= 0) {
+            fibonacci = -1;
+        } else {
+            fibonacci = a;
+
+        }
     }
 
     public int getFibonacci() {
         return fibonacci;
+    }
+
+    public void setFibonacci() {
+        this.fibonacci = 0;
     }
 }

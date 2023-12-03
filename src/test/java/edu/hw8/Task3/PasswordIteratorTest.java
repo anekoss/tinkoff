@@ -1,6 +1,5 @@
 package edu.hw8.Task3;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import static edu.hw8.Task3.PasswordGenerator.SYMBOLS;
@@ -11,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PasswordIteratorTest {
 
     @ParameterizedTest
-    @CsvSource({"2,2,4", "100,100,10000", "-1, 100, 0", "-1,-1,0", "100,-1,0", "0,100,0",})
+    @CsvSource({"2,2,4", "10,2,1024", "2,10,100", "-1, 100, 0", "-1,-1,0", "100,-1,0", "0,100,0",})
     void countCombinationTest(int combinationLength, int sizeAlpabet, int excepted) {
         assertThat(countCombination(combinationLength, sizeAlpabet)).isEqualTo(excepted);
     }

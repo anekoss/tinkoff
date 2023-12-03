@@ -8,13 +8,13 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ServerSomthing implements Runnable {
+public class ClientHandlerServer implements Runnable {
     private final Socket socket;
     private final InputStream in;
     private final OutputStream out;
     private final InvectiveService invectiveService;
 
-    public ServerSomthing(Socket socket, InvectiveService invectiveService) throws IOException {
+    public ClientHandlerServer(Socket socket, InvectiveService invectiveService) throws IOException {
         this.socket = socket;
         in = socket.getInputStream();
         out = socket.getOutputStream();

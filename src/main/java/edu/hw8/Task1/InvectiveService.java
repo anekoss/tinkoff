@@ -17,13 +17,13 @@ public class InvectiveService {
         this.sensitiveList = Files.readAllLines(path);
     }
 
-    public String getInvectiveSensitive(String word) throws IOException {
+    public String getInvectiveSensitive(String word) {
         return sensitiveList.stream().filter(value -> hasWord(word, value)).findAny()
             .orElse(DEFAULT_INVECTIVE_SENSITIVE);
     }
 
-    private boolean hasWord(String word, String sensitive) {
-        if (word == null || word.isEmpty()) {
+    public boolean hasWord(@NotNull String word, @NotNull String sensitive) {
+        if (word.isEmpty() || sensitive.isEmpty()) {
             return false;
         }
         return sensitive.contains(word);
