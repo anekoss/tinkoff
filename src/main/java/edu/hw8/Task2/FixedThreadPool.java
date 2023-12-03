@@ -1,8 +1,8 @@
 package edu.hw8.Task2;
 
-import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FixedThreadPool implements ThreadPool {
@@ -23,7 +23,6 @@ public class FixedThreadPool implements ThreadPool {
                         Runnable task = blockingQueue.take();
                         task.run();
                     } catch (InterruptedException e) {
-                        log.error("Thread interrupt");
                         Thread.currentThread().interrupt();
                     }
                 }
@@ -38,7 +37,6 @@ public class FixedThreadPool implements ThreadPool {
         try {
             blockingQueue.put(runnable);
         } catch (InterruptedException e) {
-            log.error("Thread interrupt");
             Thread.currentThread().interrupt();
         }
     }
