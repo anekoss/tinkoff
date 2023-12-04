@@ -45,6 +45,7 @@ public class ClientServerTest {
             }
         }
         ).start();
+        Thread.sleep(5000);
         Thread[] threads = new Thread[100];
         for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(() -> {
@@ -73,6 +74,7 @@ public class ClientServerTest {
             }
         }
         ).start();
+        Thread.sleep(5000);
         Thread[] threads = new Thread[100];
         for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(() -> {
