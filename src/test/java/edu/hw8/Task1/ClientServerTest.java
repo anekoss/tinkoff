@@ -36,7 +36,7 @@ public class ClientServerTest {
         int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
-                new Server(PATH, 9091, MIN_COUNT_CONNECTIONS).main();
+                new Server(PATH, 7234, MIN_COUNT_CONNECTIONS).main();
             } catch (IOException ignored) {
             }
         }
@@ -52,7 +52,7 @@ public class ClientServerTest {
             });
             thread.start();
             threads[i] = thread;
-            assertThat(Thread.activeCount() - startCountThread).isLessThanOrEqualTo(7234 + i + 1);
+            assertThat(Thread.activeCount() - startCountThread).isLessThanOrEqualTo(MIN_COUNT_CONNECTIONS + i + 1);
         }
         for (Thread thread : threads) {
             thread.join();
