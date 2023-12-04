@@ -31,12 +31,12 @@ public class InvectiveServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"личности, Не переходи на личности там, где их нет, true",
-        "где, Не переходи на личности там, где их нет, true",
-        "'', Не переходи на личности там, где их нет, false",
+    @CsvSource({"личности, 'Не переходи на личности там, где их нет', true",
+        "где, 'Не переходи на личности там, где их нет', true",
+        "'', 'Не переходи на личности там, где их нет', false",
         "ты нехороший, '', false",
         "'', '', false",
-        "ты нехороший, Не переходи на личности там, где их нет, false"})
+        "ты нехороший, 'Не переходи на личности там, где их нет', false"})
     void hasWordTest(String word, String sensitive, boolean excepted) {
         assertThat(invectiveService.hasWord(word, sensitive)).isEqualTo(excepted);
     }
