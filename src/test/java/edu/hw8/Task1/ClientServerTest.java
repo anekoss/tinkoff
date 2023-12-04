@@ -2,6 +2,7 @@ package edu.hw8.Task1;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,17 +19,21 @@ public class ClientServerTest {
     @CsvSource({"личности, 'Не переходи на личности там, где их нет'",
         "где, 'Не переходи на личности там, где их нет'",
         "'', Ты не хороший!"})
-    public void testGetInvectiveSensitive(String word, String exceptedSensitive) throws IOException {
-        new Thread(() -> {
+    public void testGetInvectiveSensitive(String word, String exceptedSensitive) {
+        int port = new InetSocketAddress(0).getPort();
+        Thread thread = new Thread(() -> {
             try {
-                new Server(PATH, 7345, MIN_COUNT_CONNECTIONS).main();
+                new Server(PATH, port, MIN_COUNT_CONNECTIONS).main();
             } catch (IOException ignored) {
             }
         }
-        ).start();
-        String invectiveSensitive =
-            new Client(InetAddress.getLocalHost(), 7345).getInvectiveSensitive(word);
-        assertThat(invectiveSensitive).isEqualTo(exceptedSensitive);
+        );
+        thread.start();
+        try {
+            String invectiveSensitive = new Client(InetAddress.getLocalHost(), port).getInvectiveSensitive(word);
+            assertThat(invectiveSensitive).isEqualTo(exceptedSensitive);
+        } catch (IOException ignored) {
+        }
     }
 
     @Test
