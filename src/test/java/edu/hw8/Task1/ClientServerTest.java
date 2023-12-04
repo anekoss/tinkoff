@@ -37,7 +37,6 @@ public class ClientServerTest {
 
     @Test
     public void testMinCountConnection() throws InterruptedException {
-        int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
                 new Server(PATH, 7234, 1).main();
@@ -45,6 +44,7 @@ public class ClientServerTest {
             }
         }
         ).start();
+        int startCountThread = Thread.activeCount();
         Thread.sleep(5000);
         Thread[] threads = new Thread[100];
         for (int i = 0; i < 100; i++) {
@@ -66,7 +66,6 @@ public class ClientServerTest {
 
     @Test
     public void testMaxCountConnection() throws InterruptedException {
-        int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
                 new Server(PATH, 9190, 4).main();
@@ -74,6 +73,7 @@ public class ClientServerTest {
             }
         }
         ).start();
+        int startCountThread = Thread.activeCount();
         Thread.sleep(5000);
         Thread[] threads = new Thread[100];
         for (int i = 0; i < 100; i++) {
