@@ -11,9 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClientServerTest {
 
     private static final Path PATH = Path.of("src/main/resources/h8/file.txt");
-    private static final int MIN_CONNECTION_SERVER_PORT = 7777;
     private static final int MIN_COUNT_CONNECTIONS = 1;
-    private static final int MAX_CONNECTION_SERVER_PORT = 9090;
     private static final int MAX_COUNT_CONNECTIONS = 4;
 
     @ParameterizedTest
@@ -29,7 +27,7 @@ public class ClientServerTest {
         }
         ).start();
         String invectiveSensitive =
-            new Client(InetAddress.getLocalHost(), MAX_CONNECTION_SERVER_PORT).getInvectiveSensitive(word);
+            new Client(InetAddress.getLocalHost(), 9090).getInvectiveSensitive(word);
         assertThat(invectiveSensitive).isEqualTo(exceptedSensitive);
     }
 
@@ -47,14 +45,14 @@ public class ClientServerTest {
         for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(() -> {
                 try {
-                    new Client(InetAddress.getLocalHost(), MIN_CONNECTION_SERVER_PORT).getInvectiveSensitive(
+                    new Client(InetAddress.getLocalHost(), 7234).getInvectiveSensitive(
                         "личности");
                 } catch (IOException ignored) {
                 }
             });
             thread.start();
             threads[i] = thread;
-            assertThat(Thread.activeCount() - startCountThread).isLessThanOrEqualTo(MIN_COUNT_CONNECTIONS + i + 1);
+            assertThat(Thread.activeCount() - startCountThread).isLessThanOrEqualTo(7234 + i + 1);
         }
         for (Thread thread : threads) {
             thread.join();
@@ -66,7 +64,7 @@ public class ClientServerTest {
         int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
-                new Server(PATH, 9190, MIN_COUNT_CONNECTIONS).main();
+                new Server(PATH, 9190, 3193).main();
             } catch (IOException ignored) {
             }
         }
@@ -75,10 +73,9 @@ public class ClientServerTest {
         for (int i = 0; i < 100; i++) {
             Thread thread = new Thread(() -> {
                 try {
-                    new Client(InetAddress.getLocalHost(), MAX_CONNECTION_SERVER_PORT).getInvectiveSensitive(
+                    new Client(InetAddress.getLocalHost(), 3193).getInvectiveSensitive(
                         "личности");
-                } catch (IOException e) {
-                    System.out.println("new");
+                } catch (IOException ignored) {
                 }
             });
             thread.start();
