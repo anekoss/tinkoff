@@ -21,13 +21,13 @@ public class ClientServerTest {
     public void testGetInvectiveSensitive(String word, String exceptedSensitive) throws IOException {
         new Thread(() -> {
             try {
-                new Server(PATH, 9090, MIN_COUNT_CONNECTIONS).main();
+                new Server(PATH, 7345, MIN_COUNT_CONNECTIONS).main();
             } catch (IOException ignored) {
             }
         }
         ).start();
         String invectiveSensitive =
-            new Client(InetAddress.getLocalHost(), 9090).getInvectiveSensitive(word);
+            new Client(InetAddress.getLocalHost(), 7345).getInvectiveSensitive(word);
         assertThat(invectiveSensitive).isEqualTo(exceptedSensitive);
     }
 
