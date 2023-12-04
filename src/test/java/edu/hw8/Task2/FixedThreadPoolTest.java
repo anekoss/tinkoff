@@ -33,6 +33,7 @@ public class FixedThreadPoolTest {
         for (int i = 1; i <= 5; i++) {
             try (FixedThreadPool fixedThreadPool = new FixedThreadPool(i)) {
                 fixedThreadPool.start();
+                Thread.sleep(5000);
                 for (Fibonacci fibonacci : fibonacciMap.keySet()) {
                     fixedThreadPool.execute(fibonacci);
                 }

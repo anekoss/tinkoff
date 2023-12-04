@@ -40,7 +40,7 @@ public class ClientServerTest {
         int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
-                new Server(PATH, 7234, 4).main();
+                new Server(PATH, 7234, 1).main();
             } catch (IOException ignored) {
             }
         }
@@ -69,7 +69,7 @@ public class ClientServerTest {
         int startCountThread = Thread.activeCount();
         new Thread(() -> {
             try {
-                new Server(PATH, 9190, 3193).main();
+                new Server(PATH, 9190, 4).main();
             } catch (IOException ignored) {
             }
         }
