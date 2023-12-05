@@ -3,7 +3,7 @@
 
 |Метрика|Значение|
 |:-:|:-:|
-|Файл(ы)|src\main\resources\project3\testLog\logs.txt|
+|Файл(ы)|src/main/resources/project3/testLog/logs.txt|
 |Начальная дата||
 |Конечная дата|2015-06-04|
 |Средний размер ответа|553004b|
