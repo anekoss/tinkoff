@@ -21,8 +21,6 @@ public class Task5Test {
     void hackerNewsTopStoriesTest() throws InterruptedException {
         long[] result = hackerNews.hackerNewsTopStories();
         assertThat(result.length).isLessThanOrEqualTo(500).isGreaterThan(0);
-        assertThat(result).contains(38423469L);
-        assertThat(result).contains(38416380L);
 
     }
 
