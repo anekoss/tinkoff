@@ -22,7 +22,7 @@ public class LogAnalyzeTest {
     static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(
-                Path.of("tsrc/main/resources/project3/estLog//logs/logFile.txt"),
+                Path.of("src/main/resources/project3/estLog//logs/logFile.txt"),
                 new ArgsRecord(
                     Set.of(
                         Path.of("src/main/resources/project3/testLog/logs/logFile.txt")),
