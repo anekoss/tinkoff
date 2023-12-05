@@ -39,7 +39,7 @@ public class ClientServerTest {
     public void minCountConnectionTest() throws InterruptedException {
         new Thread(() -> {
             try {
-                new Server(PATH, 7234, 1).main();
+                new Server(PATH, 7134, 1).main();
             } catch (IOException ignored) {
             }
         }
