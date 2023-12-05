@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import static edu.project3.report.CloneFile.cloneFile;
 
 public class LogReport {
-    private final static String FILE_NAME_MD = "REPORT";
-    private final static String FILE_NAME_DOC = "report";
+    private final static String FILE_NAME_MD = "src/main/resources/project3/REPORT";
+    private final static String FILE_NAME_DOC = "src/main/resources/project3/report";
     private final FileParser fileParser;
     private final Path file;
 

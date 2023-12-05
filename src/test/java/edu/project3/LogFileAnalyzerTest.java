@@ -1,21 +1,29 @@
 package edu.project3;
 
-import org.junit.jupiter.api.Test;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogFileAnalyzerTest {
     @Test
-    void adocReportTest() {
-        String[] args = new String[] {"--path", "testLog/logs.txt", "--from", "2015-06-04", "--format", "adoc"};
+    void adocReportTest() throws IOException {
+        String[] args =
+            new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--from", "2015-06-04", "--format",
+                "adoc"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(logAnalyze.run(args)).isEqualTo(Path.of("report.adoc"));
+        assertThat(Files.readString(logAnalyze.run(args))).isEqualTo(Files.readString(Path.of(
+            "src/main/resources/project3/report/report.adoc")));
     }
 
     @Test
-    void mdReportTest() {
-        String[] args = new String[] {"--path", "testLog/logs.txt", "--to", "2015-06-04", "--format", "markdown"};
+    void mdReportTest() throws IOException {
+        String[] args =
+            new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--to", "2015-06-04", "--format",
+                "markdown"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(logAnalyze.run(args)).isEqualTo(Path.of("REPORT.md"));
+        assertThat(Files.readString(logAnalyze.run(args))).isEqualTo(Files.readString(Path.of(
+            "src/main/resources/project3/report/REPORT.md")));
     }
 }
