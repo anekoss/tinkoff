@@ -22,17 +22,17 @@ public class LogAnalyzeTest {
     static Stream<Arguments> provideDataForTest() {
         return Stream.of(
             Arguments.of(
-                Path.of("testLog//logs/logFile.txt"),
+                Path.of("tsrc/main/resources/project3/estLog//logs/logFile.txt"),
                 new ArgsRecord(
                     Set.of(
-                        Path.of("testLog/logs/logFile.txt")),
+                        Path.of("src/main/resources/project3/testLog/logs/logFile.txt")),
                     Set.of(),
                     LocalDate.parse("2015-05-17"),
                     LocalDate.parse("2015-05-17"),
                     FormatReport.MARKDOWN
                 ),
                 List.of(
-                    List.of("Файл(ы)", "testLog/logs/logFile.txt"),
+                    List.of("Файл(ы)", "src/main/resources/project3/testLog/logs/logFile.txt"),
                     List.of("Начальная дата", "2015-05-17"),
                     List.of("Конечная дата", "2015-05-17"),
                     List.of("Средний размер ответа", "101b"),

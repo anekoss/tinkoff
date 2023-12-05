@@ -20,7 +20,7 @@ public class CommandLineArgsParserTest {
             Arguments.of(
                 new String[] {
                     "--path", "src/main/resources/project3/testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
-                new ArgsRecord(Set.of(Path.of("testLog/logs.txt")), Set.of(),
+                new ArgsRecord(Set.of(Path.of("src/main/resources/project3/testLog/logs.txt")), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 )
             ),
@@ -142,7 +142,7 @@ public class CommandLineArgsParserTest {
                 "Неверный формат аргументов командной строки"
             ),
             Arguments.of(
-                "--path src/main/resources/project3/testLog/testLog/logs.txt --from 2023-08-31 --to --format markdown",
+                "--path src/main/resources/project3/testLog/logs.txt --from 2023-08-31 --to --format markdown",
                 "Неверный формат времени. Ожидается ISO8601."
             ),
             Arguments.of(

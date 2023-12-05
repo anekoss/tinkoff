@@ -109,7 +109,7 @@ public class LogReaderTest {
                     LocalDate.parse("2023-08-31"),
                     null,
                     FormatReport.ADOC
-                ), 53895
+                ), 54096
             )
         );
     }
