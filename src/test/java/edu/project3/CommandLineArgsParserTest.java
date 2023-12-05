@@ -19,19 +19,19 @@ public class CommandLineArgsParserTest {
         return Stream.of(
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(Set.of(Path.of("testLog/logs.txt")), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 )
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/log*", "--from", "2023-08-31", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/testLog/log*", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(
                     Set.of(
-                        Path.of("testLog/logs.txt"),
-                        Path.of("testLog/logs(1).txt"),
-                        Path.of("testLog/logFile.txt")
+                        Path.of("src/main/resources/project3/testLog/logs.txt"),
+                        Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                        Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                     ),
                     Set.of(),
@@ -42,11 +42,11 @@ public class CommandLineArgsParserTest {
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/log*", "testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/testLog/log*", "src/main/resources/project3/testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs.txt"),
-                    Path.of("testLog/logs(1).txt"),
-                    Path.of("testLog/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs.txt"),
+                    Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                    Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
@@ -54,30 +54,30 @@ public class CommandLineArgsParserTest {
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "*/*/logFile.txt", "--from", "2023-08-31", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/*/*/logFile.txt", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs/logFile.txt")
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 )
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/**/logFile.txt", "--from", "2023-08-31", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/testLog/**/logFile.txt", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs/logFile.txt")
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 )
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/log*", "testLog/logs.txt", "--from", "2023-08-31", "--to", "2023-09-25",
+                    "--path", "src/main/resources/project3/testLog/log*", "src/main/resources/project3/testLog/logs.txt", "--from", "2023-08-31", "--to", "2023-09-25",
                     "--format", "adoc"},
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs.txt"),
-                    Path.of("testLog/logs(1).txt"),
-                    Path.of("testLog/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs.txt"),
+                    Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                    Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), LocalDate.parse("2023-09-25"), FormatReport.ADOC
@@ -85,11 +85,11 @@ public class CommandLineArgsParserTest {
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/log*", "testLog/logs.txt", "--to", "2023-09-25", "--format", "adoc"},
+                    "--path", "src/main/resources/project3/testLog/log*", "src/main/resources/project3/testLog/logs.txt", "--to", "2023-09-25", "--format", "adoc"},
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs.txt"),
-                    Path.of("testLog/logs(1).txt"),
-                    Path.of("testLog/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs.txt"),
+                    Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                    Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                 ), Set.of(),
                     null, LocalDate.parse("2023-09-25"), FormatReport.ADOC
@@ -97,14 +97,14 @@ public class CommandLineArgsParserTest {
             ),
             Arguments.of(
                 new String[] {
-                    "--path", "testLog/log*",
+                    "--path", "src/main/resources/project3/testLog/log*",
                     "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs",
-                    "testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
+                    "src/main/resources/project3/testLog/logs.txt", "--from", "2023-08-31", "--format", "adoc"},
                 new ArgsRecord(
                     Set.of(
-                        Path.of("testLog/logs.txt"),
-                        Path.of("testLog/logs(1).txt"),
-                        Path.of("testLog/logFile.txt")
+                        Path.of("src/main/resources/project3/testLog/logs.txt"),
+                        Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                        Path.of("src/main/resources/project3/testLog/logFile.txt")
                     ),
                     Set.of(URI.create(
                         "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs")),
@@ -130,26 +130,26 @@ public class CommandLineArgsParserTest {
                 "Неверный формат пути к log файлу. Ожидается локальный шаблон или URL."
             ),
             Arguments.of(
-                "--path logs.txt --from 2023-08-f31 --format markdown",
+                "--path src/main/resources/project3/testLog/logs.txt --from 2023-08-f31 --format markdown",
                 "Неверный формат аргументов командной строки"
             ),
             Arguments.of(
-                "--path logs.txt 2023-08-31 --format markdown",
+                "--path src/main/resources/project3/testLog/logs.txt 2023-08-31 --format markdown",
                 "Неверный формат пути к log файлу. Ожидается локальный шаблон или URL."
             ),
             Arguments.of(
-                "--path logs.txt --from 2023-08-31 --to fjfj --format markdown",
+                "--path src/main/resources/project3/testLog/logs.txt --from 2023-08-31 --to fjfj --format markdown",
                 "Неверный формат аргументов командной строки"
             ),
             Arguments.of(
-                "--path testLog/logs.txt --from 2023-08-31 --to --format markdown",
+                "--path src/main/resources/project3/testLog/testLog/logs.txt --from 2023-08-31 --to --format markdown",
                 "Неверный формат времени. Ожидается ISO8601."
             ),
             Arguments.of(
-                "--path logs.txt --from 2023-08-31 --to 2023-08-31 --format hi",
+                "--path src/main/resources/project3/testLog/logs.txt --from 2023-08-31 --to 2023-08-31 --format hi",
                 "Неверный формат аргументов командной строки"
             ),
-            Arguments.of("logs.txt --from 2023-08-31 --to --format hi", "Неверный формат аргументов командной строки")
+            Arguments.of("src/main/resources/project3/testLog/logs.txt --from 2023-08-31 --to --format hi", "Неверный формат аргументов командной строки")
         );
 
     }

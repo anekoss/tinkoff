@@ -31,16 +31,16 @@ public class LogReaderTest {
             ),
             Arguments.of(
                 new ArgsRecord(
-                    Set.of(Path.of("testLog/logs.txt")), Set.of(),
+                    Set.of(Path.of("src/main/resources/project3/testLog/logs.txt")), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 ), 2634
             ),
             Arguments.of(
                 new ArgsRecord(
                     Set.of(
-                        Path.of("testLog/logs.txt"),
-                        Path.of("testLog/logs(1).txt"),
-                        Path.of("testLog/logFile.txt")
+                        Path.of("src/main/resources/project3/testLog/logs.txt"),
+                        Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                        Path.of("src/main/resources/project3/testLog/logFile.txt")
                     ),
                     Set.of(),
                     LocalDate.parse("2023-08-31"),
@@ -50,9 +50,9 @@ public class LogReaderTest {
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs.txt"),
-                    Path.of("testLog/logs(1).txt"),
-                    Path.of("testLog/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs.txt"),
+                    Path.of("src/main/resources/project3/testLog/logs(1).txt"),
+                    Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
@@ -60,22 +60,22 @@ public class LogReaderTest {
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs/logFile.txt")
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 ), 28
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs/logFile.txt")
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), null, FormatReport.ADOC
                 ), 28
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs.txt"),
-                    Path.of("testLog/logFile.txt")
+                    Path.of("src/main/resources/project3/testLog/logs.txt"),
+                    Path.of("src/main/resources/project3/testLog/logFile.txt")
 
                 ), Set.of(),
                     LocalDate.parse("2023-08-31"), LocalDate.parse("2023-09-25"), FormatReport.ADOC
@@ -83,7 +83,7 @@ public class LogReaderTest {
             ),
             Arguments.of(
                 new ArgsRecord(Set.of(
-                    Path.of("testLog/logs(1).txt")
+                    Path.of("src/main/resources/project3/testLog/logs(1).txt")
 
                 ), Set.of(),
                     null, LocalDate.parse("2023-09-25"), FormatReport.ADOC
@@ -102,7 +102,7 @@ public class LogReaderTest {
             Arguments.of(
                 new ArgsRecord(
                     Set.of(
-                        Path.of("testLog/logs(1).txt")
+                        Path.of("src/main/resources/project3/testLog/logs(1).txt")
                     ),
                     Set.of(URI.create(
                         "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs")),
