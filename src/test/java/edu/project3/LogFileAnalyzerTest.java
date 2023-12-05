@@ -1,6 +1,7 @@
 package edu.project3;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ public class LogFileAnalyzerTest {
             new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--from", "2015-06-04", "--format",
                 "adoc"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)))).isEqualTo(new String(Files.readAllBytes(Path.of(
-            "src/main/resources/project3/report/report.adoc"))));
+        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)), StandardCharsets.UTF_8)).isEqualTo(new String(Files.readAllBytes(Path.of(
+            "src/main/resources/project3/report/report.adoc")), StandardCharsets.UTF_8));
     }
 
     @Test
@@ -23,7 +24,9 @@ public class LogFileAnalyzerTest {
             new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--to", "2015-06-04", "--format",
                 "markdown"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)))).isEqualTo(new String(Files.readAllBytes(Path.of(
-            "src/main/resources/project3/report/REPORT.md"))));
+        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)), StandardCharsets.UTF_8)).isSameAs(new String(
+            Files.readAllBytes(Path.of(
+                "src/main/resources/project3/report/REPORT.md")),
+            StandardCharsets.UTF_8));
     }
 }
