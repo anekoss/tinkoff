@@ -14,7 +14,7 @@ public class InvectiveServiceTest {
 
     @BeforeAll
     static void init() throws IOException {
-        invectiveService = new InvectiveService(Path.of("src/main/resources/h8/file.txt"));
+        invectiveService = new InvectiveService(Path.of("src/main/resources/hw8/file.txt"));
     }
 
     @ParameterizedTest
