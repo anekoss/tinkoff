@@ -13,8 +13,8 @@ public class LogFileAnalyzerTest {
             new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--from", "2015-06-04", "--format",
                 "adoc"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(Files.readString(logAnalyze.run(args))).isEqualTo(Files.readString(Path.of(
-            "src/main/resources/project3/report/report.adoc")));
+        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)))).isEqualTo(new String(Files.readAllBytes(Path.of(
+            "src/main/resources/project3/report/report.adoc"))));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class LogFileAnalyzerTest {
             new String[] {"--path", "src/main/resources/project3/testLog/logs.txt", "--to", "2015-06-04", "--format",
                 "markdown"};
         LogFileAnalyzer logAnalyze = new LogFileAnalyzer(args);
-        assertThat(Files.readString(logAnalyze.run(args))).isEqualTo(Files.readString(Path.of(
-            "src/main/resources/project3/report/REPORT.md")));
+        assertThat(new String(Files.readAllBytes(logAnalyze.run(args)))).isEqualTo(new String(Files.readAllBytes(Path.of(
+            "src/main/resources/project3/report/REPORT.md"))));
     }
 }
