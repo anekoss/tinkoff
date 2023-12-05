@@ -17,7 +17,7 @@ public class ClientServerTest {
     @CsvSource({"личности, 'Не переходи на личности там, где их нет'",
         "где, 'Не переходи на личности там, где их нет'",
         "'', Ты не хороший!"})
-    public void testGetInvectiveSensitive(String word, String exceptedSensitive) throws InterruptedException {
+    public void getInvectiveSensitiveTest(String word, String exceptedSensitive) throws InterruptedException {
         int port = new InetSocketAddress(0).getPort();
         Thread thread = new Thread(() -> {
             try {
@@ -36,7 +36,7 @@ public class ClientServerTest {
     }
 
     @Test
-    public void testMinCountConnection() throws InterruptedException {
+    public void minCountConnectionTest() throws InterruptedException {
         new Thread(() -> {
             try {
                 new Server(PATH, 7234, 1).main();
@@ -65,7 +65,7 @@ public class ClientServerTest {
     }
 
     @Test
-    public void testMaxCountConnection() throws InterruptedException {
+    public void maxCountConnectionTest() throws InterruptedException {
         new Thread(() -> {
             try {
                 new Server(PATH, 9190, 4).main();
@@ -92,4 +92,5 @@ public class ClientServerTest {
             thread.join();
         }
     }
+
 }
