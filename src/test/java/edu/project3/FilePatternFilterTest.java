@@ -13,17 +13,17 @@ public class FilePatternFilterTest {
 
     static Stream<Arguments> provideDataForTest() {
         return Stream.of(
-            Arguments.of("*/logs/lo*", List.of(Path.of("testLog/logs/logFile.txt"))),
-            Arguments.of("*/logs/logFile.txt", List.of(Path.of("testLog/logs/logFile.txt"))),
-            Arguments.of("*/*/logFile.txt", List.of(Path.of("testLog/logs/logFile.txt"))),
-            Arguments.of("*/*/logFile.txtt", List.of()),
+            Arguments.of("src/main/resources/project3/*/logs/lo*", List.of(Path.of("src/main/resources/project3/testLog/logs/logFile.txt"))),
+            Arguments.of("src/main/resources/project3/*/logs/logFile.txt", List.of(Path.of("src/main/resources/project3/testLog/logs/logFile.txt"))),
+            Arguments.of("src/main/resources/project3/*/*/logFile.txt", List.of(Path.of("src/main/resources/project3/testLog/logs/logFile.txt"))),
+            Arguments.of("src/main/resources/project3/*/*/logFile.txtt", List.of()),
             Arguments.of(
-                "*/lo*",
-                List.of(Path.of("testLog/logFile.txt"), Path.of("testLog/logs(1).txt"), Path.of("testLog/logs.txt"))
+                "src/main/resources/project3/*/lo*",
+                List.of(Path.of("src/main/resources/project3/testLog/logFile.txt"), Path.of("src/main/resources/project3/testLog/logs(1).txt"), Path.of("src/main/resources/project3/testLog/logs.txt"))
             ),
             Arguments.of(
-                "*/*.txt",
-                List.of(Path.of("testLog/logFile.txt"), Path.of("testLog/logs(1).txt"), Path.of("testLog/logs.txt"))
+                "src/main/resources/project3/*/*.txt",
+                List.of(Path.of("src/main/resources/project3/testLog/logFile.txt"), Path.of("src/main/resources/project3/testLog/logs(1).txt"), Path.of("src/main/resources/project3/testLog/logs.txt"))
             )
         );
     }
