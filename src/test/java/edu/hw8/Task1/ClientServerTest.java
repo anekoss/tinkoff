@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientServerTest {
 
-    private static final Path PATH = Path.of("src/main/resources/h8/file.txt");
+    private static final Path PATH = Path.of("src/main/resources/hw8/file.txt");
 
     @ParameterizedTest
     @CsvSource({"личности, 'Не переходи на личности там, где их нет'",
