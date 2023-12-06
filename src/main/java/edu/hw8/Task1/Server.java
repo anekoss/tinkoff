@@ -18,6 +18,12 @@ public class Server {
         this.executorService = Executors.newFixedThreadPool(maxConnections);
     }
 
+    public Server(ServerSocket serverSocket, InvectiveService invectiveService, ExecutorService executorService) {
+        this.invectiveServiceGenerator = invectiveService;
+        this.serverSocket = serverSocket;
+        this.executorService = executorService;
+    }
+
     public void main() throws IOException {
         while (true) {
             Socket socket = serverSocket.accept();
