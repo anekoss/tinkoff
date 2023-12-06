@@ -24,7 +24,7 @@ class ServerTest {
     private Socket socket;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         socket = mock(Socket.class);
         invectiveService = mock(InvectiveService.class);
         serverSocket = mock(ServerSocket.class);
