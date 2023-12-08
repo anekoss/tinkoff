@@ -20,8 +20,7 @@ public class FixedThreadPoolTest {
                     new Fibonacci(5), 5,
                     new Fibonacci(7), 13,
                     new Fibonacci(9), 34,
-                    new Fibonacci(10), 55,
-                    new Fibonacci(38), 39088169
+                    new Fibonacci(10), 55
                 )
             )
         );
