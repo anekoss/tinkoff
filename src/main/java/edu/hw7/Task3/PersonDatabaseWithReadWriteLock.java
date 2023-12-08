@@ -1,7 +1,6 @@
 package edu.hw7.Task3;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,7 +65,7 @@ public class PersonDatabaseWithReadWriteLock implements PersonDatabase {
             if (!nameIndex.containsKey(name)) {
                 return List.of();
             }
-            return getPersonFromDatabase(nameIndex.get(name));
+            return getPersonFromDatabase(nameIndex.get(name), personDatabase);
         } finally {
             readLock.unlock();
         }
@@ -79,7 +78,7 @@ public class PersonDatabaseWithReadWriteLock implements PersonDatabase {
             if (!addressIndex.containsKey(address)) {
                 return List.of();
             }
-            return getPersonFromDatabase(addressIndex.get(address));
+            return getPersonFromDatabase(addressIndex.get(address), personDatabase);
         } finally {
             readLock.unlock();
         }
@@ -92,34 +91,10 @@ public class PersonDatabaseWithReadWriteLock implements PersonDatabase {
             if (!phoneIndex.containsKey(phone)) {
                 return List.of();
             }
-            return getPersonFromDatabase(phoneIndex.get(phone));
+            return getPersonFromDatabase(phoneIndex.get(phone), personDatabase);
         } finally {
             readLock.unlock();
         }
-    }
-
-    private void addToIndex(Map<String, Set<Integer>> indexMap, String personField, Integer id) {
-        Set<Integer> ids = indexMap.getOrDefault(personField, new HashSet<>());
-        ids.add(id);
-        indexMap.put(personField, ids);
-    }
-
-    private void removeFromIndex(Map<String, Set<Integer>> indexMap, String personField, Integer id) {
-        Set<Integer> ids = indexMap.getOrDefault(personField, new HashSet<>());
-        if (ids.contains(id)) {
-            ids.remove(id);
-            if (ids.isEmpty()) {
-                indexMap.remove(personField);
-            } else {
-                indexMap.put(personField, ids);
-            }
-        }
-    }
-
-    private List<Person> getPersonFromDatabase(Set<Integer> ids) {
-        return personDatabase.entrySet().stream()
-            .filter(integerPersonEntry -> ids.contains(integerPersonEntry.getKey()))
-            .map(Map.Entry::getValue).toList();
     }
 
     public Map<String, Set<Integer>> getAddressIndex() {
