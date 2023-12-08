@@ -42,13 +42,10 @@ public class FixedThreadPool implements ThreadPool {
     }
 
     @Override
-    public void close() {
+    public void close() throws InterruptedException {
         for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                thread.interrupt();
-            }
+            thread.interrupt();
+            thread.join();
         }
     }
 

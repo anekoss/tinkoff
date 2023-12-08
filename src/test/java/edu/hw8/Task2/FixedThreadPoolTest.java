@@ -62,7 +62,7 @@ public class FixedThreadPoolTest {
     }
 
     @Test
-    void closeTest() throws Exception {
+    void closeTest() throws InterruptedException {
         FixedThreadPool fixedThreadPool = new FixedThreadPool(5);
         fixedThreadPool.start();
         fixedThreadPool.close();
