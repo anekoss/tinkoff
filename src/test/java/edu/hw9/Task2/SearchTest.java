@@ -22,6 +22,7 @@ public class SearchTest {
 
     @BeforeAll
     static void generateFileSystem() throws IOException {
+        Files.createDirectory(Path.of("src/main/resources/hw9"));
         Files.createDirectory(Path.of(DIRECTORY_SEARCH_PATH));
         for (int i = 0; i < 10; i++) {
             Files.createDirectory(Path.of(DIRECTORY_SEARCH_PATH + "/child" + i));
@@ -62,6 +63,7 @@ public class SearchTest {
             .sorted(Comparator.reverseOrder())
             .map(Path::toFile)
             .forEach(File::delete);
+        Files.deleteIfExists(Path.of("src/main/resources/hw9"));
     }
 
     static Stream<Arguments> provideDataForTest() {
