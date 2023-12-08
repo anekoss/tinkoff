@@ -1,13 +1,13 @@
 package edu.hw9.Task1;
 
-import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
-public class Stats implements Runnable {
+public class Stats implements Callable<Map<String, Double>> {
     private final double[] numbers;
     private double sum;
-    private double max;
-    private double min;
+    private double max = Double.NEGATIVE_INFINITY;
+    private double min = Double.POSITIVE_INFINITY;
     private double avg;
 
     public Stats(double[] numbers) {
@@ -15,11 +15,20 @@ public class Stats implements Runnable {
     }
 
     @Override
-    public void run() {
-        max = Arrays.stream(numbers).max().orElse(Double.NEGATIVE_INFINITY);
-        sum = Arrays.stream(numbers).sum();
-        min = Arrays.stream(numbers).min().orElse(Double.POSITIVE_INFINITY);
-        avg = Arrays.stream(numbers).average().orElse(0);
+    public Map<String, Double> call() {
+        for (double number : numbers) {
+            if (max < number) {
+                max = number;
+            }
+            if (min > number) {
+                min = number;
+            }
+            sum = sum + number;
+        }
+        if (numbers.length != 0) {
+            avg = sum / numbers.length;
+        }
+        return getStats();
     }
 
     public Map<String, Double> getStats() {
