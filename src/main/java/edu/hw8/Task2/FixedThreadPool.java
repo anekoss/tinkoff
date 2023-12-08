@@ -45,9 +45,11 @@ public class FixedThreadPool implements ThreadPool {
     public void close() throws Exception {
         for (Thread thread : threads) {
             thread.interrupt();
+            thread.join();
         }
         for (Thread thread : threads) {
             thread.join();
         }
     }
+
 }
