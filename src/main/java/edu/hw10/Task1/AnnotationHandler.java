@@ -36,10 +36,10 @@ public class AnnotationHandler {
     public Object minMaxHandler(Object value, Min minAnnotation, Max maxAnnotation)
         throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int min =
-            (int) minAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, (Class<?>) null)
+            (int) minAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, null)
                 .invoke(minAnnotation);
         int max =
-            (int) maxAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, (Class<?>) null)
+            (int) maxAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, null)
                 .invoke(maxAnnotation);
         if (min >= max) {
             throw new IllegalArgumentException("max value must be greater than min value");
@@ -57,7 +57,7 @@ public class AnnotationHandler {
     public Object minHandler(Object value, Min minAnnotation)
         throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int min =
-            (int) minAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, (Class<?>) null)
+            (int) minAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, null)
                 .invoke(minAnnotation);
         try {
             if (min > (int) value) {
@@ -72,7 +72,7 @@ public class AnnotationHandler {
     public Object maxHandler(Object value, Max maxAnnotation)
         throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int max =
-            (int) maxAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, (Class<?>) null)
+            (int) maxAnnotation.annotationType().getDeclaredMethod(METHOD_NAME, null)
                 .invoke(maxAnnotation);
         try {
             if (max < (int) value) {
