@@ -88,28 +88,6 @@ public class LogReaderTest {
                     null, LocalDate.parse("2023-09-25"), FormatReport.ADOC
                 ), 2634
             )
-//            , Arguments.of(
-//                new ArgsRecord(
-//                    Set.of(),
-//                    Set.of(URI.create(
-//                        "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs")),
-//                    LocalDate.parse("2023-08-31"),
-//                    null,
-//                    FormatReport.ADOC
-//                ), 51462
-//            ),
-//            Arguments.of(
-//                new ArgsRecord(
-//                    Set.of(
-//                        Path.of("src/main/resources/project3/testLog/logs(1).txt")
-//                    ),
-//                    Set.of(URI.create(
-//                        "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs")),
-//                    LocalDate.parse("2023-08-31"),
-//                    null,
-//                    FormatReport.ADOC
-//                ), 54096
-//            )
         );
     }
 
